@@ -1,0 +1,58 @@
+name: Build from commit
+
+on: [workflow_dispatch]
+
+env:
+  ffmpeg_commit: commit
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: 'nanake/ffmpeg-windows-build-helpers'
+
+      - name: Install dependencies
+        run: sudo apt-get install -y autogen cmake cvs gperf meson nasm pax ragel yasm
+
+      - name: Run build script
+        run: ./cross_compile_ffmpeg.sh
+          --ffmpeg-git-checkout-version=$ffmpeg_commit
+          --disable-nonfree=n
+          --sandbox-ok=y
+          --compiler-flavors=win64
+
+      - name: Archive build artifacts
+        working-directory: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.ffmpeg_commit }}
+        run: 7z a -mx9 ffmpeg-${{ env.ffmpeg_commit }}-win64-nonfree.7z ffmpeg.exe ffplay.exe ffprobe.exe
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: ffmpeg-${{ env.ffmpeg_commit }}-win64-nonfree
+          path: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.ffmpeg_commit }}/ffmpeg-${{ env.ffmpeg_commit }}-win64-nonfree.7z
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "r${{ github.run_number }}"
+          release_name: "Build #${{ github.run_number }} ${{ env.ffmpeg_commit }}"
+          body: |
+            Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.ffmpeg_commit }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ffmpeg-${{ env.ffmpeg_commit }}-win64-nonfree/ffmpeg-${{ env.ffmpeg_commit }}-win64-nonfree.7z
+          asset_name: ffmpeg-${{ env.ffmpeg_commit }}-win64-nonfree.7z
+          asset_content_type: application/x-7z-compressed
