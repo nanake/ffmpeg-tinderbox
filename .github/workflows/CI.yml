@@ -1,0 +1,67 @@
+name: Win64 Artifact Build
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 21 * * *' # Runs at 06:00 Tokyo time every day
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Set ENV
+        run: |
+          echo "CHECKOUT_REV=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git | head -1 | cut -f 1 | awk '{ print substr($1,1,10) }')" >> $GITHUB_ENV
+          echo "DATE=$(date +'%Y%m%d')" >> $GITHUB_ENV
+
+      - name: Set Target Artifact
+        id: vars
+        run: echo ::set-output name=target_artifact::"${{ env.DATE }}-${{ env.CHECKOUT_REV }}-win64-nonfree"
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          repository: 'nanake/ffmpeg-windows-build-helpers'
+
+      - name: Install Dependencies
+        run: sudo apt-get install -y autogen cmake cvs gperf meson nasm pax ragel yasm
+
+      - name: Win64 Artifact Build
+        run: ./cross_compile_ffmpeg.sh
+          --ffmpeg-git-checkout-version=${{ env.CHECKOUT_REV }}
+          --disable-nonfree=n
+          --sandbox-ok=y
+          --compiler-flavors=win64
+
+      - name: Archive a Build Artifact
+        working-directory: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}
+        run: 7z a -mx9 ${{ steps.vars.outputs.target_artifact }}.7z ffmpeg.exe ffplay.exe ffprobe.exe
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ steps.vars.outputs.target_artifact }}
+          path: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}/${{ steps.vars.outputs.target_artifact }}.7z 
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: "r${{ github.run_number }}"
+          release_name: "Build ${{ env.DATE }} @ ${{ env.CHECKOUT_REV }}"
+          body: |
+            Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.CHECKOUT_REV }}
+          draft: false
+          prerelease: false
+
+      - name: Upload Release Asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}/${{ steps.vars.outputs.target_artifact }}.7z
+          asset_name: ${{ steps.vars.outputs.target_artifact }}.7z
+          asset_content_type: application/x-7z-compressed
