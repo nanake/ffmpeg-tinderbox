@@ -12,7 +12,7 @@ jobs:
       - name: Set ENV
         run: |
           echo "CHECKOUT_REV=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git | head -1 | cut -f 1 | awk '{ print substr($1,1,10) }')" >> $GITHUB_ENV
-          echo "DATE=$(date +'%Y%m%d#H%M%OS3')" >> $GITHUB_ENV
+          echo "DATE=$(date +'%Y%m%d%H%M%OS3')" >> $GITHUB_ENV
 
       - name: Set Target Artifact
         id: vars
@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           repository: 'nanake/ffmpeg-windows-build-helpers'
-          ref: 'himawari' #🌻
+          ref: 'himawari' # 🌻
 
       - name: Install Dependencies
         run: sudo apt-get install -y autogen cmake cvs gperf meson nasm pax ragel yasm
