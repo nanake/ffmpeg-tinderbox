@@ -16,7 +16,9 @@ jobs:
 
       - name: Set Target Artifact
         id: vars
-        run: echo ::set-output name=target_artifact::"${{ env.DATE }}-${{ env.CHECKOUT_REV }}-win64-nonfree"
+        run: |
+          echo ::set-output name=artifact_name::"${{ env.DATE }}-${{ env.CHECKOUT_REV }}-win64-nonfree"
+          echo ::set-output name=artifact_path::"sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}"
 
       - name: Checkout
         uses: actions/checkout@v2
@@ -35,14 +37,16 @@ jobs:
           --compiler-flavors=win64
 
       - name: Archive a Build Artifact
-        working-directory: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}
-        run: 7z a -mx9 ${{ steps.vars.outputs.target_artifact }}.7z ffmpeg.exe ffplay.exe ffprobe.exe
+        working-directory: ${{ steps.vars.outputs.artifact_path }}
+        run: |
+          mkdir ${{ steps.vars.outputs.artifact_name }}; cp ffmpeg.exe ffplay.exe ffprobe.exe $_
+          7z a -mx9 ${{ steps.vars.outputs.artifact_name }}.7z ${{ steps.vars.outputs.artifact_name }}
 
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.vars.outputs.target_artifact }}
-          path: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}/${{ steps.vars.outputs.target_artifact }}.7z 
+          name: ${{ steps.vars.outputs.artifact_name }}
+          path: ${{ steps.vars.outputs.artifact_path }}/${{ steps.vars.outputs.artifact_name }}.7z 
 
       - name: Create Release
         id: create_release
@@ -63,6 +67,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}/${{ steps.vars.outputs.target_artifact }}.7z
-          asset_name: ${{ steps.vars.outputs.target_artifact }}.7z
+          asset_path: ${{ steps.vars.outputs.artifact_path }}/${{ steps.vars.outputs.artifact_name }}.7z
+          asset_name: ${{ steps.vars.outputs.artifact_name }}.7z
           asset_content_type: application/x-7z-compressed
