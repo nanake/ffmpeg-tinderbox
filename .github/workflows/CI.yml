@@ -4,69 +4,172 @@ on:
   workflow_dispatch:
   schedule:
     - cron: '0 21 * * *' # Runs at 06:00 Tokyo time every day
+  push:
+    paths-ignore:
+      - 'LICENSE'
+      - '**.md'
 
 jobs:
-  build:
+  build_base:
+    name: Build base image
     runs-on: ubuntu-20.04
     steps:
-      - name: Set ENV
-        run: |
-          echo "CHECKOUT_REV=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git | head -1 | cut -f 1 | awk '{ print substr($1,1,10) }')" >> $GITHUB_ENV
-          echo "DATE=$(date +'%Y%m%d%H%M%OS3')" >> $GITHUB_ENV
-
-      - name: Set Target Artifact
-        id: vars
-        run: |
-          echo ::set-output name=artifact_name::"${{ env.DATE }}-${{ env.CHECKOUT_REV }}-win64-nonfree"
-          echo ::set-output name=artifact_path::"sandbox/win64/ffmpeg_git_with_fdk_aac_${{ env.CHECKOUT_REV }}"
-
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: docker/login-action@v1
         with:
-          repository: 'nanake/ffmpeg-windows-build-helpers'
-          ref: 'himawari' # 🌻
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
 
-      - name: Install Dependencies
-        run: sudo apt-get install -y autogen cmake cvs gperf meson nasm pax ragel yasm
+      - name: Image Name
+        id: imagename
+        run: echo "::set-output name=name::docker.pkg.github.com/${GITHUB_REPOSITORY,,}/base:latest"
 
-      - name: Win64 Artifact Build
-        run: ./cross_compile_ffmpeg.sh
-          --ffmpeg-git-checkout-version=${{ env.CHECKOUT_REV }}
-          --disable-nonfree=n
-          --sandbox-ok=y
-          --compiler-flavors=win64
+      - name: Pull latest
+        run: docker pull ${{ steps.imagename.outputs.name }} || true
 
-      - name: Archive a Build Artifact
-        working-directory: ${{ steps.vars.outputs.artifact_path }}
+      - name: Build base image
+        run: docker build --pull --cache-from ${{ steps.imagename.outputs.name }} --tag ${{ steps.imagename.outputs.name }} images/base
+      
+      - name: Push base image
+        run: docker push ${{ steps.imagename.outputs.name }}
+
+  build_target_bases:
+    name: Build target base image
+    needs: build_base
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [win64]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Image Name
+        id: imagename
+        run: echo "::set-output name=name::docker.pkg.github.com/${GITHUB_REPOSITORY,,}/base-${{ matrix.target }}:latest"
+
+      - name: Pull latest
+        run: docker pull ${{ steps.imagename.outputs.name }} || true
+
+      - name: Build target base image
+        run: docker build --pull --build-arg GH_REPO=${GITHUB_REPOSITORY,,} --cache-from ${{ steps.imagename.outputs.name }} --tag ${{ steps.imagename.outputs.name }} images/base-${{ matrix.target }}
+
+      - name: Push target base image
+        run: docker push ${{ steps.imagename.outputs.name }}
+
+  build_targets:
+    name: Build target-variant image
+    needs: build_target_bases
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [win64]
+        variant: [gpl nonfree]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Generate Dockerfile
+        run: ./generate.sh ${{ matrix.target }} ${{ matrix.variant }}
+
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Image Name
+        id: imagename
         run: |
-          mkdir ${{ steps.vars.outputs.artifact_name }}; cp ffmpeg.exe ffplay.exe ffprobe.exe $_
-          7z a -mx9 ${{ steps.vars.outputs.artifact_name }}.7z ${{ steps.vars.outputs.artifact_name }}
+          IMG="docker.pkg.github.com/${GITHUB_REPOSITORY,,}/${{ matrix.target }}-${{ matrix.variant }}:latest"
+          echo "::set-output name=name::${IMG/ /-}"
 
-      - name: Upload a Build Artifact
+      - name: Pull latest
+        run: docker pull ${{ steps.imagename.outputs.name }} || true
+      
+      - name: Build variant image
+        run: docker build --pull --cache-from ${{ steps.imagename.outputs.name }} --tag ${{ steps.imagename.outputs.name }} .
+      
+      - name: Push variant image
+        run: docker push ${{ steps.imagename.outputs.name }}
+
+  build_ffmpeg:
+    name: Build ffmpeg
+    needs: build_targets
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        target: [win64]
+        variant: [gpl nonfree]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login to Docker
+        uses: docker/login-action@v1
+        with:
+          registry: docker.pkg.github.com
+          username: ${{ github.actor }}
+          password: ${{ github.token }}
+
+      - name: Build ffmpeg
+        run: ./build.sh ${{ matrix.target }} ${{ matrix.variant }}
+
+      - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ steps.vars.outputs.artifact_name }}
-          path: ${{ steps.vars.outputs.artifact_path }}/${{ steps.vars.outputs.artifact_name }}.7z 
+          name: ffmpeg
+          path: artifacts/*
 
-      - name: Create Release
+  publish_release:
+    name: Publish release
+    needs: build_ffmpeg
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v2
+        with:
+          name: ffmpeg
+          path: artifacts
+
+      - name: Set environment variables
+        run: |
+          echo "DATE=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+          echo "REV=$(basename artifacts/*.zip | awk -F '-' '{print substr($4,2)}')" >> $GITHUB_ENV
+
+      - name: Create release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tag_name: "r${{ github.run_number }}"
-          release_name: "Build ${{ env.DATE }} @ ${{ env.CHECKOUT_REV }}"
+          release_name: "Build ${{ env.DATE }} @ ${{ env.REV }}"
           body: |
-            Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.CHECKOUT_REV }}
+            Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.REV }}
           draft: false
           prerelease: false
 
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Upload release asset
+        uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ steps.vars.outputs.artifact_path }}/${{ steps.vars.outputs.artifact_name }}.7z
-          asset_name: ${{ steps.vars.outputs.artifact_name }}.7z
-          asset_content_type: application/x-7z-compressed
+          asset_path: artifacts/*.zip
