@@ -1,7 +1,7 @@
 #!/bin/bash
 
 UAVS3D_REPO="https://github.com/uavs3/uavs3d.git"
-UAVS3D_COMMIT="1bd13916d524e2c1926d75fe99588428893f6987"
+UAVS3D_COMMIT="3cff5ee4ef781af3b6140040ae59260662bf4bf5"
 
 ffbuild_enabled() {
     [[ $ADDINS_STR == *4.3* ]] && return -1

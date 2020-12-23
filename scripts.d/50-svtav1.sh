@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SVTAV1_REPO="https://github.com/OpenVisualCloud/SVT-AV1.git"
-SVTAV1_COMMIT="2936d5756ca061ee78edc8c87fd5414f93066809"
+SVTAV1_COMMIT="75af3e6f9241f5df07ffa8c67281a9eff9a476ad"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
