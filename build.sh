@@ -69,7 +69,7 @@ mkdir -p "ffbuild/pkgroot/$BUILD_NAME"
 package_variant ffbuild/prefix "ffbuild/pkgroot/$BUILD_NAME"
 
 cd ffbuild/pkgroot
-zip -9 -r "${ARTIFACTS_PATH}/${BUILD_NAME}.zip" "$BUILD_NAME"
+7z a -mx=9 "${ARTIFACTS_PATH}/${BUILD_NAME}.7z" "$BUILD_NAME"
 cd -
 
 rm -rf ffbuild

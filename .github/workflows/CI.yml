@@ -153,7 +153,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "DATE=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-          echo "REV=$(basename artifacts/*.zip | awk -F '-' '{print substr($4,2)}')" >> $GITHUB_ENV
+          echo "REV=$(basename artifacts/*.7z | awk -F '-' '{print substr($4,2)}')" >> $GITHUB_ENV
 
       - name: Create release
         id: create_release
@@ -172,4 +172,4 @@ jobs:
         uses: shogo82148/actions-upload-release-asset@v1
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/*.zip
+          asset_path: artifacts/*.7z
