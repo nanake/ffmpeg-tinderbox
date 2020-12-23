@@ -4,7 +4,7 @@ LIBFDK_AAC_REPO="https://github.com/mstorsjo/fdk-aac.git"
 LIBFDK_AAC_COMMIT="2e64f76d2e246cd01cf87c12c06b300571ea3d3b"
 
 ffbuild_enabled() {
-    [[ $ADDINS_STR != *nonfree* ]] && return -1
+    [[ $VARIANT == *nonfree* ]] || return -1
     return 0
 }
 

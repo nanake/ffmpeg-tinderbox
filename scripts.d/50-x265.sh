@@ -4,7 +4,7 @@ X265_REPO="https://github.com/videolan/x265.git"
 X265_COMMIT="241342f25bd1a83678b24588712f91ca0bff99f3"
 
 ffbuild_enabled() {
-    [[ $VARIANT == gpl* ]] || return -1
+    [[ $VARIANT != lgpl* ]] || return -1
     return 0
 }
 
