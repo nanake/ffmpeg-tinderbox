@@ -1,5 +1,5 @@
-ARG GH_REPO=btbn/ffmpeg-builds
-FROM docker.pkg.github.com/$GH_REPO/base:latest
+ARG GH_OWNER=nanake
+FROM ghcr.io/$GH_OWNER/base:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 

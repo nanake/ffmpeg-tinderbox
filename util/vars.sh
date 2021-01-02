@@ -28,12 +28,12 @@ while [[ "$#" -gt 0 ]]; do
     shift
 done
 
-REPO="${GITHUB_REPOSITORY:-nanake/ffmpeg-tinderbox}"
-REPO="${REPO,,}"
-REGISTRY="docker.pkg.github.com"
-BASE_IMAGE="${REGISTRY}/${REPO}/base:latest"
-TARGET_IMAGE="${REGISTRY}/${REPO}/base-${TARGET}:latest"
-IMAGE="${REGISTRY}/${REPO}/${TARGET}-${VARIANT}${ADDINS_STR:+-}${ADDINS_STR}:latest"
+OWNER="${GITHUB_ACTOR:-nanake}"
+OWNER="${OWNER,,}"
+REGISTRY="ghcr.io"
+BASE_IMAGE="${REGISTRY}/${OWNER}/base:latest"
+TARGET_IMAGE="${REGISTRY}/${OWNER}/base-${TARGET}:latest"
+IMAGE="${REGISTRY}/${OWNER}/${TARGET}-${VARIANT}${ADDINS_STR:+-}${ADDINS_STR}:latest"
 
 ffbuild_configure() {
     return 0
