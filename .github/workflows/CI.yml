@@ -6,6 +6,7 @@ on:
     - cron: '0 21 * * *' # Runs at 06:00 Tokyo time every day
   push:
     paths-ignore:
+      - '**/kaseifu-no-mita.yml'
       - 'LICENSE'
       - '**.md'
 
