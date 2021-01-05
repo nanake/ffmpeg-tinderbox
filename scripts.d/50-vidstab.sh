@@ -1,7 +1,8 @@
 #!/bin/bash
 
 VIDSTAB_REPO="https://github.com/georgmartius/vid.stab.git"
-VIDSTAB_COMMIT="f9166e9b082242b622b5b456ef80cbdbd4042826"
+# TODO: clamp e7715fc until issue #104 get fixed https://github.com/georgmartius/vid.stab/issues/104
+VIDSTAB_COMMIT="e7715fcf329573cdcff5c57d0e4a25f4c3a0cb7f"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1

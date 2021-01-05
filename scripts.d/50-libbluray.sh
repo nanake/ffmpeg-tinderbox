@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBBLURAY_REPO="https://github.com/nanake/libbluray.git"
-LIBBLURAY_COMMIT="a798b0533f024d9168e37a8e72e5bdeeac4b7d30"
+LIBBLURAY_COMMIT="24d38b8ec371d89b51f8b65f3085672db12334ff"
 
 ffbuild_enabled() {
     return 0
