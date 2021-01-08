@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VMAF_REPO="https://github.com/Netflix/vmaf.git"
-VMAF_COMMIT="9f5ecc65f84d2444804e6f4fc629b9e31c05a9db"
+VMAF_COMMIT="908bdefc6a1174d546040f8797eb467ef4864f5c"
 
 ffbuild_enabled() {
     return 0
@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
-        --default-library=static
+        --default-library=both
         -Denable_tests=false
         -Denable_docs=false
         -Denable_avx512=true
