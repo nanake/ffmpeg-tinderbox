@@ -171,7 +171,7 @@ jobs:
       - name: Set environment variables
         run: |
           echo "DATE=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-          echo "REV=$(basename artifacts/*.7z | awk -F '-' '{print substr($4,2)}')" >> $GITHUB_ENV
+          echo "REV=$(basename $(find artifacts -iname '*.7z' | head -1) | awk -F '-' '{print substr($4,2)}')" >> $GITHUB_ENV
 
       - name: Create release
         id: create_release
