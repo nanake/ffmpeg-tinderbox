@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AOM_REPO="https://aomedia.googlesource.com/aom"
-AOM_COMMIT="2f7028d2a96a843a2de7667f9fb99758e4d88d92"
+AOM_COMMIT="3d0593a30d56ef0e1e9e5e4e95e813563a0a3557"
 
 ffbuild_enabled() {
     return 0
@@ -18,11 +18,9 @@ ffbuild_dockerbuild() {
 
     mkdir cmbuild && cd cmbuild
 
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=OFF -DCONFIG_TUNE_VMAF=1 .. || return -1
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=OFF .. || return -1
     make -j$(nproc) || return -1
     make install || return -1
-
-    echo "Requires.private: libvmaf" >> "$FFBUILD_PREFIX/lib/pkgconfig/aom.pc"
 
     cd ../..
     rm -rf aom
