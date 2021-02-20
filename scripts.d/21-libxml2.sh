@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBXML2_REPO="https://gitlab.gnome.org/GNOME/libxml2.git"
-LIBXML2_COMMIT="acb3566739b019ef020c575b891c39121a2420fe"
+LIBXML2_COMMIT="cbe1212db6e22fa92c33242c3ce089476585f872"
 
 ffbuild_enabled() {
     return 0
