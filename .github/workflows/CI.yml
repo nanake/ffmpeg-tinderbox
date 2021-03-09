@@ -1,4 +1,4 @@
-name: Win64 Artifact Build
+name: Windows Cross Compiled
 
 on:
   workflow_dispatch:
@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64]
+        target: [win32, win64]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -88,8 +88,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64]
-        variant: [nonfree, nonfree-shared]
+        target: [win32, win64]
+        variant: [nonfree-shared]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -131,8 +131,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win64]
-        variant: [nonfree, nonfree-shared]
+        target: [win32, win64]
+        variant: [nonfree-shared]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
