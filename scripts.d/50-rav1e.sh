@@ -4,7 +4,7 @@ RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20210316"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
-    [[ $VARIANT == *4.3* ]] && return -1
+    [[ $ADDINS_STR == *4.4* ]] && return -1
     return 0
 }
 
@@ -42,6 +42,6 @@ ffbuild_configure() {
 }
 
 ffbuild_unconfigure() {
-    [[ $VARIANT == *4.2* ]] && return 0
+    [[ $ADDINS_STR == *4.4* ]] && return 0
     echo --disable-librav1e
 }
