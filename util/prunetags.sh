@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 git fetch --tags
-TAGS=( $(git tag -l "r[0-9]*" | sort -r) )
+TAGS=( $(git tag -l "r[0-9]*" | sort -Vr) )
 
 KEEP_LATEST=10
 KEEP_MONTHLY=12
