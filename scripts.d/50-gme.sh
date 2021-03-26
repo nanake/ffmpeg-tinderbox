@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GME_REPO="https://bitbucket.org/mpyne/game-music-emu.git"
-GME_COMMIT="013d4676c689dc49f363f99dcfb8b88f22278236"
+GME_COMMIT="22e5c689f33f45bbf6fd079a711dc03aa85c5e0e"
 
 ffbuild_enabled() {
     return 0
@@ -13,8 +13,9 @@ ffbuild_dockerstage() {
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$GME_REPO" "$GME_COMMIT" gme
+    git clone "$GME_REPO" gme
     cd gme
+    git checkout "$GME_COMMIT"
 
     mkdir build && cd build
 
