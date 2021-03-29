@@ -175,19 +175,11 @@ jobs:
 
       - name: Create release
         id: create_release
-        uses: actions/create-release@v1
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: "r${{ github.run_number }}"
-          release_name: "Build ${{ env.DATE }} @ ${{ env.REV }}"
-          body: |
-            Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.REV }}
-          draft: false
-          prerelease: false
-
-      - name: Upload release asset
-        uses: shogo82148/actions-upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: artifacts/*.7z
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          set -xe
+          NAME="Build ${{ env.DATE }} @ ${{ env.REV }}"
+          TAGNAME="r${{ github.run_number }}"
+          DESC="Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.REV }}"
+          hub release create $(for a in artifacts/*.7z; do echo -a $a; done) -m "$NAME" -m "$DESC" "$TAGNAME"
