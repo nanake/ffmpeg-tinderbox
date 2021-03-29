@@ -47,11 +47,3 @@ ffbuild_configure() {
 ffbuild_unconfigure() {
     echo --disable-libfdk-aac
 }
-
-ffbuild_cflags() {
-    return 0
-}
-
-ffbuild_ldflags() {
-    return 0
-}

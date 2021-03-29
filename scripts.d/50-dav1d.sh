@@ -18,6 +18,10 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
+    export CFLAGS="-static-libgcc -static-libstdc++ -I/opt/ffbuild/include -O2"
+    export CXXFLAGS="-static-libgcc -static-libstdc++ -I/opt/ffbuild/include -O2"
+    export LDFLAGS="-static-libgcc -static-libstdc++ -L/opt/ffbuild/lib -O2"
+
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release

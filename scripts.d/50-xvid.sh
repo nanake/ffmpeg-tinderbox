@@ -1,6 +1,7 @@
 #!/bin/bash
 
-XVID_SRC="https://downloads.xvid.com/downloads/xvidcore-1.3.7.tar.gz"
+XVID_REPO="https://github.com/m-ab-s/xvid.git"
+XVID_COMMIT="4f02ef0c83387cf030b236114c44af10fd9cd661"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1
@@ -13,14 +14,10 @@ ffbuild_dockerstage() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir xvid
-    cd xvid
-    wget -O xvid.tar.gz "$XVID_SRC" || return -1
-    tar xaf xvid.tar.gz || return -1
-    rm xvid.tar.gz
-    cd xvid*
+    git-mini-clone "$XVID_REPO" "$XVID_COMMIT" xvid
+    cd xvid/xvidcore/build/generic
 
-    cd build/generic
+    ./bootstrap.sh || return -1
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -39,8 +36,7 @@ ffbuild_dockerbuild() {
     make -j$(nproc) || return -1
     make install || return -1
 
-    rm "$FFBUILD_PREFIX"/{bin/xvidcore.dll,lib/xvidcore.dll.a}
-    mv "$FFBUILD_PREFIX"/lib/{,lib}xvidcore.a
+    rm "$FFBUILD_PREFIX"/{bin/libxvidcore.dll,lib/libxvidcore.dll.a}
 
     cd ../../../..
     rm -rf xvid
