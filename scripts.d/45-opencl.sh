@@ -4,14 +4,14 @@ HEADERS_REPO="https://github.com/KhronosGroup/OpenCL-Headers.git"
 HEADERS_COMMIT="23710f1b99186065c1768fc3098ba681adc0f253"
 
 LOADER_REPO="https://github.com/KhronosGroup/OpenCL-ICD-Loader.git"
-LOADER_COMMIT="b68b15dfe93d066193c1e40d876e6278d086a6f3"
+LOADER_COMMIT="9b5e3849b49a1448996c8b96ba086cd774d987db"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

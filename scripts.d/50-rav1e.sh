@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20210323"
+RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20210330"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
@@ -8,7 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

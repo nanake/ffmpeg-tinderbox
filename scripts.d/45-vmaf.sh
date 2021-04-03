@@ -1,14 +1,14 @@
 #!/bin/bash
 
 VMAF_REPO="https://github.com/Netflix/vmaf.git"
-VMAF_COMMIT="73f84ec0ae0b1a03a60e550fe8ecf7d8750cec7a"
+VMAF_COMMIT="e23732666b24792fee70afbb830b2f1805db30d6"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

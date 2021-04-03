@@ -1,14 +1,14 @@
 #!/bin/bash
 
 LIBBLURAY_REPO="https://github.com/nanake/libbluray.git"
-LIBBLURAY_COMMIT="79429a524a1f339f4c2e6c90bb14939ab767ab00"
+LIBBLURAY_COMMIT="af2a7b7f9e11f281403cdf457a1d0144937967eb"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

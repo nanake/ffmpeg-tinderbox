@@ -1,14 +1,14 @@
 #!/bin/bash
 
 LIBVPX_REPO="https://chromium.googlesource.com/webm/libvpx"
-LIBVPX_COMMIT="d55cab425d57b7e73894ac62e28ac505b6b4d6f1"
+LIBVPX_COMMIT="8b3e575a45792fe490b5bc08c3fe08f01553756b"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

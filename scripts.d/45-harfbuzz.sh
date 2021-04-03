@@ -1,14 +1,14 @@
 #!/bin/bash
 
 HARFBUZZ_REPO="https://github.com/harfbuzz/harfbuzz.git"
-HARFBUZZ_COMMIT="3c8273ab68e37ed5b08b4edacac995fc451d5732"
+HARFBUZZ_COMMIT="596f4258d0b6464a8186263625a2da1b16014bdd"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

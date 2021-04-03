@@ -1,14 +1,14 @@
 #!/bin/bash
 
 GME_REPO="https://bitbucket.org/mpyne/game-music-emu.git"
-GME_COMMIT="22e5c689f33f45bbf6fd079a711dc03aa85c5e0e"
+GME_COMMIT="b3d158a30492181fd7c38ef795c8d4dcfd77eaa9"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

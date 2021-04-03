@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AVISYNTH_REPO="https://github.com/AviSynth/AviSynthPlus.git"
-AVISYNTH_COMMIT="989c76d6a625baa337d1cd17708df8c3957cc322"
+AVISYNTH_COMMIT="927e7a3fdd4428c44c58df216df5bdffc095f8b0"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1
@@ -9,7 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mirror/mingw-w64.git"
-MINGW_COMMIT="45def5d7a10885dfb87af3c7996f8de7197183b5"
+MINGW_COMMIT="c17efd05d019136a9b3527e2dd32234175c0a9f9"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return -1
@@ -9,7 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 

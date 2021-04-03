@@ -1,14 +1,14 @@
 #!/bin/bash
 
 SRT_REPO="https://github.com/Haivision/srt.git"
-SRT_COMMIT="1d4338a0c8b0c2b6be4a21236bc254b5eec3e847"
+SRT_COMMIT="60ae6e56014b5ee48c8e25eda4d7fcc2e28f79cc"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerstage() {
-    to_df "ADD $SELF /stage.sh"
+    to_df "COPY $SELF /stage.sh"
     to_df "RUN run_stage"
 }
 
