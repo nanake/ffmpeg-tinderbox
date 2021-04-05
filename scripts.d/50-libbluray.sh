@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBBLURAY_REPO="https://github.com/nanake/libbluray.git"
-LIBBLURAY_COMMIT="af2a7b7f9e11f281403cdf457a1d0144937967eb"
+LIBBLURAY_COMMIT="02141b8bb58bfb292c982a544bcf884140ff0c01"
 
 ffbuild_enabled() {
     return 0
@@ -16,7 +16,7 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LIBBLURAY_REPO" "$LIBBLURAY_COMMIT" libbluray
     cd libbluray
 
-    ./bootstrap || return -1
+    ./bootstrap
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -44,9 +44,6 @@ ffbuild_dockerbuild() {
     ./configure "${myconf[@]}"
     make -j$(nproc)
     make install
-
-    cd ..
-    rm -rf libbluray
 }
 
 ffbuild_configure() {

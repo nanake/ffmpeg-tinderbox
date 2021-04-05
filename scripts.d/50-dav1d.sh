@@ -37,12 +37,9 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    meson "${myconf[@]}" .. || return -1
-    ninja -j$(nproc) || return -1
-    ninja install || return -1
-
-    cd ../..
-    rm -rf dav1d
+    meson "${myconf[@]}" ..
+    ninja -j$(nproc)
+    ninja install
 }
 
 ffbuild_configure() {

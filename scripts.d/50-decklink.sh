@@ -16,12 +16,9 @@ ffbuild_dockerstage() {
 
 ffbuild_dockerbuild() {
     git-mini-clone "$DECKLINK_REPO" "$DECKLINK_COMMIT" decklink
-    pushd decklink
+    cd decklink
 
-    make PREFIX="$FFBUILD_PREFIX" install || return -1
-
-    popd
-    rm -rf decklink
+    make PREFIX="$FFBUILD_PREFIX" install
 }
 
 ffbuild_configure() {

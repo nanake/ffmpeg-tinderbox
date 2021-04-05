@@ -14,8 +14,8 @@ ffbuild_dockerstage() {
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$LIBFDK_AAC_REPO" "$LIBFDK_AAC_COMMIT" libfdk_aac
-    pushd libfdk_aac
+    git-mini-clone "$LIBFDK_AAC_REPO" "$LIBFDK_AAC_COMMIT" libfdk-aac
+    cd libfdk-aac
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -31,13 +31,10 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    autoreconf -i || return -1
-    ./configure "${myconf[@]}" || return -1
-    make -j$(nproc) || return -1
-    make install || return -1
-
-    popd
-    rm -rf libfdk_aac
+    autoreconf -i
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {

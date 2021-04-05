@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mirror/mingw-w64.git"
-MINGW_COMMIT="c17efd05d019136a9b3527e2dd32234175c0a9f9"
+MINGW_COMMIT="2afb89e6a651f9c5749d9de492a263e03ba1e94e"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return -1
@@ -31,9 +31,9 @@ ffbuild_dockerbuild() {
         --enable-idl
     )
 
-    ./configure "${myconf[@]}" || return -1
-    make -j$(nproc) || return -1
-    make install || return -1
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 
     cd ../mingw-w64-libraries/winpthreads
 
@@ -47,12 +47,9 @@ ffbuild_dockerbuild() {
         --enable-static
     )
 
-    ./configure "${myconf[@]}" || return -1
-    make -j$(nproc) || return -1
-    make install || return -1
-
-    cd ../../..
-    rm -rf mingw
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {

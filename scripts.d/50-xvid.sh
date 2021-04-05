@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
     git-mini-clone "$XVID_REPO" "$XVID_COMMIT" xvid
     cd xvid/xvidcore/build/generic
 
-    ./bootstrap.sh || return -1
+    ./bootstrap.sh
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -32,14 +32,11 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    ./configure "${myconf[@]}" || return -1
-    make -j$(nproc) || return -1
-    make install || return -1
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 
     rm "$FFBUILD_PREFIX"/{bin/libxvidcore.dll,lib/libxvidcore.dll.a}
-
-    cd ../../../..
-    rm -rf xvid
 }
 
 ffbuild_configure() {

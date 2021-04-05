@@ -18,12 +18,9 @@ ffbuild_dockerbuild() {
 
     mkdir cmbuild && cd cmbuild
 
-    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=OFF .. || return -1
-    make -j$(nproc) || return -1
-    make install || return -1
-
-    cd ../..
-    rm -rf aom
+    cmake -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" -DBUILD_SHARED_LIBS=OFF ..
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {

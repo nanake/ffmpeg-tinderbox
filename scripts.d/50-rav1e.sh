@@ -31,9 +31,6 @@ ffbuild_dockerbuild() {
     mkdir -p "$FFBUILD_PREFIX"/{include,lib/pkgconfig}
     cp -r include/. "$FFBUILD_PREFIX"/include/.
     cp -r lib/. "$FFBUILD_PREFIX"/lib/.
-
-    cd ..
-    rm -rf rav1e
 }
 
 ffbuild_configure() {
