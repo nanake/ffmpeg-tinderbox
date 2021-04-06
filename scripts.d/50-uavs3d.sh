@@ -8,11 +8,6 @@ ffbuild_enabled() {
     return 0
 }
 
-ffbuild_dockerstage() {
-    to_df "COPY $SELF /stage.sh"
-    to_df "RUN run_stage"
-}
-
 ffbuild_dockerbuild() {
     git clone "$UAVS3D_REPO" uavs3d
     cd uavs3d

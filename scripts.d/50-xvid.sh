@@ -8,11 +8,6 @@ ffbuild_enabled() {
     return 0
 }
 
-ffbuild_dockerstage() {
-    to_df "COPY $SELF /stage.sh"
-    to_df "RUN run_stage"
-}
-
 ffbuild_dockerbuild() {
     git-mini-clone "$XVID_REPO" "$XVID_COMMIT" xvid
     cd xvid/xvidcore/build/generic
