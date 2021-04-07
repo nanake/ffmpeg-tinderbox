@@ -1,7 +1,6 @@
 #!/bin/bash
 
-XVID_REPO="https://github.com/m-ab-s/xvid.git"
-XVID_COMMIT="4f02ef0c83387cf030b236114c44af10fd9cd661"
+XVID_SRC="http://downloads.xvid.org/downloads/xvid_latest.tar.gz"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1
@@ -9,8 +8,10 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$XVID_REPO" "$XVID_COMMIT" xvid
-    cd xvid/xvidcore/build/generic
+    wget -O xvid.tar.gz "$XVID_SRC"
+    tar xaf xvid.tar.gz
+    rm xvid.tar.gz
+    cd xvid*/trunk/xvidcore/build/generic
 
     ./bootstrap.sh
 
