@@ -10,9 +10,6 @@ on:
       - 'LICENSE'
       - '**.md'
 
-env:
-  DOCKER_BUILDKIT: 1
-
 jobs:
   build_base:
     name: Build base image
@@ -37,7 +34,7 @@ jobs:
 
       - name: Build base image
         run: |
-          docker build \
+          docker buildx build \
             --pull \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             --cache-from ${{ steps.imagename.outputs.name }} \
@@ -75,7 +72,7 @@ jobs:
 
       - name: Build target base image
         run: |
-          docker build \
+          docker buildx build \
             --pull \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             --build-arg GH_OWNER=${GITHUB_ACTOR,,} \
@@ -120,7 +117,7 @@ jobs:
       
       - name: Build variant image
         run: |
-          docker build \
+          docker buildx build \
             --pull \
             --build-arg BUILDKIT_INLINE_CACHE=1 \
             --cache-from ${{ steps.imagename.outputs.name }} \
