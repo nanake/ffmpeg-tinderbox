@@ -11,7 +11,7 @@ to_df() {
 }
 
 to_df "FROM ${REGISTRY}/${OWNER}/base-${TARGET}:latest"
-to_df "ENV TARGET=$TARGET VARIANT=$VARIANT REPO=$REPO ADDINS_STR=$ADDINS_STR"
+to_df "ENV TARGET=$TARGET VARIANT=$VARIANT OWNER=$OWNER ADDINS_STR=$ADDINS_STR"
 
 for script in scripts.d/*.sh; do
 (
