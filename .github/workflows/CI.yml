@@ -32,9 +32,6 @@ jobs:
         id: imagename
         run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base:latest"
 
-      - name: Pull latest
-        run: docker pull ${{ steps.imagename.outputs.name }} || true
-
       - name: Build base image
         run: |
           docker build \
@@ -43,7 +40,7 @@ jobs:
             --cache-from ${{ steps.imagename.outputs.name }} \
             --tag ${{ steps.imagename.outputs.name }} \
             images/base
-      
+
       - name: Push base image
         run: docker push ${{ steps.imagename.outputs.name }}
 
@@ -69,9 +66,6 @@ jobs:
       - name: Image Name
         id: imagename
         run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}:latest"
-
-      - name: Pull latest
-        run: docker pull ${{ steps.imagename.outputs.name }} || true
 
       - name: Build target base image
         run: |
@@ -115,9 +109,6 @@ jobs:
           IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}:latest"
           echo "::set-output name=name::${IMG/ /-}"
 
-      - name: Pull latest
-        run: docker pull ${{ steps.imagename.outputs.name }} || true
-      
       - name: Build variant image
         run: |
           docker build \
