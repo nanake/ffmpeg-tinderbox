@@ -8,6 +8,15 @@ ffbuild_enabled() {
     return 0
 }
 
+ffbuild_dockerlayer() {
+    to_df "COPY --from=${SELFLAYER} /opt/mingw/. /"
+    to_df "COPY --from=${SELFLAYER} /opt/mingw/. /opt/mingw"
+}
+
+ffbuild_dockerfinal() {
+    to_df "COPY --from=${PREVLAYER} /opt/mingw/. /"
+}
+
 ffbuild_dockerbuild() {
     git-mini-clone "$MINGW_REPO" "$MINGW_COMMIT" mingw
     cd mingw/mingw-w64-headers
@@ -28,7 +37,7 @@ ffbuild_dockerbuild() {
 
     ./configure "${myconf[@]}"
     make -j$(nproc)
-    make install
+    make install DESTDIR="/opt/mingw"
 
     cd ../mingw-w64-libraries/winpthreads
 
@@ -44,7 +53,7 @@ ffbuild_dockerbuild() {
 
     ./configure "${myconf[@]}"
     make -j$(nproc)
-    make install
+    make install DESTDIR="/opt/mingw"
 }
 
 ffbuild_configure() {
