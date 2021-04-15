@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DAV1D_REPO="https://github.com/videolan/dav1d.git"
-DAV1D_COMMIT="ae8958bdc7d30847158eafcec14552213708402f"
+DAV1D_COMMIT="54ad561dfa8d5b450caa2fecc741ca6c44b80e7a"
 
 ffbuild_enabled() {
     return 0
@@ -21,7 +21,6 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -Denable_tests=false
     )
 
     if [[ $TARGET == win* ]]; then
