@@ -120,7 +120,7 @@ jobs:
           docker build \
             --pull \
             --load \
-            --cache-to=type=registry,ref=${{ steps.imagename.outputs.name }}:cache,mode=max \
+            --cache-to=type=registry,ref=${{ steps.imagename.outputs.name }}:cache \
             --cache-from=type=registry,ref=${{ steps.imagename.outputs.name }}:cache \
             --tag ${{ steps.imagename.outputs.name }}:latest \
             .
