@@ -1,10 +1,10 @@
 #!/bin/bash
 set -e
 git fetch --tags
-TAGS=( $(git tag -l "r[0-9]*" | sort -Vr) )
+TAGS=( $(git tag -l "ffbuild-*" | sort -r) )
 
-KEEP_LATEST=10
-KEEP_MONTHLY=5
+KEEP_LATEST=12
+KEEP_MONTHLY=6
 
 LATEST_TAGS=()
 MONTHLY_TAGS=()

@@ -172,18 +172,15 @@ jobs:
           name: ffmpeg
           path: artifacts
 
-      - name: Set environment variables
-        run: |
-          echo "DATE=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-          echo "REV=$(basename $(find artifacts -iname '*.7z' | head -1) | awk -F '-' '{print substr($4,2)}')" >> $GITHUB_ENV
-
       - name: Create release
         id: create_release
         env:
           GITHUB_TOKEN: ${{ github.token }}
         run: |
           set -xe
-          NAME="Build ${{ env.DATE }} @ ${{ env.REV }}"
-          TAGNAME="r${{ github.run_number }}"
-          DESC="Built from https://github.com/FFmpeg/FFmpeg/commit/${{ env.REV }}"
+          BUILDID="$(date +'%Y%m%d%H%M%S')"
+          REV="$(basename $(find artifacts -iname '*.7z' | head -1) | awk -F '-' '{print substr($4,2)}')"
+          NAME="Build $BUILDID @ $REV"
+          TAGNAME="ffbuild-$(date +'%Y-%m-%d-%H-%M')"
+          DESC="Built from https://github.com/FFmpeg/FFmpeg/commit/$REV"
           hub release create $(for a in artifacts/*.7z; do echo -a $a; done) -m "$NAME" -m "$DESC" "$TAGNAME"
