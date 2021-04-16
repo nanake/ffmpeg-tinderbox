@@ -113,20 +113,21 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}"
-          echo "::set-output name=name::${IMG/ /-}"
+          echo "::set-output name=image::${IMG/ /-}:latest"
+          echo "::set-output name=cache::${IMG/ /-}:cache"
 
       - name: Build variant image
         run: |
           docker build \
             --pull \
             --load \
-            --cache-to=type=registry,ref=${{ steps.imagename.outputs.name }}:cache,mode=max \
-            --cache-from=type=registry,ref=${{ steps.imagename.outputs.name }}:cache \
-            --tag ${{ steps.imagename.outputs.name }}:latest \
+            --cache-to=type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max \
+            --cache-from=type=registry,ref=${{ steps.imagename.outputs.cache }} \
+            --tag ${{ steps.imagename.outputs.image }} \
             .
 
       - name: Push variant image
-        run: docker push ${{ steps.imagename.outputs.name }}:latest
+        run: docker push ${{ steps.imagename.outputs.image }}
 
   build_ffmpeg:
     name: Build ffmpeg
