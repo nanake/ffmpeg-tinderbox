@@ -27,6 +27,7 @@ RUN \
         texinfo \
         unzip \
         wget \
+        xxd \
         yasm && \
     apt-get -y clean
 
