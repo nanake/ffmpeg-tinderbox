@@ -120,14 +120,11 @@ jobs:
         run: |
           docker build \
             --pull \
-            --load \
             --cache-to=type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max \
             --cache-from=type=registry,ref=${{ steps.imagename.outputs.cache }} \
-            --tag ${{ steps.imagename.outputs.image }} \
+            -t ${{ steps.imagename.outputs.image }} \
+            -o type=image,push=true,name=${{ steps.imagename.outputs.image }} \
             .
-
-      - name: Push variant image
-        run: docker push ${{ steps.imagename.outputs.image }}
 
   build_ffmpeg:
     name: Build ffmpeg
