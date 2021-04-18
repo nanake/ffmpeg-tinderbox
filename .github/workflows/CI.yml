@@ -123,7 +123,7 @@ jobs:
             --cache-to=type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max \
             --cache-from=type=registry,ref=${{ steps.imagename.outputs.cache }} \
             -t ${{ steps.imagename.outputs.image }} \
-            -o type=image,push=true,name=${{ steps.imagename.outputs.image }} \
+            -o type=registry \
             .
 
   build_ffmpeg:
@@ -180,5 +180,5 @@ jobs:
           REV="$(basename $(find artifacts -iname '*.7z' | head -1) | awk -F '-' '{print substr($4,2)}')"
           NAME="Build $BUILDID @ $REV"
           TAGNAME="ffbuild-$(date +'%Y-%m-%d-%H-%M')"
-          DESC="Built from https://github.com/FFmpeg/FFmpeg/commit/$REV"
+          DESC="Built from FFmpeg/FFmpeg@$REV"
           hub release create $(for a in artifacts/*.7z; do echo -a $a; done) -m "$NAME" -m "$DESC" "$TAGNAME"
