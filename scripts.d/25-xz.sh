@@ -17,6 +17,13 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
+        --disable-xz
+        --disable-xzdec
+        --disable-lzmadec
+        --disable-lzmainfo
+        --disable-scripts
+        --disable-doc
+        --disable-nls
         --disable-shared
         --enable-static
         --with-pic
