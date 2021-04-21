@@ -1,14 +1,6 @@
 name: Windows Cross Compiled
 
-on:
-  workflow_dispatch:
-  schedule:
-    - cron: '0 21 * * *' # Runs at 06:00 Tokyo time every day
-  push:
-    paths-ignore:
-      - '**/kaseifu-no-mita.yml'
-      - 'LICENSE'
-      - '**.md'
+on: [push, workflow_dispatch]
 
 jobs:
   build_base:
@@ -154,31 +146,3 @@ jobs:
         with:
           name: ffmpeg
           path: artifacts/*
-
-  publish_release:
-    name: Publish release
-    if: github.event_name == 'schedule'
-    needs: build_ffmpeg
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Download artifacts
-        uses: actions/download-artifact@v2
-        with:
-          name: ffmpeg
-          path: artifacts
-
-      - name: Create release
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ github.token }}
-        run: |
-          set -xe
-          BUILDID="$(date +'%Y%m%d%H%M%S')"
-          REV="$(basename $(find artifacts -iname '*.7z' | head -1) | awk -F '-' '{print substr($4,2)}')"
-          NAME="Build $BUILDID @ $REV"
-          TAGNAME="ffbuild-$(date +'%Y-%m-%d-%H-%M')"
-          DESC="Built from FFmpeg/FFmpeg@$REV"
-          hub release create $(for a in artifacts/*.7z; do echo -a $a; done) -m "$NAME" -m "$DESC" "$TAGNAME"
