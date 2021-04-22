@@ -22,6 +22,8 @@ ffbuild_dockerbuild() {
         --buildtype=release
         --default-library=static
         -Denable_tests=false
+        -Denable_tools=false
+        -Dlogging=false
     )
 
     if [[ $TARGET == win* ]]; then

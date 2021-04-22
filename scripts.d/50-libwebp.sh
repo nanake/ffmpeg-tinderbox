@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WEBP_REPO="https://chromium.googlesource.com/webm/libwebp"
-WEBP_COMMIT="7d416ff085b0553373663fe5941063bffe2318ce"
+WEBP_COMMIT="8933bac21290a64c15a1a4f492e8152fb7fba48f"
 
 ffbuild_enabled() {
     return 0
@@ -27,6 +27,7 @@ ffbuild_dockerbuild() {
         --disable-jpeg
         --disable-tiff
         --disable-gif
+        --disable-wic
     )
 
     if [[ $TARGET == win* ]]; then

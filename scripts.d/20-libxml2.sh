@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBXML2_REPO="https://gitlab.gnome.org/GNOME/libxml2.git"
-LIBXML2_COMMIT="fb08d9fe837ab64934e6ddc66d442e599c805ca4"
+LIBXML2_COMMIT="1358d157d0bd83be1dfe356a69213df9fac0b539"
 
 ffbuild_enabled() {
     return 0
@@ -13,6 +13,11 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
+        --without-catalog
+        --without-debug
+        --without-docbook
+        --without-history
+        --without-html
         --without-python
         --disable-maintainer-mode
         --disable-shared
