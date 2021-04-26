@@ -4,11 +4,11 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
     apt-get -y update && \
-    apt-get -y dist-upgrade && \
-    apt-get -y install \
+    apt-get -y --no-install-recommends install \
         autoconf \
         automake \
         build-essential \
+        ca-certificates \
         clang \
         cmake \
         curl \
@@ -29,7 +29,9 @@ RUN \
         wget \
         xxd \
         yasm && \
-    apt-get -y clean
+    apt-get -y clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* && \
+    update-ca-certificates
 
 COPY run_stage.sh /usr/bin/run_stage
 COPY git-mini-clone.sh /usr/bin/git-mini-clone

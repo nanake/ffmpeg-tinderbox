@@ -4,12 +4,14 @@ FROM ghcr.io/$GH_OWNER/base:latest
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
-    apt-get -y install gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 gfortran-mingw-w64-x86-64 && \
+    apt-get update && \
+    apt-get -y --no-install-recommends install binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 gfortran-mingw-w64-x86-64 && \
     apt-get -y clean && \
     rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll* && \
     rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s* && \
     rm /usr/lib/gcc/*-w64-mingw32/*/*.dll.a && \
     rm /usr/*-w64-mingw32/lib/*.dll.a && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* && \
     mkdir /opt/ffbuild
 
 COPY toolchain.cmake /toolchain.cmake
