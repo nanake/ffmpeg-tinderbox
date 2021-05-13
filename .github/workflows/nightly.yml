@@ -55,9 +55,9 @@ jobs:
         run: |
           set -xe
           BUILDID="$(date +'%Y-%m-%d-%H-%M')"
-          STUB="$(basename $(find artifacts -iname '*.7z' | head -1))"
-          REV="$(awk -F '-' '{print substr($4,2)}' <<< $STUB)"
-          NTAG="$(awk -F '-' '{print $3}' <<< $STUB)"
+          STUB="$(basename "$(find artifacts -iname '*.7z' | head -1)")"
+          REV="$(awk -F '-' '{print substr($4,2)}' <<< "$STUB")"
+          NTAG="$(awk -F '-' '{print $3}' <<< "$STUB")"
           TITLE="Build $BUILDID @ $REV"
           BODY="Built from FFmpeg/FFmpeg@$REV"
           TAGNAME="build-$BUILDID-n$NTAG"
