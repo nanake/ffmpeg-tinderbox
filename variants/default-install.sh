@@ -7,6 +7,6 @@ package_variant() {
     mkdir -p "$OUT"/bin
     cp "$IN"/bin/* "$OUT"/bin
 
-    mkdir -p "$OUT/doc"
+    mkdir -p "$OUT"/doc
     cp -r "$IN"/share/doc/ffmpeg/* "$OUT"/doc
 }
