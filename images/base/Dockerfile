@@ -33,6 +33,5 @@ RUN \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* && \
     update-ca-certificates
 
-COPY run_stage.sh /usr/bin/run_stage
-COPY git-mini-clone.sh /usr/bin/git-mini-clone
-COPY check-wget.sh /usr/bin/check-wget
+RUN --mount=src=.,dst=/input \
+    for s in /input/*.sh; do cp $s /usr/bin/$(echo $s | sed -e 's|.*/||' -e 's/\.sh$//'); done
