@@ -7,9 +7,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir sdl
-    cd sdl
-
     wget "$SDL_SRC" -O SDL.tar.gz
     tar xaf SDL.tar.gz
     rm SDL.tar.gz

@@ -11,9 +11,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir fftw3
-    cd fftw3
-
     check-wget fftw3.tar.gz "$FFTW3_SRC" "$FFTW3_SHA512"
     tar xaf fftw3.tar.gz
     rm fftw3.tar.gz

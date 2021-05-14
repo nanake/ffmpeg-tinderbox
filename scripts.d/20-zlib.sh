@@ -7,9 +7,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir zlib
-    cd zlib
-
     wget "$ZLIB_SRC" -O zlib.tar.gz
     tar xaf zlib.tar.gz
     rm zlib.tar.gz

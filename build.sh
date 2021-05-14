@@ -40,7 +40,7 @@ FF_LIBS="$(xargs <<< "$FF_LIBS")"
 
 TESTFILE="uidtestfile"
 rm -f "$TESTFILE"
-docker run --rm -v "$PWD:/uidtestdir" "$IMAGE" /usr/bin/touch "/uidtestdir/$TESTFILE"
+docker run --rm -v "$PWD:/uidtestdir" "$IMAGE" touch "/uidtestdir/$TESTFILE"
 DOCKERUID="$(stat -c "%u" "$TESTFILE")"
 rm -f "$TESTFILE"
 [[ "$DOCKERUID" != "$(id -u)" ]] && UIDARGS=( -u "$(id -u):$(id -g)" ) || UIDARGS=()

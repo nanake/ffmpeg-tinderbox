@@ -8,8 +8,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir rav1e && cd rav1e
-
     if [[ $TARGET == win64 ]]; then
         wget -O rav1e.zip "${RAV1E_SRC_PREFIX}/rav1e-windows-gnu.zip"
     else

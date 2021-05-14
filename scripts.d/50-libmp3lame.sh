@@ -7,8 +7,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir lame
-    cd lame
     wget -O lame.tar.gz "$LAME_SRC"
     tar xaf lame.tar.gz
     rm lame.tar.gz

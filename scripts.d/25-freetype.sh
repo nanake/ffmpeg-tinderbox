@@ -8,8 +8,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir ft
-    cd ft
     wget -O ft.tar.gz "$FREETYPE_SRC"
     tar xaf ft.tar.gz
     rm ft.tar.gz

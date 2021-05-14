@@ -7,8 +7,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir opencore
-    cd opencore
     wget -O opencore.tar.gz "$OAMR_SRC"
     tar xaf opencore.tar.gz
     rm opencore.tar.gz

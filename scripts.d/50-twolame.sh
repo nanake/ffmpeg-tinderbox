@@ -7,8 +7,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir twolame
-    cd twolame
     wget -O twolame.tar.gz "$TWOLAME_SRC"
     tar xaf twolame.tar.gz
     rm twolame.tar.gz

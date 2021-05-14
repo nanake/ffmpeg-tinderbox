@@ -7,9 +7,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    mkdir xz
-    cd xz
-
     wget "$XZ_SRC" -O xz.tar.xz
     tar xaf xz.tar.xz
     rm xz.tar.xz
