@@ -1,16 +1,15 @@
 #!/bin/bash
 
-# https://sourceforge.net/projects/freetype/files/freetype2/
-FREETYPE_SRC="https://sourceforge.net/projects/freetype/files/freetype2/2.10.4/freetype-2.10.4.tar.xz/download"
+FREETYPE_SRC="https://download.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.xz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    wget -O ft.tar.gz "$FREETYPE_SRC"
-    tar xaf ft.tar.gz
-    rm ft.tar.gz
+    wget -O ft.tar.xz "$FREETYPE_SRC"
+    tar xaf ft.tar.xz
+    rm ft.tar.xz
     cd freetype*
 
     local myconf=(
