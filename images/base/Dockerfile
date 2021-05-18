@@ -31,7 +31,10 @@ RUN \
         yasm && \
     apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* && \
-    update-ca-certificates
+    update-ca-certificates && \
+    git config --global user.email "builder@localhost" && \
+    git config --global user.name "Builder" && \
+    git config --global advice.detachedHead false
 
 RUN --mount=src=.,dst=/input \
     for s in /input/*.sh; do cp $s /usr/bin/$(echo $s | sed -e 's|.*/||' -e 's/\.sh$//'); done
