@@ -26,7 +26,6 @@ to_df() {
     echo >> "$_of"
 }
 
-to_df "# syntax=docker/dockerfile:experimental"
 to_df "FROM ${REGISTRY}/${OWNER}/base-${TARGET}:latest AS base"
 to_df "ENV TARGET=$TARGET VARIANT=$VARIANT OWNER=$OWNER ADDINS_STR=$ADDINS_STR"
 
