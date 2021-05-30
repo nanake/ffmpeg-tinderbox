@@ -32,7 +32,6 @@ cuda                    dxva2                   nvenc
 cuda_llvm               ffnvcodec               opencl
 cuvid                   libmfx                  vulkan
 
-
 Libraries:
 avcodec                 avformat                swresample
 avdevice                avutil                  swscale
