@@ -18,16 +18,10 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
-        --disable-doc
-        --with-our-malloc
-        --enable-threads
-        --with-combined-threads
+        --disable-{shared,doc}
+        --enable-{static,avx,avx2,sse2,threads}
+        --with-{combined-threads,our-malloc}
         --with-incoming-stack-boundary=2
-        --enable-sse2
-        --enable-avx
-        --enable-avx2
     )
 
     if [[ $TARGET == win* ]]; then

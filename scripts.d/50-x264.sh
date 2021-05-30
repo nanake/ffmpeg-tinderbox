@@ -13,11 +13,8 @@ ffbuild_dockerbuild() {
     cd x264
 
     local myconf=(
-        --disable-cli
-        --enable-static
-        --enable-pic
-        --disable-lavf
-        --disable-swscale
+        --disable-{cli,lavf,swscale}
+        --enable-{static,pic}
         --prefix="$FFBUILD_PREFIX"
     )
 

@@ -16,15 +16,8 @@ ffbuild_dockerbuild() {
     cd build/linux
 
     local myconf=(
-        --disable-cli
-        --enable-static
-        --enable-pic
-        --disable-avs
-        --disable-swscale
-        --disable-lavf
-        --disable-ffms
-        --disable-gpac
-        --disable-lsmash
+        --enable-{static,pic}
+        --disable-{avs,cli,ffms,gpac,lavf,lsmash,swscale}
         --extra-asflags="-w-macro-params-legacy"
         --prefix="$FFBUILD_PREFIX"
     )

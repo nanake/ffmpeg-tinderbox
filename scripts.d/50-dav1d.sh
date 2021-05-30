@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DAV1D_REPO="https://github.com/videolan/dav1d.git"
-DAV1D_COMMIT="c389d895bd428ae15bb24ef878aa2e7a27301555"
+DAV1D_COMMIT="41be890ddd8e58f938aa74a689e4a457da3a87b0"
 
 ffbuild_enabled() {
     return 0
@@ -17,8 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -Denable_tests=false
-        -Denable_tools=false
+        -Denable_{tests,tools}=false
         -Dlogging=false
     )
 

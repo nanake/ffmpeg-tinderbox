@@ -15,14 +15,9 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
         --enable-static
+        --disable-{shared,doc,examples,oggtest,spec,vorbistest}
         --with-pic
-        --disable-examples
-        --disable-oggtest
-        --disable-vorbistest
-        --disable-spec
-        --disable-doc
     )
 
     if [[ $TARGET == win* ]]; then

@@ -15,16 +15,9 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
         --enable-static
+        --disable-{shared,bdjava-jar,doxygen-{doc,dot,html,pdf,ps},examples}
         --with-pic
-        --disable-doxygen-doc
-        --disable-doxygen-dot
-        --disable-doxygen-html
-        --disable-doxygen-ps
-        --disable-doxygen-pdf
-        --disable-examples
-        --disable-bdjava-jar
     )
 
     if [[ $TARGET == win* ]]; then

@@ -18,12 +18,9 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
+        --disable-{shared,examples}
+        --enable-{static,amrnb-encoder,amrnb-decoder}
         --with-pic
-        --enable-amrnb-encoder
-        --enable-amrnb-decoder
-        --disable-examples
     )
 
     if [[ $TARGET == win* ]]; then

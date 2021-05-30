@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVPX_REPO="https://chromium.googlesource.com/webm/libvpx"
-LIBVPX_COMMIT="d42b93a15f182b0cd2bcc639e6951c40da6da8ce"
+LIBVPX_COMMIT="b8273e8ae5c14bccefde96170507336a4f15c98c"
 
 ffbuild_enabled() {
     return 0
@@ -12,15 +12,9 @@ ffbuild_dockerbuild() {
     cd libvpx
 
     local myconf=(
-        --disable-shared
-        --enable-static
-        --enable-pic
-        --disable-examples
-        --disable-tools
-        --disable-docs
-        --disable-unit-tests
-        --enable-vp9-highbitdepth
         --prefix="$FFBUILD_PREFIX"
+        --enable-{static,pic,vp9-highbitdepth}
+        --disable-{shared,docs,examples,tools,unit-tests}
     )
 
     if [[ $TARGET == win64 ]]; then

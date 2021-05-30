@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X265_REPO="https://bitbucket.org/multicoreware/x265_git.git"
-X265_COMMIT="bf91444e034831141e0ce02b1200e51996f8b6c6"
+X265_COMMIT="82786fccce10379be439243b6a776dc2f5918cb4"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1
@@ -17,8 +17,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
         -DCMAKE_BUILD_TYPE=Release
-        -DENABLE_SHARED=OFF
-        -DENABLE_CLI=OFF
+        -DENABLE_{SHARED,CLI}=OFF
         -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     )
 

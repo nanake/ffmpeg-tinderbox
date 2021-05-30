@@ -15,9 +15,8 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
         --enable-static
-        --disable-oggtest
+        --disable-{shared,oggtest}
     )
 
     if [[ $TARGET == win* ]]; then

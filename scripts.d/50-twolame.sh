@@ -15,9 +15,8 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --with-pic
-        --disable-shared
         --enable-static
-        --disable-sndfile
+        --disable-{shared,sndfile}
     )
 
     if [[ $TARGET == win* ]]; then

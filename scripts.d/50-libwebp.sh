@@ -15,19 +15,9 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
+        --enable-{static,libwebpmux}
+        --disable-{shared,gif,gl,jpeg,libwebpextras,libwebpdemux,png,sdl,tiff,wic}
         --with-pic
-        --enable-libwebpmux
-        --disable-libwebpextras
-        --disable-libwebpdemux
-        --disable-sdl
-        --disable-gl
-        --disable-png
-        --disable-jpeg
-        --disable-tiff
-        --disable-gif
-        --disable-wic
     )
 
     if [[ $TARGET == win* ]]; then

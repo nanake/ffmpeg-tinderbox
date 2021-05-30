@@ -14,11 +14,8 @@ ffbuild_dockerbuild() {
     local myconf=(
         threads
         zlib
-        no-shared
-        no-tests
-        enable-camellia
-        enable-ec
-        enable-srp
+        no-{shared,tests}
+        enable-{camellia,ec,srp}
         --prefix="$FFBUILD_PREFIX"
     )
 

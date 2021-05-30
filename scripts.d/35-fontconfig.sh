@@ -14,11 +14,8 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-docs
-        --enable-libxml2
-        --enable-iconv
-        --disable-shared
-        --enable-static
+        --disable-{shared,docs}
+        --enable-{static,iconv,libxml2}
     )
 
     if [[ $TARGET == win* ]]; then
