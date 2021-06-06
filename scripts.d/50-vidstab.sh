@@ -1,17 +1,25 @@
 #!/bin/bash
 
 VIDSTAB_REPO="https://github.com/georgmartius/vid.stab.git"
-# TODO: clamp e7715fc until issue #104 get fixed https://github.com/georgmartius/vid.stab/issues/104
-VIDSTAB_COMMIT="e7715fcf329573cdcff5c57d0e4a25f4c3a0cb7f"
+VIDSTAB_COMMIT="f9166e9b082242b622b5b456ef80cbdbd4042826"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1
     return 0
 }
 
+ffbuild_dockerstage() {
+    to_df "RUN --mount=src=${SELF},dst=/stage.sh --mount=src=patches/vidstab,dst=/patches run_stage /stage.sh"
+}
+
 ffbuild_dockerbuild() {
     git-mini-clone "$VIDSTAB_REPO" "$VIDSTAB_COMMIT" vidstab
     cd vidstab
+
+    for patch in /patches/*.patch; do
+        echo "Applying $patch"
+        git am < "$patch"
+    done
 
     mkdir build && cd build
 
