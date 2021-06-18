@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIBUDFREAD_REPO="https://github.com/nanake/libudfread.git"
+LIBUDFREAD_REPO="https://code.videolan.org/videolan/libudfread.git"
 LIBUDFREAD_COMMIT="b8ada6557b5336f4d3f144d8604ddc0ccf51f0c2"
 
 ffbuild_enabled() {

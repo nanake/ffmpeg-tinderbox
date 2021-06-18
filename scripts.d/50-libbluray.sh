@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIBBLURAY_REPO="https://github.com/nanake/libbluray.git"
+LIBBLURAY_REPO="https://code.videolan.org/videolan/libbluray.git"
 LIBBLURAY_COMMIT="311f09286e94565e1acb2e98bb7afaa903d6be13"
 
 ffbuild_enabled() {
