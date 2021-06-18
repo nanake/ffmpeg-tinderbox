@@ -21,6 +21,9 @@ RUN \
         nasm \
         ninja-build \
         pkgconf \
+        python-is-python3 \
+        python3-apt \
+        python3-distutils \
         ragel \
         subversion \
         texi2html \
