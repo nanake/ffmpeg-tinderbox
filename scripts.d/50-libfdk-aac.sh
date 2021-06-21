@@ -12,22 +12,14 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LIBFDK_AAC_REPO" "$LIBFDK_AAC_COMMIT" libfdk-aac
     cd libfdk-aac
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-    )
+    mkdir build && cd build
 
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    autoreconf -i
-    ./configure "${myconf[@]}"
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_SHARED_LIBS=OFF \
+        ..
     make -j$(nproc)
     make install
 }
