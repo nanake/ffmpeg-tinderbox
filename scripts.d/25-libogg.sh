@@ -11,25 +11,14 @@ ffbuild_dockerbuild() {
     git-mini-clone "$OGG_REPO" "$OGG_COMMIT" ogg
     cd ogg
 
-    ./autogen.sh
+    mkdir build && cd build
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
-        --with-pic
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -D{BUILD_SHARED_LIBS,INSTALL_DOCS}=OFF \
+        ..
     make -j$(nproc)
     make install
 }

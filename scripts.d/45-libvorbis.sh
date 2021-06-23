@@ -11,24 +11,14 @@ ffbuild_dockerbuild() {
     git-mini-clone "$VORBIS_REPO" "$VORBIS_COMMIT" vorbis
     cd vorbis
 
-    ./autogen.sh
+    mkdir build && cd build
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --enable-static
-        --disable-{shared,oggtest}
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
+        ..
     make -j$(nproc)
     make install
 }

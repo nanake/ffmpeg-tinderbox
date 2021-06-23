@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FRIBIDI_REPO="https://github.com/fribidi/fribidi.git"
-FRIBIDI_COMMIT="a2dd9351a0f21153ccdeb291c9679024c453699f"
+FRIBIDI_COMMIT="da0d0643b2114d457a88f9142ef0af8d32ac8f1e"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -D{bin,docs,tests}=false
+        -D{bin,docs,tests}"=false"
     )
 
     if [[ $TARGET == win* ]]; then

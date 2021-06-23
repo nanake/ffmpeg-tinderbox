@@ -1,7 +1,7 @@
 #!/bin/bash
 
-WEBP_REPO="https://chromium.googlesource.com/webm/libwebp"
-WEBP_COMMIT="f6d2924757f356fcdc620ddaf4c200728a78df09"
+WEBP_REPO="https://github.com/webmproject/libwebp.git"
+WEBP_COMMIT="6f445b3e3d2d19182878686b8ad03fba5d68aff9"
 
 ffbuild_enabled() {
     return 0
@@ -11,25 +11,14 @@ ffbuild_dockerbuild() {
     git-mini-clone "$WEBP_REPO" "$WEBP_COMMIT" webp
     cd webp
 
-    ./autogen.sh
+    mkdir build && cd build
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --enable-{static,libwebpmux}
-        --disable-{shared,gif,gl,jpeg,libwebpextras,libwebpdemux,png,sdl,tiff,wic}
-        --with-pic
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DWEBP_BUILD_{{C,D,GIF2,IMG2,V}WEBP,WEBPINFO,LIBWEBPMUX,WEBPMUX,EXTRAS}=OFF \
+        ..
     make -j$(nproc)
     make install
 }

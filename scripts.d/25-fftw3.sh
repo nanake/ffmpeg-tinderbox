@@ -16,24 +16,14 @@ ffbuild_dockerbuild() {
     rm fftw3.tar.gz
     cd fftw*
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,doc}
-        --enable-{static,avx,avx2,sse2,threads}
-        --with-{combined-threads,our-malloc}
-        --with-incoming-stack-boundary=2
-    )
+    mkdir build && cd build
 
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_{SHARED_LIBS,TESTS}=OFF \
+        ..
     make -j$(nproc)
     make install
 }
