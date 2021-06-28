@@ -37,7 +37,7 @@ ffbuild_dockerbuild() {
     ninja -j"$(nproc)"
     ninja install
 
-    sed -i -e 's/-lws2_32.*$/-lws2_32 -pthread/' -e 's/Cflags:.*/& -pthread/' "$FFBUILD_PREFIX"/lib/pkgconfig/librist.pc
+    sed -i 's/-lws2_32.*$/-lws2_32 -lpthread/' "$FFBUILD_PREFIX"/lib/pkgconfig/librist.pc
 }
 
 ffbuild_configure() {
