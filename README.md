@@ -10,21 +10,22 @@
 
 ```
 External libraries:
-avisynth                libmp3lame              libvorbis
-decklink                libopencore_amrnb       libvpx
-gmp                     libopencore_amrwb       libwebp
-iconv                   libopenjpeg             libx264
-libaom                  libopus                 libx265
-libass                  librav1e                libxavs2
-libbluray               librubberband           libxml2
-libdav1d                libsoxr                 libxvid
-libdavs2                libsrt                  libzimg
-libfdk_aac              libsvtav1               lv2
-libfontconfig           libtheora               lzma
-libfreetype             libtwolame              mediafoundation
-libfribidi              libuavs3d               schannel
-libglslang              libvidstab              sdl2
-libgme                  libvmaf                 zlib
+avisynth                libopencore_amrnb       libvpx
+decklink                libopencore_amrwb       libwebp
+gmp                     libopenjpeg             libx264
+iconv                   libopus                 libx265
+libaom                  librav1e                libxavs2
+libass                  librist                 libxml2
+libbluray               librubberband           libxvid
+libdav1d                libsoxr                 libzimg
+libdavs2                libsrt                  lv2
+libfdk_aac              libsvtav1               lzma
+libfontconfig           libtheora               mediafoundation
+libfreetype             libtwolame              schannel
+libfribidi              libuavs3d               sdl2
+libglslang              libvidstab              zlib
+libgme                  libvmaf
+libmp3lame              libvorbis
 
 External libraries providing hardware acceleration:
 amf                     d3d11va                 nvdec
@@ -482,19 +483,19 @@ h263                    pcm_s16le               yuv4mpegpipe
 h264                    pcm_s24be
 
 Enabled protocols:
-async                   http                    rtmpt
-bluray                  httpproxy               rtmpte
-cache                   https                   rtmpts
-concat                  icecast                 rtp
-crypto                  libsrt                  srtp
-data                    md5                     subfile
-ffrtmpcrypt             mmsh                    tcp
-ffrtmphttp              mmst                    tee
-file                    pipe                    tls
-ftp                     prompeg                 udp
-gopher                  rtmp                    udplite
-gophers                 rtmpe
-hls                     rtmps
+async                   http                    rtmps
+bluray                  httpproxy               rtmpt
+cache                   https                   rtmpte
+concat                  icecast                 rtmpts
+crypto                  librist                 rtp
+data                    libsrt                  srtp
+ffrtmpcrypt             md5                     subfile
+ffrtmphttp              mmsh                    tcp
+file                    mmst                    tee
+ftp                     pipe                    tls
+gopher                  prompeg                 udp
+gophers                 rtmp                    udplite
+hls                     rtmpe
 
 Enabled filters:
 abench                  deflate                 pan
