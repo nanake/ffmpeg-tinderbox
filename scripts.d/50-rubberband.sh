@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # https://breakfastquay.com/rubberband/
-RUBBERBAND_SRC="https://breakfastquay.com/files/releases/rubberband-1.9.1.tar.bz2"
+RUBBERBAND_SRC="https://breakfastquay.com/files/releases/rubberband-1.9.2.tar.bz2"
 
 ffbuild_enabled() {
     [[ $VARIANT != lgpl* ]] || return -1
@@ -16,9 +16,6 @@ ffbuild_dockerbuild() {
     tar xaf rubberband.tar.gz
     rm rubberband.tar.gz
     cd rubberband*
-
-    # Fix broken cross compilation
-    sed -i 's/build_machine.system/host_machine.system/' meson.build
 
     mkdir build && cd build
 

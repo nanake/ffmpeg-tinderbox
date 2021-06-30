@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
         -DCMAKE_BUILD_TYPE=Release
-        -DENABLE_{SHARED,CLI}=OFF
+        -DENABLE_{SHARED,CLI}"=OFF"
         -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
     )
 
