@@ -20,9 +20,10 @@ ffbuild_dockerbuild() {
         -DBUILD_PKGCONFIG_FILES=ON \
         -DBUILD_{SHARED_LIBS,CODEC,TESTING}=OFF \
         -DWITH_ASTYLE=OFF \
+        -GNinja \
         ..
-    make -j$(nproc)
-    make install
+    ninja -j$(nproc)
+    ninja install
 }
 
 ffbuild_configure() {

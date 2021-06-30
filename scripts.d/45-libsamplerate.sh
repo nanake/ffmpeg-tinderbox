@@ -23,7 +23,8 @@ ffbuild_dockerbuild() {
         -DBUILD_{SHARED_LIBS,TESTING}=NO \
         -DLIBSAMPLERATE_EXAMPLES=OFF \
         -DLIBSAMPLERATE_INSTALL=YES \
+        -GNinja \
         ..
-    make -j$(nproc)
-    make install
+    ninja -j$(nproc)
+    ninja install
 }

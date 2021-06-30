@@ -18,7 +18,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -D{BUILD_SHARED_LIBS,INSTALL_DOCS}=OFF \
+        -GNinja \
         ..
-    make -j$(nproc)
-    make install
+    ninja -j$(nproc)
+    ninja install
 }

@@ -30,9 +30,10 @@ ffbuild_dockerbuild() {
         -DBUILD_SHARED_LIBS=OFF \
         -DOPENCL_ICD_LOADER_{DISABLE_OPENCLON12,PIC}=ON \
         -DOPENCL_ICD_LOADER_BUILD_TESTING=OFF \
+        -GNinja \
         ..
-    make -j$(nproc)
-    make install
+    ninja -j$(nproc)
+    ninja install
 
     echo "prefix=$FFBUILD_PREFIX" > OpenCL.pc
     echo "exec_prefix=\${prefix}" >> OpenCL.pc

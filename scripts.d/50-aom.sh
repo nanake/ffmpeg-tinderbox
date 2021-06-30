@@ -19,9 +19,10 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=0 \
         -DENABLE_{DOCS,EXAMPLES,TESTS,TOOLS}=0 \
+        -GNinja \
         ..
-    make -j$(nproc)
-    make install
+    ninja -j$(nproc)
+    ninja install
 }
 
 ffbuild_configure() {

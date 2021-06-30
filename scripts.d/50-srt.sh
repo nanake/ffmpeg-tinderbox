@@ -19,9 +19,10 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DENABLE_{SHARED,APPS}=OFF \
         -DENABLE_{STATIC,ENCRYPTION}=ON \
+        -GNinja \
         ..
-    make -j$(nproc)
-    make install
+    ninja -j$(nproc)
+    ninja install
 }
 
 ffbuild_configure() {
