@@ -483,10 +483,11 @@ h263                    pcm_s16le               yuv4mpegpipe
 h264                    pcm_s24be
 
 Enabled protocols:
-async                   http                    rtmps
-bluray                  httpproxy               rtmpt
-cache                   https                   rtmpte
-concat                  icecast                 rtmpts
+async                   hls                     rtmpe
+bluray                  http                    rtmps
+cache                   httpproxy               rtmpt
+concat                  https                   rtmpte
+concatf                 icecast                 rtmpts
 crypto                  librist                 rtp
 data                    libsrt                  srtp
 ffrtmpcrypt             md5                     subfile
@@ -495,7 +496,6 @@ file                    mmst                    tee
 ftp                     pipe                    tls
 gopher                  prompeg                 udp
 gophers                 rtmp                    udplite
-hls                     rtmpe
 
 Enabled filters:
 abench                  deflate                 pan
