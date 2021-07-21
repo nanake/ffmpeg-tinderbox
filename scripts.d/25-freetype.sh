@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FREETYPE_SRC="https://download.savannah.gnu.org/releases/freetype/freetype-2.10.4.tar.xz"
+FREETYPE_SRC="https://download.savannah.gnu.org/releases/freetype/freetype-2.11.0.tar.xz"
 
 ffbuild_enabled() {
     return 0
