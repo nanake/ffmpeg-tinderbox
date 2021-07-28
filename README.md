@@ -498,35 +498,36 @@ gopher                  prompeg                 udp
 gophers                 rtmp                    udplite
 
 Enabled filters:
-abench                  deflate                 pan
-abitscope               deflicker               perms
-acompressor             deinterlace_qsv         perspective
-acontrast               dejudder                phase
-acopy                   delogo                  photosensitivity
-acrossfade              derain                  pixdesctest
-acrossover              deshake                 pixscope
-acrusher                deshake_opencl          pp
-acue                    despill                 pp7
-addroi                  detelecine              premultiply
-adeclick                dilation                prewitt
-adeclip                 dilation_opencl         prewitt_opencl
-adelay                  displace                program_opencl
-adenorm                 dnn_classify            pseudocolor
-aderivative             dnn_detect              psnr
-adrawgraph              dnn_processing          pullup
-aecho                   doubleweave             qp
-aemphasis               drawbox                 random
-aeval                   drawgraph               readeia608
-aevalsrc                drawgrid                readvitc
-aexciter                drawtext                realtime
-afade                   drmeter                 remap
-afftdn                  dynaudnorm              removegrain
-afftfilt                earwax                  removelogo
-afifo                   ebur128                 repeatfields
-afir                    edgedetect              replaygain
-afirsrc                 elbg                    reverse
-aformat                 entropy                 rgbashift
-afreqshift              epx                     rgbtestsrc
+abench                  deesser                 paletteuse
+abitscope               deflate                 pan
+acompressor             deflicker               perms
+acontrast               deinterlace_qsv         perspective
+acopy                   dejudder                phase
+acrossfade              delogo                  photosensitivity
+acrossover              derain                  pixdesctest
+acrusher                deshake                 pixscope
+acue                    deshake_opencl          pp
+addroi                  despill                 pp7
+adeclick                detelecine              premultiply
+adeclip                 dilation                prewitt
+adelay                  dilation_opencl         prewitt_opencl
+adenorm                 displace                program_opencl
+aderivative             dnn_classify            pseudocolor
+adrawgraph              dnn_detect              psnr
+aecho                   dnn_processing          pullup
+aemphasis               doubleweave             qp
+aeval                   drawbox                 random
+aevalsrc                drawgraph               readeia608
+aexciter                drawgrid                readvitc
+afade                   drawtext                realtime
+afftdn                  drmeter                 remap
+afftfilt                dynaudnorm              removegrain
+afifo                   earwax                  removelogo
+afir                    ebur128                 repeatfields
+afirsrc                 edgedetect              replaygain
+aformat                 elbg                    reverse
+afreqshift              entropy                 rgbashift
+afwtdn                  epx                     rgbtestsrc
 agate                   eq                      roberts
 agraphmonitor           equalizer               roberts_opencl
 ahistogram              erosion                 rotate
@@ -652,7 +653,6 @@ deblock                 pad_opencl              yuvtestsrc
 decimate                pal100bars              zoompan
 deconvolve              pal75bars               zscale
 dedot                   palettegen
-deesser                 paletteuse
 
 Enabled bsfs:
 aac_adtstoasc           hapqa_extract           pcm_rechunk
