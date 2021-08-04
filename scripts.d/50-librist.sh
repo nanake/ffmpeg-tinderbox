@@ -1,8 +1,7 @@
 #!/bin/bash
 
-LIBRIST_REPO="https://code.videolan.org/rist/librist.git"
-# cjson_workaround branch
-LIBRIST_COMMIT="099fd39658e3bd37753f38f78221c3134b93f8cf"
+LIBRIST_REPO="https://github.com/nanake/librist.git"
+LIBRIST_COMMIT="13fadfb7a138b9633f9c618a9c5c6f90cb268652"
 
 ffbuild_enabled() {
     return 0
@@ -36,8 +35,6 @@ ffbuild_dockerbuild() {
     meson "${myconf[@]}" ..
     ninja -j"$(nproc)"
     ninja install
-
-    sed -i 's/-lws2_32.*$/-lws2_32 -lpthread/' "$FFBUILD_PREFIX"/lib/pkgconfig/librist.pc
 }
 
 ffbuild_configure() {
