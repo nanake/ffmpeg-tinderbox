@@ -7,12 +7,14 @@ RUN \
     apt-get -y --no-install-recommends install \
         autoconf \
         automake \
+        autopoint \
         build-essential \
         ca-certificates \
         clang \
         cmake \
         curl \
         gawk \
+        gettext \
         git \
         gperf \
         libc6-dev \
