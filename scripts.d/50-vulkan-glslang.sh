@@ -1,7 +1,7 @@
 #!/bin/bash
 
-VKGLS_WIN32="https://github.com/nanake/Vulkan-Loader/releases/download/v1.2.188/vulkan.glslang-7ca4dfa.win32.tar.xz"
-VKGLS_WIN64="https://github.com/nanake/Vulkan-Loader/releases/download/v1.2.188/vulkan.glslang-7ca4dfa.win64.tar.xz"
+VKGLS_WIN32="https://github.com/nanake/Vulkan-Loader/releases/download/v1.2.189/vulkan.glslang-a4599ef.win32.tar.xz"
+VKGLS_WIN64="https://github.com/nanake/Vulkan-Loader/releases/download/v1.2.189/vulkan.glslang-a4599ef.win64.tar.xz"
 
 ffbuild_enabled() {
     return 0
