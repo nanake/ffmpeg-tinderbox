@@ -1,0 +1,62 @@
+From f712c42a36bf39592abb2c7f8d2d891287f14c3f Mon Sep 17 00:00:00 2001
+From: BtbN <btbn@btbn.de>
+Date: Mon, 7 Sep 2020 20:07:39 +0200
+Subject: [PATCH 2/4] Fixes for MinGW build
+
+Adapted from https://github.com/msys2/MINGW-packages/blob/348f1d46d9d273a2cc928deadf9d9114f7a69c2f/mingw-w64-vulkan-loader/002-proper-def-files-for-32bit.patch
+---
+ loader/CMakeLists.txt          | 2 +-
+ loader/loader.h                | 4 +++-
+ tests/layers/vk_format_utils.h | 4 +++-
+ 3 files changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/loader/CMakeLists.txt b/loader/CMakeLists.txt
+index 50cced309..d35d37220 100644
+--- a/loader/CMakeLists.txt
++++ b/loader/CMakeLists.txt
+@@ -326,11 +326,11 @@ else()
+         )
+ # cmake-format: on
+     endif()
++endif()
+ 
+     if(NOT APPLE)
+         target_compile_definitions(vulkan PRIVATE _XOPEN_SOURCE=500) # hush compiler warnings for readlink
+     endif()
+-endif()
+ 
+ # Generate pkg-config file.
+ include(FindPkgConfig QUIET)
+diff --git a/loader/loader.h b/loader/loader.h
+index 6cc0f8388..fc26fcde6 100644
+--- a/loader/loader.h
++++ b/loader/loader.h
+@@ -38,7 +38,9 @@
+ #include "vk_layer_dispatch_table.h"
+ #include "vk_loader_extensions.h"
+ 
+-#if defined(__GNUC__) && __GNUC__ >= 4
++#if defined(_WIN32)
++#define LOADER_EXPORT __declspec(dllexport)
++#elif defined(__GNUC__) && __GNUC__ >= 4
+ #define LOADER_EXPORT __attribute__((visibility("default")))
+ #elif defined(__SUNPRO_C) && (__SUNPRO_C >= 0x590)
+ #define LOADER_EXPORT __attribute__((visibility("default")))
+diff --git a/tests/layers/vk_format_utils.h b/tests/layers/vk_format_utils.h
+index e76f9ec2f..ef06e12af 100644
+--- a/tests/layers/vk_format_utils.h
++++ b/tests/layers/vk_format_utils.h
+@@ -25,7 +25,9 @@
+ #include "vulkan/vulkan.h"
+ 
+ #if !defined(VK_LAYER_EXPORT)
+-#if defined(__GNUC__) && __GNUC__ >= 4
++#if defined(_WIN32)
++#define VK_LAYER_EXPORT __declspec(dllexport)
++#elif defined(__GNUC__) && __GNUC__ >= 4
+ #define VK_LAYER_EXPORT __attribute__((visibility("default")))
+ #elif defined(__SUNPRO_C) && (__SUNPRO_C >= 0x590)
+ #define VK_LAYER_EXPORT __attribute__((visibility("default")))
+-- 
+2.25.1
+

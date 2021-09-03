@@ -1,0 +1,76 @@
+From 4037e82a4a6e46bd1133755683ad62f32e5af76e Mon Sep 17 00:00:00 2001
+From: Syoyo Fujita <syoyo@lighttransport.com>
+Date: Thu, 28 May 2020 21:38:16 +0900
+Subject: [PATCH 1/4] Fix build on MinGW cross compiling environment.
+
+---
+ loader/CMakeLists.txt |  4 +++-
+ loader/loader.c       | 13 +++++++++++++
+ loader/loader.rc      |  4 ++++
+ 3 files changed, 20 insertions(+), 1 deletion(-)
+
+diff --git a/loader/CMakeLists.txt b/loader/CMakeLists.txt
+index 4f54c3298..50cced309 100644
+--- a/loader/CMakeLists.txt
++++ b/loader/CMakeLists.txt
+@@ -160,7 +160,7 @@ if(WIN32)
+     if (USE_MASM)
+       enable_language(ASM_MASM)
+     endif ()
+-    if(CMAKE_ASM_MASM_COMPILER_WORKS OR JWASM_FOUND)
++    if((CMAKE_ASM_MASM_COMPILER_WORKS AND NOT CMAKE_CROSSCOMPILING) OR JWASM_FOUND)
+         if(MINGW)
+             set(CMAKE_ASM_MASM_FLAGS ${CMAKE_ASM_MASM_FLAGS} ${JWASM_FLAGS})
+         elseif(NOT CMAKE_CL_64 AND NOT JWASM_FOUND)
+@@ -180,6 +180,8 @@ if(WIN32)
+         add_library(loader-unknown-chain OBJECT unknown_ext_chain.c)
+         set_target_properties(loader-unknown-chain PROPERTIES CMAKE_C_FLAGS_DEBUG "${MODIFIED_C_FLAGS_DEBUG}")
+         target_compile_options(loader-unknown-chain PUBLIC ${MSVC_LOADER_COMPILE_OPTIONS})
++
++        target_include_directories(loader-unknown-chain PRIVATE "$<TARGET_PROPERTY:Vulkan::Headers,INTERFACE_INCLUDE_DIRECTORIES>")
+     endif()
+ elseif(APPLE)
+     # For MacOS, use the C code and force the compiler's tail-call optimization instead of using assembly code.
+diff --git a/loader/loader.c b/loader/loader.c
+index 6db4e9245..d76f7dbe7 100644
+--- a/loader/loader.c
++++ b/loader/loader.c
+@@ -83,6 +83,19 @@
+ 
+ typedef HRESULT(APIENTRY *PFN_CreateDXGIFactory1)(REFIID riid, void **ppFactory);
+ static PFN_CreateDXGIFactory1 fpCreateDXGIFactory1;
++
++#if defined(__MINGW32__)
++// MinGW header may not have some definitions(cfgmgr32.h).
++#if !defined(CM_GETIDLIST_FILTER_CLASS)
++#define CM_GETIDLIST_FILTER_CLASS (0x200)
++#endif
++
++#if !defined(CM_GETIDLIST_FILTER_PRESENT)
++#define CM_GETIDLIST_FILTER_PRESENT (0x100)
++#endif
++
++#endif // __MINGW32__
++
+ #endif
+ 
+ // This is a CMake generated file with #defines for any functions/includes
+diff --git a/loader/loader.rc b/loader/loader.rc
+index a29c507de..6ed444bfe 100755
+--- a/loader/loader.rc
++++ b/loader/loader.rc
+@@ -43,7 +43,11 @@
+ ///////////////////////////////////////////////////////////////////////////////
+ ///////////////////////////////////////////////////////////////////////////////
+ 
++#if defined(__MINGW32__)
++#include <winresrc.h>
++#else
+ #include "winres.h"
++#endif
+ 
+ #define VER_FILE_VERSION            VERSION_MAJOR, VERSION_MINOR, VERSION_PATCH, VERSION_BUILDNO
+ 
+-- 
+2.25.1
+
