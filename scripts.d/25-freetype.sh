@@ -12,24 +12,27 @@ ffbuild_dockerbuild() {
     rm ft.tar.xz
     cd freetype*
 
+    mkdir build && cd build
+
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
+        --buildtype=release
+        --default-library=static
+        -D{brotli,bzip2,harfbuzz,png,tests,zlib}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then
         myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
+            --cross-file=/cross.meson
         )
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
+    meson "${myconf[@]}" ..
+    ninja -j$(nproc)
+    ninja install
 }
 
 ffbuild_configure() {
