@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBBLURAY_REPO="https://code.videolan.org/videolan/libbluray.git"
-LIBBLURAY_COMMIT="06d7ce99531eb643a6f165424373d1ab72178a51"
+LIBBLURAY_COMMIT="8412dc1ee24b186a161902de1dd9f15f712041f5"
 
 ffbuild_enabled() {
     return 0
