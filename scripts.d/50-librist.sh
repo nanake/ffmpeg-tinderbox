@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBRIST_REPO="https://github.com/nanake/librist.git"
-LIBRIST_COMMIT="74965a1cbd0a352a33bbab83314cf105135f0210"
+LIBRIST_COMMIT="688bfddf5ab5ef7f1642c762b7804cdd8683a8cf"
 
 ffbuild_enabled() {
     return 0
