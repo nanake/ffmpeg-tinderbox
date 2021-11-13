@@ -1,4 +1,4 @@
-FROM debian:bullseye-slim
+FROM ubuntu:jammy
 
 ENV DEBIAN_FRONTEND noninteractive
 
