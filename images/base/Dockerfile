@@ -26,6 +26,7 @@ RUN \
         python-is-python3 \
         python3-apt \
         python3-distutils \
+        python3-mako \
         ragel \
         subversion \
         texi2html \
