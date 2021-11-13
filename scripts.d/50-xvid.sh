@@ -3,7 +3,7 @@
 XVID_SRC="http://downloads.xvid.org/downloads/xvid_latest.tar.gz"
 
 ffbuild_enabled() {
-    [[ $VARIANT != lgpl* ]] || return -1
+    [[ $VARIANT == lgpl* ]] && return -1
     return 0
 }
 

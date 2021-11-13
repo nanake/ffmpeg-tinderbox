@@ -6,7 +6,7 @@ FFTW3_SHA512="2D34B5CCAC7B08740DBDACC6EBE451D8A34CF9D9BFEC85A5E776E87ADF94ABFD80
 
 ffbuild_enabled() {
     # Dependency of GPL-Only librubberband
-    [[ $VARIANT != lgpl* ]] || return -1
+    [[ $VARIANT == lgpl* ]] && return -1
     return 0
 }
 

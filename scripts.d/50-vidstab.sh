@@ -4,7 +4,7 @@ VIDSTAB_REPO="https://github.com/georgmartius/vid.stab.git"
 VIDSTAB_COMMIT="f9166e9b082242b622b5b456ef80cbdbd4042826"
 
 ffbuild_enabled() {
-    [[ $VARIANT != lgpl* ]] || return -1
+    [[ $VARIANT == lgpl* ]] && return -1
     return 0
 }
 
