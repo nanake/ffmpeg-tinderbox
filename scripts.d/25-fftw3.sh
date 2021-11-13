@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# http://fftw.org/download.html
-FFTW3_SRC="http://fftw.org/fftw-3.3.10.tar.gz"
+# https://fftw.org/download.html
+FFTW3_SRC="https://fftw.org/fftw-3.3.10.tar.gz"
 FFTW3_SHA512="2D34B5CCAC7B08740DBDACC6EBE451D8A34CF9D9BFEC85A5E776E87ADF94ABFD803C222412D8E10FBAA4ED46F504AA87180396AF1B108666CDE4314A55610B40"
 
 ffbuild_enabled() {
