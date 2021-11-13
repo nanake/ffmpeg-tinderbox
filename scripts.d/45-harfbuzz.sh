@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -D{benchmark,cairo,cairo:fontconfig,docs,fontconfig,glib,gobject,icu,introspection,tests}"=disabled"
+        -D{benchmark,cairo,docs,glib,gobject,icu,introspection,tests}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then
