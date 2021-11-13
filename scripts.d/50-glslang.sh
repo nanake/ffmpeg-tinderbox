@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GLSLANG_REPO="https://github.com/KhronosGroup/glslang.git"
-GLSLANG_COMMIT="eb92526d5e04572fdf1d15d2f3ae10a967c2f46f"
+GLSLANG_COMMIT="3074ec94bf5d77f4bae56f137ff074fd99a8d368"
 
 ffbuild_enabled() {
     return 0
@@ -19,8 +19,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -D{BUILD_SHARED_LIBS,BUILD_TESTING,ENABLE_CTEST,ENABLE_GLSLANG_BINARIES}=OFF \
-        -DBUILD_EXTERNAL=ON \
+        -D{BUILD_{SHARED_LIBS,TESTING},ENABLE_{CTEST,GLSLANG_BINARIES}}=OFF \
+        -D{BUILD_EXTERNAL,ENABLE_{HLSL,OPT}}=ON \
         -GNinja \
         ..
     ninja -j$(nproc)

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DAV1D_REPO="https://github.com/videolan/dav1d.git"
-DAV1D_COMMIT="316342457f6140b2310bbefc2967f48eb313e3c3"
+DAV1D_COMMIT="2337127cecd737e7134ad8f53f0d71f347fa0851"
 
 ffbuild_enabled() {
     return 0
