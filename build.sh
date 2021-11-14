@@ -48,14 +48,18 @@ rm -f "$TESTFILE"
 rm -rf ffbuild
 mkdir ffbuild
 
+FFMPEG_REPO="${FFMPEG_REPO:-https://github.com/FFmpeg/FFmpeg.git}"
+FFMPEG_REPO="${FFMPEG_REPO_OVERRIDE:-$FFMPEG_REPO}"
+GIT_BRANCH="${GIT_BRANCH:-master}"
+GIT_BRANCH="${GIT_BRANCH_OVERRIDE:-$GIT_BRANCH}"
+
 docker run --rm -i "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild "$IMAGE" bash -s <<EOF
     set -xe
     cd /ffbuild
     rm -rf ffmpeg prefix
 
-    git clone https://github.com/FFmpeg/FFmpeg.git ffmpeg
+    git clone --filter=blob:none --branch='$GIT_BRANCH' '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
-    git checkout $GIT_BRANCH
 
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS $FF_CONFIGURE --extra-cflags="$FF_CFLAGS" --extra-cxxflags="$FF_CXXFLAGS" --extra-ldflags="$FF_LDFLAGS" --extra-libs="$FF_LIBS"
     make -j\$(nproc)
