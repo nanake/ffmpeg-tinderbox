@@ -10,6 +10,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -22,18 +25,14 @@ jobs:
         run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base:latest"
 
       - name: Build base image
-        run: |
-          docker build \
-            --pull \
-            --build-arg BUILDKIT_INLINE_CACHE=1 \
-            --cache-from ${{ steps.imagename.outputs.name }} \
-            --tag ${{ steps.imagename.outputs.name }} \
-            images/base
-        env:
-          DOCKER_BUILDKIT: 1
-
-      - name: Push base image
-        run: docker push ${{ steps.imagename.outputs.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: images/base
+          pull: true
+          push: true
+          cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}
+          cache-to: type=inline
+          tags: ${{ steps.imagename.outputs.name }}
 
   build_target_bases:
     name: Build target base image
@@ -47,6 +46,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -59,19 +61,14 @@ jobs:
         run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}:latest"
 
       - name: Build target base image
-        run: |
-          docker build \
-            --pull \
-            --build-arg BUILDKIT_INLINE_CACHE=1 \
-            --build-arg GH_OWNER=${GITHUB_ACTOR,,} \
-            --cache-from ${{ steps.imagename.outputs.name }} \
-            --tag ${{ steps.imagename.outputs.name }} \
-            images/base-${{ matrix.target }}
-        env:
-          DOCKER_BUILDKIT: 1
-
-      - name: Push target base image
-        run: docker push ${{ steps.imagename.outputs.name }}
+        uses: docker/build-push-action@v2
+        with:
+          context: images/base-${{ matrix.target }}
+          pull: true
+          push: true
+          cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}
+          cache-to: type=inline
+          tags: ${{ steps.imagename.outputs.name }}
 
   build_targets:
     name: Build target-variant image
@@ -90,7 +87,6 @@ jobs:
         uses: docker/setup-buildx-action@v1
         with:
           driver-opts: image=moby/buildkit:master
-          install: true
 
       - name: Generate Dockerfile
         run: ./generate.sh ${{ matrix.target }} ${{ matrix.variant }}
@@ -110,14 +106,14 @@ jobs:
           echo "::set-output name=cache::${IMG/ /-}:cache"
 
       - name: Build variant image
-        run: |
-          docker build \
-            --pull \
-            --cache-to=type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max \
-            --cache-from=type=registry,ref=${{ steps.imagename.outputs.cache }} \
-            -t ${{ steps.imagename.outputs.image }} \
-            -o type=registry \
-            .
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          pull: true
+          push: true
+          cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
+          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
+          tags: ${{ steps.imagename.outputs.image }}
 
   build_ffmpeg:
     name: Build ffmpeg
