@@ -1,7 +1,7 @@
 #!/bin/bash
 
-LIBRIST_REPO="https://github.com/nanake/librist.git"
-LIBRIST_COMMIT="688bfddf5ab5ef7f1642c762b7804cdd8683a8cf"
+LIBRIST_REPO="https://code.videolan.org/rist/librist.git"
+LIBRIST_COMMIT="0b1aaf995c4cad83d562ec7887180cc6ee132c84"
 
 ffbuild_enabled() {
     return 0
@@ -19,8 +19,6 @@ ffbuild_dockerbuild() {
         --default-library=static
         -Dhave_mingw_pthreads=true
         -D{built_tools,test,use_mbedtls}"=false"
-        # Workaround/fixes for cJSON symbol collision
-        -Ddisable_json=true
     )
 
     if [[ $TARGET == win* ]]; then
