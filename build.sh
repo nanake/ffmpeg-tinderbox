@@ -61,6 +61,8 @@ docker run --rm -i "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild "$IMAGE" bash -s <<E
     git clone --filter=blob:none --branch='$GIT_BRANCH' '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
+    curl https://raw.githubusercontent.com/yt-dlp/FFmpeg-Builds/master/patches/ffmpeg/0001-Fixes-ticket-9086.patch | git apply
+
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS $FF_CONFIGURE --extra-cflags="$FF_CFLAGS" --extra-cxxflags="$FF_CXXFLAGS" --extra-ldflags="$FF_LDFLAGS" --extra-libs="$FF_LIBS"
     make -j\$(nproc)
     make install    
