@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/OpenCL-Headers.git"
-HEADERS_COMMIT="447efd3be3169fa0ef37fa481241d7b261a02412"
+HEADERS_COMMIT="e3cd57376dada061bc6d5f9edfce2ea631b81214"
 
 LOADER_REPO="https://github.com/KhronosGroup/OpenCL-ICD-Loader.git"
 LOADER_COMMIT="4e65bd5db0a0a87637fddc081a70d537fc2a9e70"
