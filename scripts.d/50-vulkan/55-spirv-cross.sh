@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SPIRV_CROSS_REPO="https://github.com/KhronosGroup/SPIRV-Cross.git"
-SPIRV_CROSS_COMMIT="37dfb3f45f4fc47c841f81e618c602f6f3de0f17"
+SPIRV_CROSS_COMMIT="e9cc6403341baf0edd430a4027b074d0a06b782f"
 
 ffbuild_enabled() {
     [[ $ADDINS_STR == *4.4* ]] && return -1
@@ -20,13 +20,13 @@ ffbuild_dockerbuild() {
     mkdir build && cd build
 
     cmake \
-      -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
-      -DCMAKE_BUILD_TYPE=Release \
-      -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-      -DSPIRV_CROSS_{SHARED,CLI,ENABLE_{CPP,TESTS}}=OFF \
-      -DSPIRV_CROSS_{FORCE_PIC,STATIC}=ON \
-      -GNinja \
-      ..
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DSPIRV_CROSS_{SHARED,CLI,ENABLE_{CPP,TESTS}}=OFF \
+        -DSPIRV_CROSS_{FORCE_PIC,STATIC}=ON \
+        -GNinja \
+        ..
     ninja -j$(nproc)
     ninja install
 
