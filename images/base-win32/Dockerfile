@@ -5,7 +5,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN \
     apt-get update && \
-    apt-get -y --no-install-recommends install binutils-mingw-w64-i686 gcc-mingw-w64-i686 g++-mingw-w64-i686 gfortran-mingw-w64-i686 && \
+    apt-get -y --no-install-recommends install binutils-mingw-w64-i686 gcc-mingw-w64-i686 g++-mingw-w64-i686 && \
     apt-get -y clean && \
     rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll* && \
     rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s* && \

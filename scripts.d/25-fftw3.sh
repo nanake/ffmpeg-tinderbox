@@ -23,6 +23,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_{SHARED_LIBS,TESTS}=OFF \
+        -DDISABLE_FORTRAN=ON \
         -GNinja \
         ..
     ninja -j$(nproc)
