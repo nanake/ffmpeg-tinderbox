@@ -20,9 +20,8 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -Dbuilt_in_models=true
+        -D{built_in_models,enable_float}"=true"
         -Denable_{docs,tests}"=false"
-        -Denable_{avx512,float}"=true"
     )
 
     if [[ $TARGET == win* ]]; then
