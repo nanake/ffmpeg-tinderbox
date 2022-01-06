@@ -4,7 +4,6 @@ PLACEBO_REPO="https://github.com/haasn/libplacebo.git"
 PLACEBO_COMMIT="b26044055920ede23884b5bb2be0d97ea4d4bf9d"
 
 ffbuild_enabled() {
-    [[ $ADDINS_STR == *4.4* ]] && return -1
     return 0
 }
 
@@ -44,6 +43,5 @@ ffbuild_configure() {
 }
 
 ffbuild_unconfigure() {
-    [[ $ADDINS_STR == *4.4* ]] && return 0
     echo --disable-libplacebo
 }

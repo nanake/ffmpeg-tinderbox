@@ -4,7 +4,6 @@ SHADERC_REPO="https://github.com/google/shaderc.git"
 SHADERC_COMMIT="4864297864494780c4424c625e1d987e9321ba00"
 
 ffbuild_enabled() {
-    [[ $ADDINS_STR == *4.4* ]] && return -1
     return 0
 }
 
@@ -51,6 +50,5 @@ ffbuild_configure() {
 }
 
 ffbuild_unconfigure() {
-    [[ $ADDINS_STR == *4.4* ]] && return 0
     echo --disable-libshaderc
 }

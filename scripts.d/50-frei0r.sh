@@ -5,7 +5,6 @@ FREI0R_COMMIT="e48da90c4ebd285fa2399cfb71851f07bd3d919a"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
-    [[ $ADDINS_STR == *4.4* ]] && return -1
     return 0
 }
 

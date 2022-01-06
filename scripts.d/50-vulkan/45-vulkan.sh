@@ -4,7 +4,6 @@ HEADERS_REPO="https://github.com/KhronosGroup/Vulkan-Headers.git"
 HEADERS_VERSION="1.2.203"
 
 ffbuild_enabled() {
-    [[ $ADDINS_STR == *4.4* ]] && return -1
     return 0
 }
 
