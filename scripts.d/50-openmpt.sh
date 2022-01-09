@@ -1,14 +1,14 @@
 #!/bin/bash
 
-OPENMPT_REPO="https://source.openmpt.org/svn/openmpt/trunk/OpenMPT"
-OPENMPT_REV="16438"
+OPENMPT_REPO="https://github.com/OpenMPT/openmpt.git"
+OPENMPT_COMMIT="05441096c0592a3e81021e1419e36617df440dde"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    svn checkout "${OPENMPT_REPO}@${OPENMPT_REV}" openmpt
+    git-mini-clone "$OPENMPT_REPO" "$OPENMPT_COMMIT" openmpt
     cd openmpt
 
     local myconf=(
