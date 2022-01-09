@@ -1,7 +1,6 @@
 #!/bin/bash
 
-ZVBI_REPO="https://svn.code.sf.net/p/zapping/svn/trunk/vbi"
-ZVBI_REV="4270"
+ZVBI_SRC="https://sourceforge.net/projects/zapping/files/zvbi/0.2.35/zvbi-0.2.35.tar.bz2/download"
 
 ffbuild_enabled() {
     return 0
@@ -12,8 +11,10 @@ ffbuild_dockerstage() {
 }
 
 ffbuild_dockerbuild() {
-    svn checkout "${ZVBI_REPO}@${ZVBI_REV}" zvbi
-    cd zvbi
+    wget -O zvbi.tar.bz2 "$ZVBI_SRC"
+    tar xaf zvbi.tar.bz2
+    rm zvbi.tar.bz2
+    cd zvbi*
 
     for patch in /patches/*.patch; do
         echo "Applying $patch"
