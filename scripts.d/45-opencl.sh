@@ -1,10 +1,10 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/OpenCL-Headers.git"
-HEADERS_COMMIT="59ac4dc2f282286d8db83143686cfe37ec658b84"
+HEADERS_COMMIT="80c10b1f65b932894b830da7cd37bc56c541bae4"
 
 LOADER_REPO="https://github.com/KhronosGroup/OpenCL-ICD-Loader.git"
-LOADER_COMMIT="169f05d026e65948b30cfe2200595fda92198cf7"
+LOADER_COMMIT="b7a648b2702e5484725163dcb99a3960370807b5"
 
 ffbuild_enabled() {
     return 0

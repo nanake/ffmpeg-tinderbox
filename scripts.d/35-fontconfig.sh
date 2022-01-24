@@ -7,9 +7,9 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget "$FONTCONFIG_SRC" -O fc.tar.gz
-    tar xaf fc.tar.gz
-    rm fc.tar.gz
+    wget "$FONTCONFIG_SRC" -O fc.tar.xz
+    tar xaf fc.tar.xz
+    rm fc.tar.xz
     cd fontconfig*
 
     local myconf=(
