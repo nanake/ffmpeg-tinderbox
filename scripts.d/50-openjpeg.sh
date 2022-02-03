@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENJPEG_REPO="https://github.com/uclouvain/openjpeg.git"
-OPENJPEG_COMMIT="241e9e8efeb6750ef4202a61b3a436628e4f6d23"
+OPENJPEG_COMMIT="99d555c0f1818277645a0c79a5199f2e827d68cc"
 
 ffbuild_enabled() {
     return 0
