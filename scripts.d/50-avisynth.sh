@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AVISYNTH_REPO="https://github.com/AviSynth/AviSynthPlus.git"
-AVISYNTH_COMMIT="58dc64f61518368deaa6dcdb8fa67698e5386316"
+AVISYNTH_COMMIT="193de815cee777ecc586ff9af35ac546f17d5687"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -19,10 +19,9 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DHEADERS_ONLY=ON \
-        -GNinja \
         ..
-    ninja -j$(nproc)
-    ninja install
+    make -j$(nproc)
+    make VersionGen install
 }
 
 ffbuild_configure() {
