@@ -27,9 +27,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DOPENCL_ICD_LOADER_HEADERS_DIR="$FFBUILD_PREFIX"/include \
-        -DBUILD_SHARED_LIBS=OFF \
         -DOPENCL_ICD_LOADER_{DISABLE_OPENCLON12,PIC}=ON \
-        -DOPENCL_ICD_LOADER_BUILD_TESTING=OFF \
+        -D{BUILD_TESTING,OPENCL_ICD_LOADER_BUILD_SHARED_LIBS}=OFF \
         -GNinja \
         ..
     ninja -j$(nproc)
