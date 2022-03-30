@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENH264_REPO="https://github.com/cisco/openh264.git"
-OPENH264_COMMIT="5e02a73b8b251d69e073c8c43f8fa50cff2beb84"
+OPENH264_COMMIT="b3ed70d257cc0976d1deae146f922c3d18c69874"
 
 ffbuild_enabled() {
     return 0
@@ -13,7 +13,6 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         PREFIX="$FFBUILD_PREFIX"
-        INCLUDE_PREFIX="$FFBUILD_PREFIX"/include/wels
         BUILDTYPE=Release
         DEBUGSYMBOLS=False
         LIBDIR_NAME=lib
