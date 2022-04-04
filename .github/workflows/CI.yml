@@ -146,7 +146,7 @@ jobs:
         run: ./build.sh ${{ matrix.target }} ${{ matrix.variant }}
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: ffmpeg
           path: artifacts/*
