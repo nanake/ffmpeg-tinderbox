@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FREETYPE_SRC="https://download.savannah.gnu.org/releases/freetype/freetype-2.11.1.tar.xz"
+FREETYPE_SRC="https://download.savannah.gnu.org/releases/freetype/freetype-2.12.0.tar.xz"
 
 ffbuild_enabled() {
     return 0
@@ -12,18 +12,24 @@ ffbuild_dockerbuild() {
     rm ft.tar.xz
     cd freetype*
 
-    mkdir build && cd build
+    local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --disable-shared
+        --enable-static
+    )
 
-    cmake \
-        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DBUILD_SHARED_LIBS=OFF \
-        -DFT_DISABLE_{BROTLI,BZIP2,HARFBUZZ,PNG,ZLIB}=TRUE \
-        -GNinja \
-        ..
-    ninja -j$(nproc)
-    ninja install
+    if [[ $TARGET == win* ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
+        )
+    else
+        echo "Unknown target"
+        return -1
+    fi
+
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {
