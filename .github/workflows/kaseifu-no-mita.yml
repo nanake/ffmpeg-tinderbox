@@ -5,15 +5,6 @@ on:
     - cron: '0 23 * * *'
 
 jobs:
-  remove_old_artifacts:
-    runs-on: ubuntu-20.04
-    steps:
-      - name: Remove old artifacts
-        uses: c-hive/gha-remove-artifacts@v1
-        with:
-          age: '0 days'
-          skip-recent: 1
-
   prune_old_releases:
     runs-on: ubuntu-20.04
     steps:

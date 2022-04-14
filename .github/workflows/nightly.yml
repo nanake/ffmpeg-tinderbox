@@ -25,7 +25,8 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: ffmpeg
-          path: artifacts/*
+          path: artifacts/
+          retention-days: 1
 
   publish_release:
     name: Publish release
