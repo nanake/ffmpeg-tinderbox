@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WEBP_REPO="https://github.com/webmproject/libwebp.git"
-WEBP_COMMIT="b8bca81fb6e3fce2dcf54d2c1664ad89c678103c"
+WEBP_COMMIT="42888f6c7c526855d674d01492c794b31c90d0a7"
 
 ffbuild_enabled() {
     return 0
@@ -17,6 +17,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_SHARED_LIBS=OFF \
         -DWEBP_BUILD_{{C,D,GIF2,IMG2,V}WEBP,ANIM_UTILS,EXTRAS,WEBPINFO,WEBPMUX}=OFF \
         -GNinja \
         ..
