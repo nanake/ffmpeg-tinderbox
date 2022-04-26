@@ -16,9 +16,9 @@ ffbuild_dockerbuild() {
     cd build/linux
 
     local myconf=(
+        --prefix="$FFBUILD_PREFIX"
         --disable-cli
         --enable-pic
-        --prefix="$FFBUILD_PREFIX"
     )
 
     if [[ $TARGET == win* ]]; then

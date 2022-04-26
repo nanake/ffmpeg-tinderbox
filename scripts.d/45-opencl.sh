@@ -4,7 +4,7 @@ HEADERS_REPO="https://github.com/KhronosGroup/OpenCL-Headers.git"
 HEADERS_COMMIT="dcd5bede6859d26833cd85f0d6bbcee7382dc9b3"
 
 LOADER_REPO="https://github.com/KhronosGroup/OpenCL-ICD-Loader.git"
-LOADER_COMMIT="c8490f9d2eb52dd12a1e9652c4e5369ff5af18d8"
+LOADER_COMMIT="aec3952654832211636fc4af613710f80e203b0a"
 
 ffbuild_enabled() {
     return 0
@@ -28,7 +28,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DOPENCL_ICD_LOADER_HEADERS_DIR="$FFBUILD_PREFIX"/include \
         -DOPENCL_ICD_LOADER_{DISABLE_OPENCLON12,PIC}=ON \
-        -D{BUILD_TESTING,OPENCL_ICD_LOADER_BUILD_SHARED_LIBS}=OFF \
+        -D{BUILD_SHARED_LIBS,BUILD_TESTING,OPENCL_ICD_LOADER_BUILD_{SHARED_LIBS,TESTING}}=OFF \
         -GNinja \
         ..
     ninja -j$(nproc)
