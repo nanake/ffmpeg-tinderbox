@@ -1,0 +1,28 @@
+From f00a118325a585a2f6f1a933ac18649f94cf4ef2 Mon Sep 17 00:00:00 2001
+From: Ozkan Sezer <sezeroz@gmail.com>
+Date: Mon, 2 May 2022 21:25:36 +0900
+Subject: [PATCH] compilability of WGI code against MinGW headers
+
+---
+ src/joystick/windows/SDL_windows_gaming_input.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/src/joystick/windows/SDL_windows_gaming_input.c b/src/joystick/windows/SDL_windows_gaming_input.c
+index 8b552bb7d..c1608a797 100644
+--- a/src/joystick/windows/SDL_windows_gaming_input.c
++++ b/src/joystick/windows/SDL_windows_gaming_input.c
+@@ -34,6 +34,11 @@
+ #include <cfgmgr32.h>
+ #include <roapi.h>
+ 
++#ifdef __MINGW32__
++#define __FIReference_1_int __FIReference_1_INT32
++#define __FIReference_1_int_get_Value __FIReference_1_INT32_get_Value
++#define __FIReference_1_int_Release __FIReference_1_INT32_Release
++#endif
+ 
+ struct joystick_hwdata
+ {
+-- 
+2.36.0.windows.1
+
