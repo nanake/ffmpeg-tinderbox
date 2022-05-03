@@ -1,4 +1,4 @@
-FROM ubuntu:jammy
+FROM ubuntu:kinetic
 
 ENV DEBIAN_FRONTEND noninteractive
 
