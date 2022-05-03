@@ -4,6 +4,7 @@ LIBUDFREAD_REPO="https://code.videolan.org/videolan/libudfread.git"
 LIBUDFREAD_COMMIT="b3e6936a23f8af30a0be63d88f4695bdc0ea26e1"
 
 ffbuild_enabled() {
+    [[ $TARGET == win32 ]] && return -1
     return 0
 }
 
