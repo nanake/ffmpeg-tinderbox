@@ -33,7 +33,7 @@ jobs:
         run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base:latest"
 
       - name: Build base image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: images/base
           pull: true
@@ -72,7 +72,7 @@ jobs:
         run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}:latest"
 
       - name: Build target base image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: images/base-${{ matrix.target }}
           pull: true
@@ -118,7 +118,7 @@ jobs:
           echo "::set-output name=cache::${IMG/ /-}:cache"
 
       - name: Build variant image
-        uses: docker/build-push-action@v2
+        uses: docker/build-push-action@v3
         with:
           context: .
           pull: true
