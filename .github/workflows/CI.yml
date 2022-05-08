@@ -36,7 +36,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: images/base
-          pull: true
           push: true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}
           cache-to: type=inline
@@ -75,7 +74,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: images/base-${{ matrix.target }}
-          pull: true
           push: true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}
           cache-to: type=inline
@@ -121,7 +119,6 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
-          pull: true
           push: true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
           cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
