@@ -2,7 +2,7 @@ name: I am Mita, Your Housekeeper # 家政婦のミタ
 
 on:
   schedule:
-    - cron: '0 23 * * TUE' # Runs at 08:00 Tokyo time every Tuesday ⌚
+    - cron: '0 23 * * TUE' # Runs at 08:00 Tokyo time every Wednesday ⌚
 
 jobs:
   prune_old_releases:
