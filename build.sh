@@ -70,7 +70,8 @@ EOF
 
 mkdir -p artifacts
 ARTIFACTS_PATH="$PWD/artifacts"
-BUILD_NAME="ffmpeg-$(./ffbuild/ffmpeg/ffbuild/version.sh ffbuild/ffmpeg)-${TARGET}-${VARIANT}${ADDINS_STR:+-}${ADDINS_STR}"
+FFMPEG_VERSION="$(./ffbuild/ffmpeg/ffbuild/version.sh ffbuild/ffmpeg)"
+BUILD_NAME="ffmpeg-${FFMPEG_VERSION//-g/-git-}-${TARGET}-${VARIANT}${ADDINS_STR:+-}${ADDINS_STR}"
 
 mkdir -p "ffbuild/pkgroot/$BUILD_NAME"
 package_variant ffbuild/prefix "ffbuild/pkgroot/$BUILD_NAME"
