@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LV2_REPO="https://github.com/lv2/lv2.git"
-LV2_COMMIT="6cefc7df1a6158c79d23029df183c09b10b88cad"
+LV2_COMMIT="fb0c82ea9a90c4e09367921edd5dd5320ec2d965"
 
 ffbuild_enabled() {
     return 0
