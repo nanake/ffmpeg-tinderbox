@@ -1,20 +1,21 @@
+# syntax=docker/dockerfile:1.4
 ARG GH_OWNER=nanake
 FROM ghcr.io/$GH_OWNER/base:latest
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN \
-    apt-get update && \
-    apt-get -y --no-install-recommends install binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64 && \
-    rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll* && \
-    rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s* && \
-    rm /usr/lib/gcc/*-w64-mingw32/*/*.dll.a && \
-    rm /usr/*-w64-mingw32/lib/*.dll.a && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* && \
-    mkdir /opt/ffbuild
+RUN <<EOF
+apt-get update
+apt-get -y --no-install-recommends install binutils-mingw-w64-x86-64 gcc-mingw-w64-x86-64 g++-mingw-w64-x86-64
+rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll*
+rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s*
+rm /usr/lib/gcc/*-w64-mingw32/*/*.dll.a
+rm /usr/*-w64-mingw32/lib/*.dll.a
+rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+mkdir /opt/ffbuild
+EOF
 
-COPY toolchain.cmake /toolchain.cmake
-COPY cross.meson /cross.meson
+COPY cross.meson toolchain.cmake /
 
 ENV FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=x86_64-w64-mingw32- --arch=x86_64 --target-os=mingw32" \
     FFBUILD_TOOLCHAIN=x86_64-w64-mingw32 \
