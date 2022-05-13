@@ -4,6 +4,7 @@ FROM ubuntu:kinetic
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN <<EOF
+rm /etc/apt/sources.list.d/proposed.list
 apt-get -y update
 apt-get -y --no-install-recommends install \
     autoconf \
