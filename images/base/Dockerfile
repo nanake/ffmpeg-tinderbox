@@ -35,7 +35,6 @@ RUN \
         wget \
         xxd \
         yasm && \
-    apt-get -y clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/* && \
     update-ca-certificates && \
     git config --global user.email "builder@localhost" && \
