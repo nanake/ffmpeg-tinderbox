@@ -31,7 +31,7 @@ jobs:
   publish_release:
     name: Publish release
     needs: build_ffmpeg
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout
         uses: actions/checkout@v3
