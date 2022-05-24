@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mirror/mingw-w64.git"
-MINGW_COMMIT="2c202976797b80703720a2bb19841d304205c936"
+MINGW_COMMIT="89bacd2be60fa92dd74d3b5f2074b06a32d8c784"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return -1
