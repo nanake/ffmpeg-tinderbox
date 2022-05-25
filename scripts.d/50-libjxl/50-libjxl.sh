@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="c8817909d26184d6f15d1b38205a4d099494acf0"
+JXL_COMMIT="9c1e1c1446982bddf6987a6236f0731e826570ad"
 
 ffbuild_enabled() {
     [[ $ADDINS_STR == *5.0* ]] && return -1
@@ -36,10 +36,6 @@ ffbuild_dockerbuild() {
     echo "Libs.private: -lstdc++" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_threads.pc
     echo "Libs.private: -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
     echo "Libs.private: -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_threads.pc
-
-    mv "${FFBUILD_PREFIX}"/lib/libjxl{-static,}.a
-    mv "${FFBUILD_PREFIX}"/lib/libjxl_dec{-static,}.a
-    mv "${FFBUILD_PREFIX}"/lib/libjxl_threads{-static,}.a
 }
 
 ffbuild_configure() {
