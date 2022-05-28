@@ -3,9 +3,11 @@ name: I am Mita, Your Housekeeper # 家政婦のミタ
 on:
   schedule:
     - cron: '0 23 * * TUE' # Runs at 08:00 Tokyo time every Wednesday ⌚
+    - cron: '0 23 27 * *' # Runs at 08:00 Tokyo time on day-of-month 28 🗓️
 
 jobs:
   prune_old_releases:
+    if: github.event.schedule == '0 23 * * TUE'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -15,3 +17,29 @@ jobs:
         run: ./util/prunetags.sh
         env:
           GITHUB_TOKEN: ${{ github.token }}
+
+  prune_untagged_pkgs:
+    if: github.event.schedule == '0 23 27 * *'
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        image_name: [base,base-win32,base-win64,win32-nonfree,win64-nonfree,win32-nonfree-shared,win64-nonfree-shared]
+    steps:
+      - name: Prune untagged pkgs
+        uses: actions/github-script@v6
+        with: 
+          github-token: ${{ secrets.dodosolsollalasol }}
+          script: |
+            const image_ls = await github.request(
+              "GET /user/packages/container/${{ matrix.image_name }}/versions"
+            )
+
+            for (version of image_ls.data)
+              if (0 == version.metadata.container.tags.length) {
+                console.log("prune " + version.id)
+                const prune_image = await github.request(
+                  "DELETE /user/packages/container/${{ matrix.image_name }}/versions/" + version.id
+                )
+                console.log("status " + prune_image.status)
+              }
