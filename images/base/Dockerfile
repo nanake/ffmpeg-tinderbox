@@ -4,44 +4,44 @@ FROM ubuntu:kinetic
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN <<EOF
-rm /etc/apt/sources.list.d/proposed.list
-apt-get -y update
-apt-get -y --no-install-recommends install \
-    autoconf \
-    automake \
-    autopoint \
-    build-essential \
-    ca-certificates \
-    clang \
-    cmake \
-    curl \
-    gawk \
-    gettext \
-    git \
-    gperf \
-    libc6-dev \
-    libtool \
-    meson \
-    nasm \
-    ninja-build \
-    pkgconf \
-    python-is-python3 \
-    python3-apt \
-    python3-distutils \
-    python3-mako \
-    ragel \
-    subversion \
-    texi2html \
-    texinfo \
-    unzip \
-    wget \
-    xxd \
-    yasm
-rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
-update-ca-certificates
-git config --global user.email "builder@localhost"
-git config --global user.name "Builder"
-git config --global advice.detachedHead false
+    rm /etc/apt/sources.list.d/proposed.list
+    apt-get -y update
+    apt-get -y --no-install-recommends install \
+        autoconf \
+        automake \
+        autopoint \
+        build-essential \
+        ca-certificates \
+        clang \
+        cmake \
+        curl \
+        gawk \
+        gettext \
+        git \
+        gperf \
+        libc6-dev \
+        libtool \
+        meson \
+        nasm \
+        ninja-build \
+        pkgconf \
+        python-is-python3 \
+        python3-apt \
+        python3-distutils \
+        python3-mako \
+        ragel \
+        subversion \
+        texi2html \
+        texinfo \
+        unzip \
+        wget \
+        xxd \
+        yasm
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    update-ca-certificates
+    git config --global user.email "builder@localhost"
+    git config --global user.name "Builder"
+    git config --global advice.detachedHead false
 EOF
 
 RUN --mount=src=.,dst=/input \
