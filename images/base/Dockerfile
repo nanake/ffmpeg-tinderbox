@@ -1,12 +1,10 @@
 # syntax=docker/dockerfile:1.4
 FROM ubuntu:kinetic
 
-ENV DEBIAN_FRONTEND noninteractive
-
 RUN <<EOF
     rm /etc/apt/sources.list.d/proposed.list
     apt-get -y update
-    apt-get -y --no-install-recommends install \
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
         autoconf \
         automake \
         autopoint \

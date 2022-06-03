@@ -2,11 +2,9 @@
 ARG GH_OWNER=nanake
 FROM ghcr.io/$GH_OWNER/base:latest
 
-ENV DEBIAN_FRONTEND noninteractive
-
 RUN <<EOF
     apt-get update
-    apt-get -y --no-install-recommends install binutils-mingw-w64-i686 gcc-mingw-w64-i686 g++-mingw-w64-i686
+    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install binutils-mingw-w64-i686 gcc-mingw-w64-i686 g++-mingw-w64-i686
     rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll*
     rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s*
     rm /usr/lib/gcc/*-w64-mingw32/*/*.dll.a
