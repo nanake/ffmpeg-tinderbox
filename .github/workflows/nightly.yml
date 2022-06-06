@@ -6,7 +6,23 @@ on:
     - cron: '0 21 * * *' # Runs at 06:00 Tokyo time every day 🕕
 
 jobs:
+  decision_task:
+    name: Determine whether to perform Nightly build
+    runs-on: ubuntu-22.04
+    outputs:
+      status: ${{ steps.decision.outputs.status }}
+    steps:
+      - name: Take a decision
+        id: decision
+        run: |
+          set -xe
+          LATEST_RELEASE=$(curl -H 'Accept: application/vnd.github.v3+json' https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r '.body' | cut -d@ -f2)
+          FFMPEG_LATEST=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git HEAD | awk '{ print substr($1,1,10) }')
+          [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]] && echo "::set-output name=status::skip" || echo "::set-output name=status::proceed"
+
   build_ffmpeg:
+    needs: decision_task
+    if: ${{ needs.decision_task.outputs.status == 'proceed' }}
     name: Build ffmpeg
     runs-on: ubuntu-22.04
     strategy:
