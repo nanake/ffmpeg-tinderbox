@@ -2,7 +2,6 @@
 FROM ubuntu:kinetic
 
 RUN <<EOF
-    rm /etc/apt/sources.list.d/proposed.list
     apt-get -y update
     DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
         autoconf \
