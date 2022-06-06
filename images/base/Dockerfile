@@ -27,7 +27,6 @@ RUN <<EOF
         python3-distutils \
         python3-mako \
         ragel \
-        subversion \
         texi2html \
         texinfo \
         unzip \
