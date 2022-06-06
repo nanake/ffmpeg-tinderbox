@@ -1,16 +1,15 @@
 #!/bin/bash
 
-ZLIB_SRC="https://github.com/madler/zlib/archive/refs/tags/v1.2.12.tar.gz"
+ZLIB_REPO="https://github.com/madler/zlib.git"
+ZLIB_VERSION="1.2.12"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    wget "$ZLIB_SRC" -O zlib.tar.gz
-    tar xaf zlib.tar.gz
-    rm zlib.tar.gz
-    cd zlib*
+    git-mini-clone "$ZLIB_REPO" "v$ZLIB_VERSION" zlib
+    cd zlib
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
