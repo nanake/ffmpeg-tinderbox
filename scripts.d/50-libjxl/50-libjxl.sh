@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="7d047b5feca7a4a0bd620de171179d2c3810bc8e"
+JXL_COMMIT="0ac5fc162e87578936d9223df8b2f201fdc71350"
 
 ffbuild_enabled() {
     [[ $ADDINS_STR == *5.0* ]] && return -1
@@ -14,6 +14,12 @@ ffbuild_dockerbuild() {
     git submodule update --init --recursive --depth 1 --recommend-shallow third_party/{highway,skcms}
 
     mkdir build && cd build
+
+    # Fix AVX2 proc (64bit) crash by highway due to unaligned stack memory
+    if [[ $TARGET == win64 ]]; then
+        export CXXFLAGS="$CXXFLAGS -Wa,-muse-unaligned-vector-move"
+        export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
+    fi
 
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
@@ -29,10 +35,8 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 
-    echo "Libs.private: -lstdc++" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
-    echo "Libs.private: -lstdc++" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_threads.pc
-    echo "Libs.private: -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
-    echo "Libs.private: -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_threads.pc
+    echo "Libs.private: -lstdc++ -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
+    echo "Libs.private: -lstdc++ -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_threads.pc
 }
 
 ffbuild_configure() {
