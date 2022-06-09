@@ -61,7 +61,7 @@ jobs:
       - name: Create release
         id: create_release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -xe
           BUILDID="$(date +'%Y-%m-%d-%H-%M')"
@@ -71,4 +71,4 @@ jobs:
           TITLE="Build $BUILDID @ $REV"
           BODY="Built from FFmpeg/FFmpeg@$REV"
           TAGNAME="build-$BUILDID-n$NTAG"
-          hub release create $(for a in artifacts/*.7z; do echo -a $a; done) -m "$TITLE" -m "$BODY" "$TAGNAME"
+          gh release create "$TAGNAME" $(for a in artifacts/*.7z; do echo $a; done) -t "$TITLE" -n "$BODY"
