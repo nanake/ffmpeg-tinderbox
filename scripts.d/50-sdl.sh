@@ -19,6 +19,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DSDL_SHARED=OFF \
         -DSDL_{STATIC,STATIC_PIC}=ON \
+        -DSDL2_DISABLE_SDL2MAIN=ON \
         -GNinja \
         ..
     ninja -j$(nproc)
@@ -26,8 +27,6 @@ ffbuild_dockerbuild() {
 
     sed -ri -e 's/\-Wl,\-\-no\-undefined.*//' \
         -e 's/ \-mwindows//g' \
-        -e 's/ \-lSDL2main//g' \
-        -e 's/ \-Dmain=SDL_main//g' \
         "$FFBUILD_PREFIX"/lib/pkgconfig/sdl2.pc
 }
 
