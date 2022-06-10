@@ -61,6 +61,8 @@ docker run --rm -i "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild "$IMAGE" bash -s <<E
     git clone --filter=blob:none --branch='$GIT_BRANCH' --single-branch '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
+    curl https://github.com/ffstaging/FFmpeg/commit/b0ac2f0a778b05399fb307efbfa28a23d5b5c71e.patch | git apply
+
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS $FF_CONFIGURE \
         --extra-cflags="$FF_CFLAGS" --extra-cxxflags="$FF_CXXFLAGS" \
         --extra-ldflags="$FF_LDFLAGS" --extra-libs="$FF_LIBS"
