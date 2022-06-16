@@ -14,9 +14,11 @@ jobs:
     steps:
       - name: Take a decision
         id: decision
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -xe
-          LATEST_RELEASE=$(curl -H 'Accept: application/vnd.github.v3+json' https://api.github.com/repos/$GITHUB_REPOSITORY/releases/latest | jq -r '.body' | cut -d@ -f2)
+          LATEST_RELEASE=$(gh api repos/$GITHUB_REPOSITORY/releases/latest --jq '.body' | cut -d@ -f2)
           FFMPEG_LATEST=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git HEAD | awk '{ print substr($1,1,10) }')
           [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]] && echo "::set-output name=status::skip" || echo "::set-output name=status::proceed"
 
