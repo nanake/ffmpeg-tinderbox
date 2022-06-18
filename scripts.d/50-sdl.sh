@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SDL_REPO="https://github.com/libsdl-org/SDL.git"
-SDL_COMMIT="847539afebe1019c2e1320eccfbe2334d30a2bcc"
+SDL_COMMIT="83b766174c5ead353119d55067646d9dc3a547b2"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DSDL_SHARED=OFF \
+        -DSDL_{SHARED,TEST}=OFF \
         -DSDL_{STATIC,STATIC_PIC}=ON \
         -DSDL2_DISABLE_SDL2MAIN=ON \
         -GNinja \
@@ -25,8 +25,9 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 
-    sed -ri -e 's/\-Wl,\-\-no\-undefined.*//' \
-        -e 's/ \-mwindows//g' \
+    sed -ri -e 's/ \-mwindows//g' \
+        -e 's/ -lSDL2//g' \
+        -e 's/Libs: /Libs: -lSDL2 /' \
         "$FFBUILD_PREFIX"/lib/pkgconfig/sdl2.pc
 }
 

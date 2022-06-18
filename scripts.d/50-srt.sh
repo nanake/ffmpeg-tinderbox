@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SRT_REPO="https://github.com/Haivision/srt.git"
-SRT_COMMIT="49fb18e2b039242e46b306f23b9886be692f074c"
+SRT_COMMIT="c5f613eb716fdb0bb82597df0dd4b56116f19d0b"
 
 ffbuild_enabled() {
     return 0
@@ -18,11 +18,14 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DENABLE_{SHARED,APPS}=OFF \
-        -DENABLE_{STATIC,ENCRYPTION}=ON \
+        -DENABLE_{STATIC,CXX_DEPS,ENCRYPTION}=ON \
+        -DUSE_STATIC_LIBSTDCXX=ON \
         -GNinja \
         ..
     ninja -j$(nproc)
     ninja install
+
+    echo "Libs.private: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/srt.pc
 }
 
 ffbuild_configure() {

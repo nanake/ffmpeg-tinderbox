@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SVTAV1_REPO="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
-SVTAV1_COMMIT="bb917022519dd477706da2236ac2d194f88d62db"
+SVTAV1_COMMIT="9953a2179a8605508b42b62d76e1a2c5d412e37d"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
@@ -9,9 +9,8 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone "$SVTAV1_REPO" svtav1
+    git-mini-clone "$SVTAV1_REPO" "$SVTAV1_COMMIT" svtav1
     cd svtav1
-    git checkout "$SVTAV1_COMMIT"
 
     mkdir build && cd build
 

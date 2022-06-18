@@ -1,14 +1,14 @@
 #!/bin/bash
 
 GME_REPO="https://bitbucket.org/mpyne/game-music-emu.git"
-GME_COMMIT="839ea742c42c4e0fbe4f153621d92e24c20d0799"
+GME_COMMIT="d39b0bce47f66074c6aa85202b8cb4642fa77b78"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git clone "$GME_REPO" gme
+    git clone --branch=master --single-branch "$GME_REPO" gme
     cd gme
     git checkout "$GME_COMMIT"
 
