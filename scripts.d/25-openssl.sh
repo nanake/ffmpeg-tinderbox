@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENSSL_REPO="https://github.com/openssl/openssl.git"
-OPENSSL_COMMIT="OpenSSL_1_1_1o"
+OPENSSL_COMMIT="openssl-3.0.3"
 
 ffbuild_enabled() {
     return 0
@@ -17,6 +17,7 @@ ffbuild_dockerbuild() {
         no-{shared,tests}
         enable-{camellia,ec,srp}
         --prefix="$FFBUILD_PREFIX"
+        --libdir=lib
     )
 
     if [[ $TARGET == win64 ]]; then
@@ -35,8 +36,6 @@ ffbuild_dockerbuild() {
     fi
 
     ./Configure "${myconf[@]}"
-
-    sed -i -e "/^CFLAGS=/s|=.*|=${CFLAGS}|" -e "/^LDFLAGS=/s|=[[:space:]]*$|=${LDFLAGS}|" Makefile
 
     make -j$(nproc)
     make install_sw
