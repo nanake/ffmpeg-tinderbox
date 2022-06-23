@@ -5,8 +5,7 @@ DECKLINK_REPO="https://github.com/nanake/decklink-headers.git"
 DECKLINK_COMMIT="23194d695a3ae4aca7bc6c2f16dd6e7325a41c27"
 
 ffbuild_enabled() {
-    [[ $VARIANT == *nonfree* ]] || return -1
-    return 0
+    return -1
 }
 
 ffbuild_dockerbuild() {
