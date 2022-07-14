@@ -4,7 +4,6 @@ JXL_REPO="https://github.com/libjxl/libjxl.git"
 JXL_COMMIT="1040d32a40146897717f8ebc1fea1031211554de"
 
 ffbuild_enabled() {
-    [[ $ADDINS_STR == *5.0* ]] && return -1
     return 0
 }
 
@@ -44,6 +43,5 @@ ffbuild_configure() {
 }
 
 ffbuild_unconfigure() {
-    [[ $ADDINS_STR == *5.0* ]] && return 0
     echo --disable-libjxl
 }
