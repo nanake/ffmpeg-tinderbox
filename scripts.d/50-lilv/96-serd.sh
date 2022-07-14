@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERD_REPO="https://github.com/drobilla/serd.git"
-SERD_COMMIT="272d7081257dc6d50c06b1b62e8c4baa5bf3b4b2"
+SERD_COMMIT="47adc7d3dec1e1d2454750612d48353944fcf836"
 
 ffbuild_enabled() {
     return 0
@@ -10,19 +10,26 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$SERD_REPO" "$SERD_COMMIT" serd
     cd serd
-    git submodule update --init --recursive --depth 1
+    
+    mkdir build && cd build
 
-    local mywaf=(
+    local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --static
-        --largefile
-        --stack-check
-        --no-{shared,utils}
+        --buildtype=release
+        --default-library=static
+        -D{docs,tests,tools}"=disabled"
     )
 
-    CC="${FFBUILD_CROSS_PREFIX}gcc" CXX="${FFBUILD_CROSS_PREFIX}g++" ./waf configure "${mywaf[@]}"
-    ./waf -j$(nproc)
-    ./waf install
+    if [[ $TARGET == win* ]]; then
+        myconf+=(
+            --cross-file=/cross.meson
+        )
+    else
+        echo "Unknown target"
+        return -1
+    fi
 
-    sed -i 's/Cflags:/Cflags: -DSERD_STATIC/' "$FFBUILD_PREFIX"/lib/pkgconfig/serd-0.pc
+    meson "${myconf[@]}" ..
+    ninja -j"$(nproc)"
+    ninja install
 }

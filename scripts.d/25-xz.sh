@@ -1,17 +1,17 @@
 #!/bin/bash
 
-# https://tukaani.org/xz/
-XZ_SRC="https://github.com/nanake/xz/releases/download/v5.2.5/xz-5.2.5.tar.bz2"
+XZ_REPO="https://github.com/xz-mirror/xz.git"
+XZ_COMMIT="4773608554d1b684a05ff9c1d879cf5c42266d33"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    wget -O xz.tar.bz2 "$XZ_SRC"
-    tar xaf xz.tar.bz2
-    rm xz.tar.bz2
-    cd xz*
+    git-mini-clone "$XZ_REPO" "$XZ_COMMIT" xz
+    cd xz
+
+    ./autogen.sh --no-po4a
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
