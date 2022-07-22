@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERD_REPO="https://github.com/drobilla/serd.git"
-SERD_COMMIT="47adc7d3dec1e1d2454750612d48353944fcf836"
+SERD_COMMIT="14f422f6355aaa109d030b81203eb090ad7d2663"
 
 ffbuild_enabled() {
     return 0
@@ -17,6 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
+        -Dstatic=true
         -D{docs,tests,tools}"=disabled"
     )
 

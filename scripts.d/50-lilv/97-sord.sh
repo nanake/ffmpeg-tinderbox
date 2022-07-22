@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SORD_REPO="https://github.com/drobilla/sord.git"
-SORD_COMMIT="ee631481ba7cbe5f6afdf5dd00860eb9bbed57f4"
+SORD_COMMIT="c1cda16cede3998f0f590db932944bce39550820"
 
 ffbuild_enabled() {
     return 0
@@ -10,17 +10,26 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$SORD_REPO" "$SORD_COMMIT" sord
     cd sord
-    git submodule update --init --recursive --depth 1
 
-    local mywaf=(
+    mkdir build && cd build
+
+    local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --static
-        --no-{shared,utils}
+        --buildtype=release
+        --default-library=static
+        -D{docs,tests,tools}"=disabled"
     )
 
-    CC="${FFBUILD_CROSS_PREFIX}gcc" CXX="${FFBUILD_CROSS_PREFIX}g++" ./waf configure "${mywaf[@]}"
-    ./waf -j$(nproc)
-    ./waf install
+    if [[ $TARGET == win* ]]; then
+        myconf+=(
+            --cross-file=/cross.meson
+        )
+    else
+        echo "Unknown target"
+        return -1
+    fi
 
-    sed -i 's/Cflags:/Cflags: -DSORD_STATIC/' "$FFBUILD_PREFIX"/lib/pkgconfig/sord-0.pc
+    meson "${myconf[@]}" ..
+    ninja -j"$(nproc)"
+    ninja install
 }
