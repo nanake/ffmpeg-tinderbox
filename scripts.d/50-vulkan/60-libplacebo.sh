@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PLACEBO_REPO="https://github.com/haasn/libplacebo.git"
-PLACEBO_COMMIT="619969b2a77436892392a05c3dbea5a710b9c0c4"
+PLACEBO_COMMIT="eeab271b4871c1639c961243c19d6761835463c2"
 
 ffbuild_enabled() {
     return 0
@@ -10,6 +10,7 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$PLACEBO_REPO" "$PLACEBO_COMMIT" placebo
     cd placebo
+    git submodule update --init --recursive --depth 1
 
     mkdir build && cd build
 

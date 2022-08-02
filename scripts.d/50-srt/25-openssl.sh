@@ -17,14 +17,14 @@ ffbuild_dockerbuild() {
         no-{shared,tests}
         enable-{camellia,ec,srp}
         --prefix="$FFBUILD_PREFIX"
-        # (win64) install libraries onto lib not lib64
-        # otherwise srt fails to find libcrypto
-        # see https://github.com/openssl/openssl/issues/16244
-        --libdir=lib
     )
 
     if [[ $TARGET == win64 ]]; then
         myconf+=(
+            # (win64) install libraries onto lib not lib64
+            # otherwise srt fails to find libcrypto
+            # see https://github.com/openssl/openssl/issues/16244
+            --libdir=lib
             --cross-compile-prefix="$FFBUILD_CROSS_PREFIX"
             mingw64
         )
