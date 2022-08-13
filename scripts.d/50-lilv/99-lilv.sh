@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LILV_REPO="https://github.com/lv2/lilv.git"
-LILV_COMMIT="a15b01e4f211d3fae909c7c7b9bd02045a801ef1"
+LILV_COMMIT="bc824e98e8bf69067752566925aa2bfbd3cf3890"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -D{docs,tests,tools}"=disabled"
+        -D{bindings_py,docs,tests,tools}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then

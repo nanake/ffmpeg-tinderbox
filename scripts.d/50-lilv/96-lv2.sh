@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LV2_REPO="https://github.com/lv2/lv2.git"
-LV2_COMMIT="03cab09433d7bc5b5e0c1508351053494653a340"
+LV2_COMMIT="503ad506f919b425f7812f08615eb5c6af00f63c"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,8 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -D{docs,tests}"=disabled"
+        -D{docs,plugins,tests}"=disabled"
+        -Donline_docs=false
     )
 
     if [[ $TARGET == win* ]]; then
