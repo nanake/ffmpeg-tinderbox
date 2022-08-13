@@ -4,6 +4,7 @@ MFX_REPO="https://github.com/lu-zero/mfx_dispatch.git"
 MFX_COMMIT="7e4d221c36c630c1250b23a5dfa15657bc04c10c"
 
 ffbuild_enabled() {
+    [[ $ADDINS_STR == *5.1* ]] || return -1
     return 0
 }
 
