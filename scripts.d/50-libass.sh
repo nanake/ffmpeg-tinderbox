@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ASS_REPO="https://github.com/libass/libass.git"
-ASS_COMMIT="1472ccf73bc8ba8d4bdd37364b52771c4bfa8a8f"
+ASS_COMMIT="b890df23eb8931728acdf240fd5d29e53401b4f2"
 
 ffbuild_enabled() {
     return 0
