@@ -23,8 +23,6 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 
-    # Build system is severely lacking in options, clean up after it
-    rm -r "${FFBUILD_PREFIX}"/bin
     rm "${FFBUILD_PREFIX}"/lib/libbrotli*.dll.a
 
     mv "${FFBUILD_PREFIX}"/lib/libbrotlienc{-static,}.a

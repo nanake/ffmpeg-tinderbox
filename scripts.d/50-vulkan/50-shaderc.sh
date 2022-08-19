@@ -37,12 +37,7 @@ ffbuild_dockerbuild() {
 
     cp "$FFBUILD_PREFIX"/lib/pkgconfig/{shaderc_combined,shaderc}.pc
 
-    if [[ $TARGET == win* ]]; then
-        rm -r "$FFBUILD_PREFIX"/bin "$FFBUILD_PREFIX"/lib/*.dll.a
-    else
-        echo "Unknown target"
-        return -1
-    fi
+    rm "$FFBUILD_PREFIX"/lib/*.dll.a
 }
 
 ffbuild_configure() {
