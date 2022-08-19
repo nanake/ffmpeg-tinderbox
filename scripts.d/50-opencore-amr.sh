@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # https://sourceforge.net/projects/opencore-amr/files/opencore-amr/
-OAMR_SRC="https://github.com/nanake/opencore-amr/releases/download/v0.1.5/opencore-amr-0.1.5.tar.gz"
+OAMR_SRC="https://github.com/nanake/opencore-amr/releases/download/v0.1.6/opencore-amr-0.1.6.tar.gz"
 
 ffbuild_enabled() {
     return 0
