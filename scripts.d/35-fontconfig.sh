@@ -12,24 +12,27 @@ ffbuild_dockerbuild() {
     rm fc.tar.xz
     cd fontconfig*
 
+    mkdir build && cd build
+
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,docs}
-        --enable-{static,iconv,libxml2}
+        --buildtype=release
+        --default-library=static
+        -D{doc,tests,tools}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then
         myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
+            --cross-file=/cross.meson
         )
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
+    meson "${myconf[@]}" ..
+    ninja -j$(nproc)
+    ninja install
 }
 
 ffbuild_configure() {
