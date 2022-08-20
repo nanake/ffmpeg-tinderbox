@@ -13,12 +13,16 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
+    # FIXME: https://gitlab.com/libssh/libssh-mirror/-/issues/140
+    export CFLAGS="$CFLAGS -Dgettimeofday=ssh_gettimeofday"
+    export CXXFLAGS="$CFLAGS -Dgettimeofday=ssh_gettimeofday"
+
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
-        -DWITH_{BLOWFISH_CIPHER,DSA,PCAP,SFTP,ZLIB}=ON \
+        -DWITH_{SFTP,ZLIB}=ON \
         -DWITH_{EXAMPLES,SERVER}=OFF \
         -GNinja \
         ..
@@ -27,7 +31,7 @@ ffbuild_dockerbuild() {
 
     {
         echo "Requires.private: libssl libcrypto zlib"
-        echo "Cflags.private: -DLIBSSH_STATIC" 
+        echo "Cflags.private: -DLIBSSH_STATIC"
     } >> "$FFBUILD_PREFIX"/lib/pkgconfig/libssh.pc
 }
 
@@ -37,8 +41,4 @@ ffbuild_configure() {
 
 ffbuild_unconfigure() {
     echo --disable-libssh
-}
-
-ffbuild_ldflags() {
-    echo -Wl,--allow-multiple-definition
 }
