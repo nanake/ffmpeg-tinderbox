@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBSSH_REPO="https://git.libssh.org/projects/libssh.git"
-LIBSSH_COMMIT="ac6d2fad4a8bf07277127736367e90387646363f"
+LIBSSH_COMMIT="20406e51c9e1e096dc8ba47975abad448a51bfc1"
 
 ffbuild_enabled() {
     return 0
@@ -12,10 +12,6 @@ ffbuild_dockerbuild() {
     cd libssh
 
     mkdir build && cd build
-
-    # FIXME: https://gitlab.com/libssh/libssh-mirror/-/issues/140
-    export CFLAGS="$CFLAGS -Dgettimeofday=ssh_gettimeofday"
-    export CXXFLAGS="$CFLAGS -Dgettimeofday=ssh_gettimeofday"
 
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
