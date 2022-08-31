@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBBLURAY_REPO="https://code.videolan.org/videolan/libbluray.git"
-LIBBLURAY_COMMIT="e99df3adeb07420b72690ac09a147c8f34876eb8"
+LIBBLURAY_COMMIT="9a2d23d049760ef9cc9661ff90011a84d90368f1"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1

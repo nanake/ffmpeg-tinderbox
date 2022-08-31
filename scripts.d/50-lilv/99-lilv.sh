@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LILV_REPO="https://github.com/lv2/lilv.git"
-LILV_COMMIT="96d897c5981d60ac52c33a9f9ac66753998fa4ed"
+LILV_COMMIT="8cbf2a3dfce848c099536cf0f5e59c4fa8e04d87"
 
 ffbuild_enabled() {
     return 0
@@ -10,7 +10,7 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$LILV_REPO" "$LILV_COMMIT" lilv
     cd lilv
-    
+
     mkdir build && cd build
 
     local myconf=(

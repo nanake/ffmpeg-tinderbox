@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SERD_REPO="https://github.com/drobilla/serd.git"
-SERD_COMMIT="f4f9c9ec4c1031fc42af80642760a9138c3eaabc"
+SERD_COMMIT="e864af0d8d6002ad07adc4695894c01e0fe24c2c"
 
 ffbuild_enabled() {
     return 0
@@ -10,7 +10,7 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$SERD_REPO" "$SERD_COMMIT" serd
     cd serd
-    
+
     mkdir build && cd build
 
     local myconf=(

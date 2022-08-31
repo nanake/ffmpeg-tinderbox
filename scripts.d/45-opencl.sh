@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/OpenCL-Headers.git"
-HEADERS_COMMIT="7f216e8aa5317a71d91bed7edc83f3620dff763d"
+HEADERS_COMMIT="4b6d2aabcb00b879f4509d63fe32593b820a6feb"
 
 LOADER_REPO="https://github.com/KhronosGroup/OpenCL-ICD-Loader.git"
 LOADER_COMMIT="7072cf2ae9d9acb6be8f4fc956f1cdbf0675695b"
@@ -34,20 +34,19 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 
-    echo "prefix=$FFBUILD_PREFIX" > OpenCL.pc
-    echo "exec_prefix=\${prefix}" >> OpenCL.pc
-    echo "libdir=\${exec_prefix}/lib" >> OpenCL.pc
-    echo "includedir=\${prefix}/include" >> OpenCL.pc
-    echo >> OpenCL.pc
-    echo "Name: OpenCL" >> OpenCL.pc
-    echo "Description: OpenCL ICD Loader" >> OpenCL.pc
-    echo "Version: 9999" >> OpenCL.pc
-    echo "Libs: -L\${libdir} -lOpenCL" >> OpenCL.pc
-    echo "Libs.private: -lole32 -lshlwapi -lcfgmgr32" >> OpenCL.pc
-    echo "Cflags: -I\${includedir}" >> OpenCL.pc
+    cat >"$FFBUILD_PREFIX"/lib/pkgconfig/OpenCL.pc <<EOF
+prefix=$FFBUILD_PREFIX
+exec_prefix=\${prefix}
+libdir=\${exec_prefix}/lib
+includedir=\${prefix}/include
 
-    mkdir -p "$FFBUILD_PREFIX"/lib/pkgconfig
-    mv OpenCL.pc "$FFBUILD_PREFIX"/lib/pkgconfig/OpenCL.pc
+Name: OpenCL
+Description: OpenCL ICD Loader
+Version: 9999
+Libs: -L\${libdir} -lOpenCL
+Libs.private: -lole32 -lshlwapi -lcfgmgr32
+Cflags: -I\${includedir}
+EOF
 }
 
 ffbuild_configure() {

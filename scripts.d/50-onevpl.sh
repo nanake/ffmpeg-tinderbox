@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ONEVPL_REPO="https://github.com/oneapi-src/oneVPL.git"
-ONEVPL_COMMIT="2232af4cdb13c0018d965c3b040466ad89b1922b"
+ONEVPL_COMMIT="15b79165c30fc4a7bf6efdf261a39b128b63b896"
 
 ffbuild_enabled() {
     [[ $ADDINS_STR == *5.1* ]] && return -1
