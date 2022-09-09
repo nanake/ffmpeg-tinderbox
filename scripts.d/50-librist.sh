@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
         --buildtype=release
         --default-library=static
         -Dhave_mingw_pthreads=true
-        -D{built_tools,test,use_mbedtls}"=false"
+        -D{built_tools,test}"=false"
     )
 
     if [[ $TARGET == win* ]]; then

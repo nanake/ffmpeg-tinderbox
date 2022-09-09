@@ -1,13 +1,19 @@
 #!/bin/bash
 
 LIBXML2_REPO="https://gitlab.gnome.org/GNOME/libxml2.git"
-LIBXML2_COMMIT="b1a0961858cc5b26950697dc97b7fe8befd22932"
+LIBXML2_COMMIT="27c8ba605495e326628ee1537dcb953249c2d297"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
+    # pinned to last known good
+    # build bustage on ubuntu:kinetic (mingw-w64 10.0 AND gcc-10.3)
+    if [[ $TARGET == win32 ]]; then
+        LIBXML2_COMMIT="6a5c88cc5e009def0b6d9706019d799fce49faa1"
+    fi
+
     git-mini-clone "$LIBXML2_REPO" "$LIBXML2_COMMIT" libxml2
     cd libxml2
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20220830"
+RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20220906"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
