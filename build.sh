@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xe
+set -e
 shopt -s globstar
 cd "$(dirname "$0")"
 source util/vars.sh
