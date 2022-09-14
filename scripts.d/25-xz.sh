@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XZ_REPO="https://github.com/xz-mirror/xz.git"
-XZ_COMMIT="18d7facd3802b55c287581405c4d49c98708c136"
+XZ_COMMIT="f2d084fe3f0d6d71488bfc6987f26542f67bfd99"
 
 ffbuild_enabled() {
     return 0
