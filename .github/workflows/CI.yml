@@ -8,42 +8,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build_base:
+  build_bases:
     name: Build base image
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@master
-        with:
-          version: latest
-          driver-opts: image=moby/buildkit:master
-
-      - name: Login to GitHub Container Registry
-        uses: docker/login-action@v2
-        with:
-          registry: ghcr.io
-          username: ${{ github.actor }}
-          password: ${{ secrets.dodosolsollalasol }}
-
-      - name: Image Name
-        id: imagename
-        run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base:latest"
-
-      - name: Build base image
-        uses: docker/build-push-action@v3
-        with:
-          context: images/base
-          push: true
-          cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}
-          cache-to: type=inline
-          tags: ${{ steps.imagename.outputs.name }}
-
-  build_target_bases:
-    name: Build target base image
-    needs: build_base
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -68,20 +34,23 @@ jobs:
 
       - name: Image Name
         id: imagename
-        run: echo "::set-output name=name::ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}:latest"
+        run: |
+          IMG="ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}"
+          echo "::set-output name=image::${IMG/ /-}:latest"
+          echo "::set-output name=cache::${IMG/ /-}:cache"
 
-      - name: Build target base image
+      - name: Build base image
         uses: docker/build-push-action@v3
         with:
           context: images/base-${{ matrix.target }}
           push: true
-          cache-from: type=registry,ref=${{ steps.imagename.outputs.name }}
-          cache-to: type=inline
-          tags: ${{ steps.imagename.outputs.name }}
+          cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
+          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
+          tags: ${{ steps.imagename.outputs.image }}
 
   build_targets:
     name: Build target-variant image
-    needs: build_target_bases
+    needs: build_bases
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false

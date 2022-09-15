@@ -24,11 +24,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image_name: [base,base-win32,base-win64,win32-nonfree,win64-nonfree,win32-nonfree-shared,win64-nonfree-shared]
+        image_name: [base-win32,base-win64,win32-nonfree,win64-nonfree,win32-nonfree-shared,win64-nonfree-shared]
     steps:
       - name: Prune untagged pkgs
         uses: actions/github-script@v6
-        with: 
+        with:
           github-token: ${{ secrets.dodosolsollalasol }}
           script: |
             const image_ls = await github.request(
