@@ -1,16 +1,15 @@
 #!/bin/bash
 
-FREETYPE_SRC="https://download.savannah.gnu.org/releases/freetype/freetype-2.12.1.tar.xz"
+FREETYPE_REPO="https://github.com/freetype/freetype.git"
+FREETYPE_COMMIT="df2601395f96d5d513f15795a725abfe76214d95"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    wget -O ft.tar.xz "$FREETYPE_SRC"
-    tar xaf ft.tar.xz
-    rm ft.tar.xz
-    cd freetype*
+    git-mini-clone "$FREETYPE_REPO" "$FREETYPE_COMMIT" freetype
+    cd freetype
 
     mkdir build && cd build
 
