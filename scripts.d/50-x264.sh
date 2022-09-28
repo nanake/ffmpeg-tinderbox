@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X264_REPO="https://github.com/mirror/x264.git"
-X264_COMMIT="7628a5696f79a1f0421dda99ab37b34481c69821"
+X264_COMMIT="e067ab0b530395f90b578f6d05ab0a225e2efdf9"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1

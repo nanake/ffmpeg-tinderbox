@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SDL_REPO="https://github.com/libsdl-org/SDL.git"
-SDL_COMMIT="228b9fb5178405138775db55b28a6b6e787d8ce0"
+SDL_COMMIT="8e14647759da0fbe90b32a798f55c58a406f1a69"
 
 ffbuild_enabled() {
     return 0
