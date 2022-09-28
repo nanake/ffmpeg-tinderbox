@@ -1,31 +1,34 @@
 #!/bin/bash
 
-SDL_REPO="https://github.com/libsdl-org/SDL.git"
-SDL_COMMIT="8e14647759da0fbe90b32a798f55c58a406f1a69"
+SDL_SRC="https://github.com/libsdl-org/SDL/releases/download/release-2.24.0/SDL2-devel-2.24.0-mingw.tar.gz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$SDL_REPO" "$SDL_COMMIT" sdl
-    cd sdl
+    wget -O sdl.tar.gz "$SDL_SRC"
+    tar xaf sdl.tar.gz
+    rm sdl.tar.gz
+    cd SDL*
 
-    mkdir build && cd build
+    if [[ $TARGET == win64 ]]; then
+        cd x86_64-w64-mingw32
+    elif [[ $TARGET == win32 ]]; then
+        cd i686-w64-mingw32
+    else
+        echo "Unknown target"
+        return -1
+    fi
 
-    cmake \
-        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DSDL_{SHARED,TEST}=OFF \
-        -DSDL_{STATIC,STATIC_PIC}=ON \
-        -DSDL2_DISABLE_SDL2MAIN=ON \
-        -GNinja \
-        ..
-    ninja -j$(nproc)
-    ninja install
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp lib/libSDL2.a "$FFBUILD_PREFIX"/lib
+    cp lib/pkgconfig/sdl2.pc "$FFBUILD_PREFIX"/lib/pkgconfig
 
-    sed -ri -e 's/ \-mwindows//g' \
+    sed -ri -e "s|^prefix=.*|prefix=${FFBUILD_PREFIX}|" \
+        -e 's/ \-mwindows//g' \
+        -e 's/ \-lSDL2main//g' \
+        -e 's/ \-Dmain=SDL_main//g' \
         -e 's/ -lSDL2//g' \
         -e 's/Libs: /Libs: -lSDL2 /' \
         "$FFBUILD_PREFIX"/lib/pkgconfig/sdl2.pc
