@@ -1,7 +1,7 @@
 #!/bin/bash
 
 KVAZAAR_REPO="https://github.com/ultravideo/kvazaar.git"
-KVAZAAR_COMMIT="d6032feab140a294cb72da708ea19c05a27d77d0"
+KVAZAAR_COMMIT="a085e802ec6d24319160fec32c4027122e73580f"
 
 ffbuild_enabled() {
     return 0
