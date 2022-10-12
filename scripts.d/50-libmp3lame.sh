@@ -1,22 +1,22 @@
 #!/bin/bash
 
-# https://sourceforge.net/projects/lame/files/lame/
-LAME_SRC="https://github.com/nanake/lame/releases/download/3.100/lame-3.100.tar.gz"
+LAME_REPO="https://github.com/nanake/lame.git"
+LAME_COMMIT="5ac0145e612c72a9417af7ac6f9d3b5b93671a2d"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    wget -O lame.tar.gz "$LAME_SRC"
-    tar xaf lame.tar.gz
-    rm lame.tar.gz
-    cd lame*
+    git-mini-clone "$LAME_REPO" "$LAME_COMMIT" lame
+    cd lame
+
+    autoreconf -i
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --enable-{static,nasm}
-        --disable-{shared,cpml,frontend,gtktest}
+        --disable-{shared,cpml,decoder,frontend,gtktest}
     )
 
     if [[ $TARGET == win* ]]; then
@@ -27,6 +27,8 @@ ffbuild_dockerbuild() {
         echo "Unknown target"
         return -1
     fi
+
+    export CFLAGS="$CFLAGS -DNDEBUG"
 
     ./configure "${myconf[@]}"
     make -j$(nproc)
