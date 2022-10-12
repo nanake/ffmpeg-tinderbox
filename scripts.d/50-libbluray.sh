@@ -4,13 +4,16 @@ LIBBLURAY_REPO="https://code.videolan.org/videolan/libbluray.git"
 LIBBLURAY_COMMIT="5539addbbf8c26d756fc2cb76b3919f8b73be66a"
 
 ffbuild_enabled() {
-    [[ $TARGET == win32 ]] && return -1
     return 0
 }
 
 ffbuild_dockerbuild() {
     git-mini-clone "$LIBBLURAY_REPO" "$LIBBLURAY_COMMIT" libbluray
     cd libbluray
+
+    if [[ $TARGET == win32 ]]; then
+        sed -i 's/\[snprintf\],, \[AC_MSG_ERROR/\[snprintf\],, \[AC_MSG_WARN/g' configure.ac
+    fi
 
     ./bootstrap
 
