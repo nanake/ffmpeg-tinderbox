@@ -20,7 +20,7 @@ jobs:
           set -xe
           LATEST_RELEASE=$(gh api repos/$GITHUB_REPOSITORY/releases/latest --jq '.body' | cut -d@ -f2)
           FFMPEG_LATEST=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git HEAD | awk '{ print substr($1,1,10) }')
-          [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]] && echo "::set-output name=status::skip" || echo "::set-output name=status::proceed"
+          [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]] && echo "status=skip" >> $GITHUB_OUTPUT || echo "status=proceed" >> $GITHUB_OUTPUT
 
   build_ffmpeg:
     needs: decision_task

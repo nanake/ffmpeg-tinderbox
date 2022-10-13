@@ -36,8 +36,8 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}"
-          echo "::set-output name=image::${IMG/ /-}:latest"
-          echo "::set-output name=cache::${IMG/ /-}:cache"
+          echo "image=${IMG/ /-}:latest" >> $GITHUB_OUTPUT
+          echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
 
       - name: Build base image
         uses: docker/build-push-action@v3
@@ -81,8 +81,8 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}"
-          echo "::set-output name=image::${IMG/ /-}:latest"
-          echo "::set-output name=cache::${IMG/ /-}:cache"
+          echo "image=${IMG/ /-}:latest" >> $GITHUB_OUTPUT
+          echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
 
       - name: Build variant image
         uses: docker/build-push-action@v3
