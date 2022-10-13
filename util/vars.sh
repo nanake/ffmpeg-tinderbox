@@ -31,7 +31,6 @@ done
 OWNER="${GITHUB_ACTOR:-nanake}"
 OWNER="${OWNER,,}"
 REGISTRY="ghcr.io"
-BASE_IMAGE="${REGISTRY}/${OWNER}/base:latest"
 TARGET_IMAGE="${REGISTRY}/${OWNER}/base-${TARGET}:latest"
 IMAGE="${REGISTRY}/${OWNER}/${TARGET}-${VARIANT}${ADDINS_STR:+-}${ADDINS_STR}:latest"
 
