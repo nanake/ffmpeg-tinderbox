@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZLIB_REPO="https://github.com/madler/zlib.git"
-ZLIB_VERSION="1.2.12"
+ZLIB_VERSION="1.2.13"
 
 ffbuild_enabled() {
     return 0
