@@ -21,6 +21,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --enable-static
         --disable-{shared,bdjava-jar,doxygen-{doc,dot,html,pdf,ps},examples}
+        --without-{fontconfig,libxml2}
         --with-pic
     )
 
