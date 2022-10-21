@@ -29,11 +29,6 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    # Workaround for symbol collision
-    # Regressed by https://github.com/FFmpeg/FFmpeg/commit/18d6c07
-    # See also: https://github.com/libass/libass/issues/654
-    export CFLAGS="$CFLAGS -Dread_file=libass_read_file"
-
     ./configure "${myconf[@]}"
     make -j$(nproc)
     make install
