@@ -16,6 +16,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         -Ddefault_library=static
+        -D{fft,resampler}"=builtin"
     )
 
     if [[ $TARGET == win* ]]; then
@@ -30,9 +31,6 @@ ffbuild_dockerbuild() {
     meson "${myconf[@]}" ..
     ninja -j$(nproc)
     ninja install
-
-    # Fix static linking
-    echo "Requires.private: fftw3 samplerate" >> "$FFBUILD_PREFIX"/lib/pkgconfig/rubberband.pc
 }
 
 ffbuild_configure() {
