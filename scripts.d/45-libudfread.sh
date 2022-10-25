@@ -1,37 +1,26 @@
 #!/bin/bash
 
-LIBUDFREAD_REPO="https://code.videolan.org/videolan/libudfread.git"
-LIBUDFREAD_COMMIT="b3e6936a23f8af30a0be63d88f4695bdc0ea26e1"
+LIBUDFREAD_SRC="https://github.com/nanake/libudfread/releases/download/git-b3e6936/libudfread-git-b3e6936-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$LIBUDFREAD_REPO" "$LIBUDFREAD_COMMIT" libudfread
-    cd libudfread
+    wget -O libudfread.tar.xz "$LIBUDFREAD_SRC"
+    tar xaf libudfread.tar.xz
+    rm libudfread.tar.xz
+    cd libudfread*
 
-    ./bootstrap
-
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
-        --with-pic
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
+    if [[ $TARGET == win64 ]]; then
+        cd x86_64*
+    elif [[ $TARGET == win32 ]]; then
+        cd i686*
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
-
-    ln -s libudfread.pc "$FFBUILD_PREFIX"/lib/pkgconfig/udfread.pc
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
 }

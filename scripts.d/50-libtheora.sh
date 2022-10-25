@@ -1,37 +1,28 @@
 #!/bin/bash
 
-THEORA_REPO="https://github.com/xiph/theora.git"
-THEORA_COMMIT="7180717276af1ebc7da15c83162d6c5d6203aabf"
+THEORA_SRC="https://github.com/nanake/theora/releases/download/git-718071/theora-git-7180717-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$THEORA_REPO" "$THEORA_COMMIT" theora
-    cd theora
+    wget -O theora.tar.xz "$THEORA_SRC"
+    tar xaf theora.tar.xz
+    rm theora.tar.xz
+    cd theora*
 
-    ./autogen.sh
-
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --enable-static
-        --disable-{shared,doc,examples,oggtest,spec,vorbistest}
-        --with-pic
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
+    if [[ $TARGET == win64 ]]; then
+        cd x86_64*
+    elif [[ $TARGET == win32 ]]; then
+        cd i686*
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
 }
 
 ffbuild_configure() {

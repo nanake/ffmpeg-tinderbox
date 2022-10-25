@@ -1,38 +1,28 @@
 #!/bin/bash
 
-TWOLAME_SRC="https://github.com/njh/twolame/releases/download/0.4.0/twolame-0.4.0.tar.gz"
+TWOLAME_SRC="https://github.com/nanake/twolame/releases/download/0.4.0/twolame-0.4.0-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    wget -O twolame.tar.gz "$TWOLAME_SRC"
-    tar xaf twolame.tar.gz
-    rm twolame.tar.gz
+    wget -O twolame.tar.xz "$TWOLAME_SRC"
+    tar xaf twolame.tar.xz
+    rm twolame.tar.xz
     cd twolame*
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --with-pic
-        --enable-static
-        --disable-{shared,sndfile}
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
+    if [[ $TARGET == win64 ]]; then
+        cd x86_64*
+    elif [[ $TARGET == win32 ]]; then
+        cd i686*
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
-
-    sed -i 's/Cflags:/Cflags: -DLIBTWOLAME_STATIC/' "$FFBUILD_PREFIX"/lib/pkgconfig/twolame.pc
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
 }
 
 ffbuild_configure() {
