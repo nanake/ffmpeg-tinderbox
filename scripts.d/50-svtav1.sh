@@ -19,6 +19,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_{DEC,SHARED_LIBS,TESTING,APPS}=OFF \
+        -DENABLE_AVX512=ON \
         -GNinja \
         ..
     ninja -j$(nproc)
