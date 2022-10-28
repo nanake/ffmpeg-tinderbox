@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X265_REPO="https://bitbucket.org/multicoreware/x265_git.git"
-X265_COMMIT="8584bc7bd99262b8bd926476c866840fe0d9428a"
+X265_COMMIT="8c159ba54aaf7f3e815790e7951c2ed285d2e0a7"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -12,8 +12,6 @@ ffbuild_dockerbuild() {
     git clone --branch=master --single-branch "$X265_REPO" x265
     cd x265
     git checkout "$X265_COMMIT"
-
-    curl https://bitbucket.org/1480c1/x265_git/commits/c0cb74b92fe17854e9441b2842923960d1e900de/raw | git apply -v
 
     local common_config=(
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
