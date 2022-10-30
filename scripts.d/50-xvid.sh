@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XVID_SRC="http://downloads.xvid.org/downloads/xvid_latest.tar.gz"
+XVID_SRC="https://github.com/nanake/xvidcore/releases/download/r2198/xvidcore-r2198-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -8,31 +8,22 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O xvid.tar.gz "$XVID_SRC"
-    tar xaf xvid.tar.gz
-    rm xvid.tar.gz
-    cd xvid*/trunk/xvidcore/build/generic
+    wget -O xvid.tar.xz "$XVID_SRC"
+    tar xaf xvid.tar.xz
+    rm xvid.tar.xz
+    cd xvidcore*
 
-    ./bootstrap.sh
-
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
+    if [[ $TARGET == win64 ]]; then
+        cd x86_64*
+    elif [[ $TARGET == win32 ]]; then
+        cd i686*
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
-
-    rm "$FFBUILD_PREFIX"/{bin/libxvidcore.dll,lib/libxvidcore.dll.a}
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
 }
 
 ffbuild_configure() {
