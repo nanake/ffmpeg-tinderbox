@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SRATOM_REPO="https://github.com/lv2/sratom.git"
-SRATOM_COMMIT="079015972ee915ccff3aa55265b2568bdf0aeafd"
+SRATOM_COMMIT="36fd5599e7c67f9d99046aa1570e7f0d308b7092"
 
 ffbuild_enabled() {
     return 0
