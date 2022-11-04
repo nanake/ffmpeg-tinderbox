@@ -16,7 +16,8 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         -Ddefault_library=static
-        -D{fft,resampler}"=builtin"
+        -Dfft=fftw
+        -Dresampler=libsamplerate
     )
 
     if [[ $TARGET == win* ]]; then
