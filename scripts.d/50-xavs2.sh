@@ -9,9 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O xavs2.tar.xz "$XAVS2_SRC"
-    tar xaf xavs2.tar.xz
-    rm xavs2.tar.xz
+    curl -L "$XAVS2_SRC" | tar xJ
     cd xavs2*/x86_64*
 
     cp -r include/. "$FFBUILD_PREFIX"/include/.

@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O libudfread.tar.xz "$LIBUDFREAD_SRC"
-    tar xaf libudfread.tar.xz
-    rm libudfread.tar.xz
+    curl -L "$LIBUDFREAD_SRC" | tar xJ
     cd libudfread*
 
     if [[ $TARGET == win64 ]]; then

@@ -8,9 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O soxr.tar.xz "$SOXR_SRC"
-    tar xaf soxr.tar.xz
-    rm soxr.tar.xz
+    curl -L "$SOXR_SRC" | tar xJ
     cd libsoxr*
 
     if [[ $TARGET == win64 ]]; then

@@ -8,9 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O xvid.tar.xz "$XVID_SRC"
-    tar xaf xvid.tar.xz
-    rm xvid.tar.xz
+    curl -L "$XVID_SRC" | tar xJ
     cd xvidcore*
 
     if [[ $TARGET == win64 ]]; then

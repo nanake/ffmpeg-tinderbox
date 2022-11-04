@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O lame.tar.xz "$LAME_SRC"
-    tar xaf lame.tar.xz
-    rm lame.tar.xz
+    curl -L "$LAME_SRC" | tar xJ
     cd lame*
 
     if [[ $TARGET == win64 ]]; then

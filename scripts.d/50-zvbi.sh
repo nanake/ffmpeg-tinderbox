@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O zvbi.tar.xz "$ZVBI_SRC"
-    tar xaf zvbi.tar.xz
-    rm zvbi.tar.xz
+    curl -L "$ZVBI_SRC" | tar xJ
     cd zvbi*
 
     if [[ $TARGET == win64 ]]; then

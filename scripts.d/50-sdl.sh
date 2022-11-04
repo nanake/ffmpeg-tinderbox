@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O sdl.tar.gz "$SDL_SRC"
-    tar xaf sdl.tar.gz
-    rm sdl.tar.gz
+    curl -L "$SDL_SRC" | tar xz
     cd SDL*
 
     if [[ $TARGET == win64 ]]; then

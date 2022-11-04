@@ -8,9 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O oamr.tar.xz "$OAMR_SRC"
-    tar xaf oamr.tar.xz
-    rm oamr.tar.xz
+    curl -L "$OAMR_SRC" | tar xJ
     cd opencore*
 
     if [[ $TARGET == win64 ]]; then

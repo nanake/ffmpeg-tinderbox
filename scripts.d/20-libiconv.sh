@@ -8,9 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O iconv.tar.gz "$ICONV_SRC"
-    tar xaf iconv.tar.gz
-    rm iconv.tar.gz
+    curl -L "$ICONV_SRC" | tar xz
     cd libiconv*
 
     local myconf=(

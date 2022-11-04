@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O theora.tar.xz "$THEORA_SRC"
-    tar xaf theora.tar.xz
-    rm theora.tar.xz
+    curl -L "$THEORA_SRC" | tar xJ
     cd theora*
 
     if [[ $TARGET == win64 ]]; then

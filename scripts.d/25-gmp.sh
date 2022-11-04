@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget "$GMP_SRC" -O gmp.tar.xz
-    tar xaf gmp.tar.xz
-    rm gmp.tar.xz
+    curl -L "$GMP_SRC" | tar xJ
     cd gmp*
 
     autoreconf -i

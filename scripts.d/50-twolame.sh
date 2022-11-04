@@ -7,9 +7,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget -O twolame.tar.xz "$TWOLAME_SRC"
-    tar xaf twolame.tar.xz
-    rm twolame.tar.xz
+    curl -L "$TWOLAME_SRC" | tar xJ
     cd twolame*
 
     if [[ $TARGET == win64 ]]; then
