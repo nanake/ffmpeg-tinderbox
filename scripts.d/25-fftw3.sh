@@ -3,8 +3,6 @@
 FFTW3_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
-    # Dependency of GPL-Only librubberband
-    [[ $VARIANT == lgpl* ]] && return -1
     return 0
 }
 

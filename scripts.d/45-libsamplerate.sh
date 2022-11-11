@@ -3,8 +3,6 @@
 LIBSR_SRC="https://github.com/nanake/libsamplerate/releases/download/0.2.2/libsamplerate-0.2.2-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
-    # Dependency of GPL-Only librubberband
-    [[ $VARIANT == lgpl* ]] && return -1
     return 0
 }
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X265_REPO="https://bitbucket.org/multicoreware/x265_git.git"
-X265_COMMIT="795122c3140189101b0594a53639dfc451a27d4f"
+X265_COMMIT="40e37bce9a357fb18f70ff0852015983cf90a6d3"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
