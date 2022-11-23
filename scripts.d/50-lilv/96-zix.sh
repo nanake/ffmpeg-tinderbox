@@ -1,15 +1,15 @@
 #!/bin/bash
 
-SORD_REPO="https://github.com/drobilla/sord.git"
-SORD_COMMIT="676ce7d32d25cda0a60c8cad7a782e8f52391184"
+ZIX_REPO="https://github.com/drobilla/zix.git"
+ZIX_COMMIT="f85870e15491cc98f8a0fa247d79073e98f1694e"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$SORD_REPO" "$SORD_COMMIT" sord
-    cd sord
+    git-mini-clone "$ZIX_REPO" "$ZIX_COMMIT" zix
+    cd zix
 
     mkdir build && cd build
 
@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         --default-library=static
-        -D{docs,tests,tools}"=disabled"
+        -D{benchmarks,docs,tests,tests_cpp}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then
