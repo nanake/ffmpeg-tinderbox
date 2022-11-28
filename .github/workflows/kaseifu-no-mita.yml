@@ -31,9 +31,9 @@ jobs:
         with:
           github-token: ${{ secrets.dodosolsollalasol }}
           script: |
-            const image_ls = await github.request(
-              "GET /user/packages/container/${{ matrix.image_name }}/versions"
-            )
+            const image_ls = await github.request("GET /user/packages/container/${{ matrix.image_name }}/versions", {
+              per_page: 100
+            })
 
             for (version of image_ls.data)
               if (0 == version.metadata.container.tags.length) {
