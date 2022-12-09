@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.4
-FROM ubuntu:kinetic AS base
+FROM ubuntu:lunar AS base
 
 RUN <<EOF
     apt-get -y update
