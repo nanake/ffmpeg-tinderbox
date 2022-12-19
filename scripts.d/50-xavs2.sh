@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/1.4/xavs2-1.4-mingw-w64.tar.xz"
+XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/1.4/xavs2-1.4-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1

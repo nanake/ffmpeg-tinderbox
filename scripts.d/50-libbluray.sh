@@ -11,10 +11,6 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LIBBLURAY_REPO" "$LIBBLURAY_COMMIT" libbluray
     cd libbluray
 
-    if [[ $TARGET == win32 ]]; then
-        sed -i 's/\[snprintf\],, \[AC_MSG_ERROR/\[snprintf\],, \[AC_MSG_WARN/g' configure.ac
-    fi
-
     ./bootstrap
 
     local myconf=(

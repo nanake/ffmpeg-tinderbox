@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ZVBI_SRC="https://github.com/nanake/zvbi/releases/download/0.2.35/zvbi-0.2.35-mingw-w64.tar.xz"
+ZVBI_SRC="https://github.com/nanake/zvbi/releases/download/0.2.35/zvbi-0.2.35-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0

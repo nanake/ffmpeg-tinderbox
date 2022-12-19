@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LAME_SRC="https://github.com/nanake/lame/releases/download/3.100/lame-3.100-mingw-w64.tar.xz"
+LAME_SRC="https://github.com/nanake/lame/releases/download/3.100/lame-3.100-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0

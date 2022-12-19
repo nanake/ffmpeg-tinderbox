@@ -1,6 +1,6 @@
 #!/bin/bash
 
-TWOLAME_SRC="https://github.com/nanake/twolame/releases/download/0.4.0/twolame-0.4.0-mingw-w64.tar.xz"
+TWOLAME_SRC="https://github.com/nanake/twolame/releases/download/0.4.0/twolame-0.4.0-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0

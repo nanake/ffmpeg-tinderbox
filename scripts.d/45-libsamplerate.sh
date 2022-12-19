@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIBSR_SRC="https://github.com/nanake/libsamplerate/releases/download/0.2.2/libsamplerate-0.2.2-mingw-w64.tar.xz"
+LIBSR_SRC="https://github.com/nanake/libsamplerate/releases/download/0.2.2/libsamplerate-0.2.2-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0

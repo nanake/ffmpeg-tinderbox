@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # https://sourceforge.net/p/soxr/code/ci/master/tree/
-SOXR_SRC="https://github.com/nanake/libsoxr/releases/download/0.1.3/libsoxr-0.1.3-mingw-w64.tar.xz"
+SOXR_SRC="https://github.com/nanake/libsoxr/releases/download/0.1.3/libsoxr-0.1.3-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0

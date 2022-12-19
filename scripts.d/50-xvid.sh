@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XVID_SRC="https://github.com/nanake/xvidcore/releases/download/r2198/xvidcore-r2198-mingw-w64.tar.xz"
+XVID_SRC="https://github.com/nanake/xvidcore/releases/download/r2198/xvidcore-r2198-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1

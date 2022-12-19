@@ -1,6 +1,6 @@
 #!/bin/bash
 
-THEORA_SRC="https://github.com/nanake/theora/releases/download/git-718071/theora-git-7180717-mingw-w64.tar.xz"
+THEORA_SRC="https://github.com/nanake/theora/releases/download/git-718071/theora-git-7180717-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0

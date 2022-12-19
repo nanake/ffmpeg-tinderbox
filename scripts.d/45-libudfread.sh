@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LIBUDFREAD_SRC="https://github.com/nanake/libudfread/releases/download/git-b3e6936/libudfread-git-b3e6936-mingw-w64.tar.xz"
+LIBUDFREAD_SRC="https://github.com/nanake/libudfread/releases/download/git-b3e6936/libudfread-git-b3e6936-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0
