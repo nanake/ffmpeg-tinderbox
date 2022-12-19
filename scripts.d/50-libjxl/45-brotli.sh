@@ -1,7 +1,7 @@
 #!/bin/bash
 
 BROTLI_REPO="https://github.com/google/brotli.git"
-BROTLI_COMMIT="3914999fcc1fda92e750ef9190aa6db9bf7bdb07"
+BROTLI_COMMIT="641bec0e30bea648b3da1cd90fc6b44deb429f71"
 
 ffbuild_enabled() {
     return 0
@@ -22,10 +22,4 @@ ffbuild_dockerbuild() {
         ..
     ninja -j$(nproc)
     ninja install
-
-    rm "${FFBUILD_PREFIX}"/lib/libbrotli*.dll.a
-
-    mv "${FFBUILD_PREFIX}"/lib/libbrotlienc{-static,}.a
-    mv "${FFBUILD_PREFIX}"/lib/libbrotlidec{-static,}.a
-    mv "${FFBUILD_PREFIX}"/lib/libbrotlicommon{-static,}.a
 }
