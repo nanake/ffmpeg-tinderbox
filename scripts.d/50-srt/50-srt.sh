@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DENABLE_{SHARED,APPS}=OFF \
-        -DENABLE_{STATIC,CXX_DEPS,ENCRYPTION}=ON \
+        -DENABLE_{STATIC,AEAD_API_PREVIEW,CXX_DEPS,ENCRYPTION}=ON \
         -DUSE_ENCLIB=openssl-evp \
         -DUSE_STATIC_LIBSTDCXX=ON \
         -GNinja \
