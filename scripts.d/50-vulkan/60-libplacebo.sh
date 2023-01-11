@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PLACEBO_REPO="https://github.com/haasn/libplacebo.git"
-PLACEBO_COMMIT="8ca1a81a38e674ab782243eb5e9ab6ebe77838b8"
+PLACEBO_COMMIT="d0f2e68bde5ba89097f4f698606eb9033b909357"
 
 ffbuild_enabled() {
     return 0

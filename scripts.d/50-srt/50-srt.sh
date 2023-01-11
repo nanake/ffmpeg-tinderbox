@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SRT_REPO="https://github.com/Haivision/srt.git"
-SRT_COMMIT="b3a21e10689b2b69093b48fd2adb3ccffa125a14"
+SRT_COMMIT="a08a42c431c5beec223562774351d05aa6361a68"
 
 ffbuild_enabled() {
     return 0

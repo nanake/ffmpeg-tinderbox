@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBPNG_REPO="https://github.com/glennrp/libpng.git"
-LIBPNG_COMMIT="61bfdb0cb02a6f3a62c929dbc9e832894c0a8df2"
+LIBPNG_COMMIT="cd0ea2a7f53b603d3d9b5b891c779c430047b39a"
 
 ffbuild_enabled() {
     return 0
