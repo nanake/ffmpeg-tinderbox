@@ -1,4 +1,4 @@
-# syntax=docker/dockerfile:1.4
+# syntax=docker/dockerfile:latest
 FROM debian:bookworm-slim AS base
 
 RUN <<EOF
