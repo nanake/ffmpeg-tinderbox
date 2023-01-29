@@ -5,9 +5,22 @@ on:
     - cron: '0 23 * * TUE' # Runs at 08:00 Tokyo time every Wednesday ⌚
     - cron: '0 23 27 * *' # Runs at 08:00 Tokyo time on day-of-month 28 🗓️
 
+  workflow_dispatch:
+    inputs:
+      prune_tags:
+        description: 'Prune old releases'
+        type: boolean
+        default: false
+        required: false
+      prune_pkgs:
+        description: 'Prune untagged packages'
+        type: boolean
+        default: false
+        required: false
+
 jobs:
   prune_old_releases:
-    if: github.event.schedule == '0 23 * * TUE'
+    if: github.event.schedule == '0 23 * * TUE' || github.event.inputs.prune_tags == 'true'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
@@ -19,7 +32,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
 
   prune_untagged_pkgs:
-    if: github.event.schedule == '0 23 27 * *'
+    if: github.event.schedule == '0 23 27 * *' || github.event.inputs.prune_pkgs == 'true'
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
