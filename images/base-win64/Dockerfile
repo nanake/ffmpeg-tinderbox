@@ -2,8 +2,8 @@
 FROM debian:bookworm-slim AS base
 
 RUN <<EOF
-    apt-get -y update
-    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+    apt update
+    DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
         autoconf \
         automake \
         autopoint \
@@ -45,7 +45,7 @@ RUN --mount=src=.,dst=/input \
 FROM base AS build
 
 RUN <<EOF
-    DEBIAN_FRONTEND=noninteractive apt-get -y --no-install-recommends install \
+    DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
         binutils-mingw-w64-x86-64 \
         gcc-mingw-w64-x86-64-posix \
         g++-mingw-w64-x86-64-posix
