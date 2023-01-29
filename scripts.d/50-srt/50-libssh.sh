@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBSSH_REPO="https://git.libssh.org/projects/libssh.git"
-LIBSSH_COMMIT="96ee1c62ddfbfba7389bde070edddd5ca7debc9e"
+LIBSSH_COMMIT="bc2e99dc3f4a3f192c7d3c0b95e7b7dc56f15dd7"
 
 ffbuild_enabled() {
     return 0

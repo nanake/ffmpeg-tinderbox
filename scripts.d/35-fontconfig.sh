@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FONTCONFIG_SRC="https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.14.1.tar.xz"
+FONTCONFIG_SRC="https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.14.2.tar.xz"
 
 ffbuild_enabled() {
     return 0
