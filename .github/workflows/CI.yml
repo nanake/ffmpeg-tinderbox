@@ -47,6 +47,7 @@ jobs:
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
           cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
           tags: ${{ steps.imagename.outputs.image }}
+          provenance: false
 
   build_targets:
     name: Build target-variant image
@@ -92,6 +93,7 @@ jobs:
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
           cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
           tags: ${{ steps.imagename.outputs.image }}
+          provenance: false
 
   build_ffmpeg:
     name: Build ffmpeg
