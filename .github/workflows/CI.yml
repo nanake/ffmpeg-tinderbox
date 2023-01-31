@@ -40,7 +40,7 @@ jobs:
           echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
 
       - name: Build base image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: images/base-${{ matrix.target }}
           push: true
@@ -86,7 +86,7 @@ jobs:
           echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
 
       - name: Build variant image
-        uses: docker/build-push-action@v3
+        uses: docker/build-push-action@v4
         with:
           context: .
           push: true
