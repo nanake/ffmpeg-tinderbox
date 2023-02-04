@@ -10,7 +10,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone "$DAVS2_REPO" davs2
+    git clone --filter=tree:0 --branch=master --single-branch "$DAVS2_REPO" davs2
     cd davs2
     git checkout "$DAVS2_COMMIT"
     cd build/linux

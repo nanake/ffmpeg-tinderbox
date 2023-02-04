@@ -9,7 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone --branch=master --single-branch "$X265_REPO" x265
+    git clone --filter=tree:0 --branch=master --single-branch "$X265_REPO" x265
     cd x265
     git checkout "$X265_COMMIT"
 

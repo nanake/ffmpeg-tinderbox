@@ -9,7 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone "$UAVS3D_REPO" uavs3d
+    git clone --filter=tree:0 "$UAVS3D_REPO" uavs3d
     cd uavs3d
     git checkout "$UAVS3D_COMMIT"
 

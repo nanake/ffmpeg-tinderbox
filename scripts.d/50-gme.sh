@@ -8,7 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone --branch=master --single-branch "$GME_REPO" gme
+    git clone --filter=tree:0 --branch=master --single-branch "$GME_REPO" gme
     cd gme
     git checkout "$GME_COMMIT"
 
