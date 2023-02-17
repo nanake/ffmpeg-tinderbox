@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: images/base-${{ matrix.target }}
-          push: true
+          outputs: type=registry,oci-mediatypes=true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
           cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
           tags: ${{ steps.imagename.outputs.image }}
@@ -89,7 +89,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          push: true
+          outputs: type=registry,oci-mediatypes=true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
           cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
           tags: ${{ steps.imagename.outputs.image }}
