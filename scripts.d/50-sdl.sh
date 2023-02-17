@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SDL_SRC="https://github.com/libsdl-org/SDL/releases/download/release-2.26.2/SDL2-devel-2.26.2-mingw.tar.gz"
+SDL_SRC="https://github.com/libsdl-org/SDL/releases/download/release-2.26.3/SDL2-devel-2.26.3-mingw.tar.gz"
 
 ffbuild_enabled() {
     return 0
