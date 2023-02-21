@@ -18,9 +18,13 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -xe
-          LATEST_RELEASE=$(gh api repos/$GITHUB_REPOSITORY/releases/latest --jq '.body' | cut -d@ -f2)
+          LATEST_RELEASE=$(gh api repos/${{ github.repository }}/releases/latest --jq '.body' | cut -d@ -f2)
           FFMPEG_LATEST=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git HEAD | awk '{ print substr($1,1,10) }')
-          [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]] && echo "status=skip" >> $GITHUB_OUTPUT || echo "status=proceed" >> $GITHUB_OUTPUT
+          if [ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]; then
+            echo "status=skip" >> $GITHUB_OUTPUT
+          else
+            echo "status=proceed" >> $GITHUB_OUTPUT
+          fi
 
   build_ffmpeg:
     needs: decision_task
@@ -66,11 +70,11 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -xe
-          BUILDID="$(date +'%Y-%m-%d-%H-%M')"
-          STUB="$(basename "$(find artifacts -iname '*.7z' | head -1)")"
-          REV="$(cut -d- -f5 <<< "$STUB")"
-          NTAG="$(cut -d- -f3 <<< "$STUB")"
+          BUILDID=$(date +'%Y-%m-%d-%H-%M')
+          STUB=$(find artifacts -iname '*.7z' | head -1 | xargs -I{} basename {})
+          REV=$(echo $STUB | cut -d'-' -f5)
+          NTAG=$(echo $STUB | cut -d'-' -f3)
           TITLE="Build $BUILDID @ $REV"
           BODY="Built from FFmpeg/FFmpeg@$REV"
           TAGNAME="build-$BUILDID-n$NTAG"
-          gh release create "$TAGNAME" $(for a in artifacts/*.7z; do echo $a; done) -t "$TITLE" -n "$BODY"
+          gh release create $TAGNAME $(for a in artifacts/*.7z; do echo $a; done) -t "$TITLE" -n "$BODY"

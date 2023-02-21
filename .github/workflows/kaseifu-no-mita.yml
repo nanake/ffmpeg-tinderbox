@@ -11,12 +11,10 @@ on:
         description: 'Prune old releases'
         type: boolean
         default: false
-        required: false
       prune_pkgs:
         description: 'Prune untagged packages'
         type: boolean
         default: false
-        required: false
 
 jobs:
   prune_old_releases:
@@ -48,14 +46,22 @@ jobs:
               per_page: 100
             })
 
-            for (version of image_ls.data)
-              if (0 == version.metadata.container.tags.length) {
-                console.log("✂️ prune " + version.id)
-                const prune_image = await github.request(
-                  "DELETE /user/packages/container/${{ matrix.image_name }}/versions/" + version.id
-                )
-                204 == prune_image.status && console.log("🎉 success"),
-                401 == prune_image.status && console.log("🔐 requires authentication"),
-                403 == prune_image.status && console.log("⛔ forbidden"),
-                404 == prune_image.status && console.log("🤷‍♀️ package not found")
+            for (const version of image_ls.data)
+              if (0 === version.metadata.container.tags.length) {
+                console.log(`✂️ prune ${version.id}`);
+                const prune_image = await github.request(`DELETE /user/packages/container/${{ matrix.image_name }}/versions/${version.id}`);
+                switch (prune_image.status) {
+                  case 204:
+                    console.log("🎉 success");
+                    break;
+                  case 401:
+                    console.log("🔐 requires authentication");
+                    break;
+                  case 403:
+                    console.log("⛔ forbidden");
+                    break;
+                  case 404:
+                    console.log("🤷‍♀️ package not found");
+                    break;
+                }
               }
