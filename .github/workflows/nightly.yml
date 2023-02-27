@@ -28,7 +28,7 @@ jobs:
 
   build_ffmpeg:
     needs: decision_task
-    if: ${{ needs.decision_task.outputs.status == 'proceed' }}
+    if: needs.decision_task.outputs.status == 'proceed'
     name: Build ffmpeg
     runs-on: ubuntu-22.04
     strategy:
