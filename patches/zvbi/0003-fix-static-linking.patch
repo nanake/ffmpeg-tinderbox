@@ -1,0 +1,26 @@
+From 2c686ae8038a9a848a3953da049c730fac4f95d2 Mon Sep 17 00:00:00 2001
+From: nanake <nanake@users.noreply.github.com>
+Date: Fri, 31 Mar 2023 12:06:15 +0900
+Subject: [PATCH 3/5] fix static linking
+
+Signed-off-by: nanake <nanake@users.noreply.github.com>
+---
+ configure.ac | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/configure.ac b/configure.ac
+index 915875a..7daa4c9 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -330,7 +330,7 @@ dnl (PNG page export)
+ dnl
+ HAVE_PNG="yes"
+ AC_CHECK_LIB(png, png_destroy_write_struct,
+-  LIBS="$LIBS -lpng -lz", HAVE_PNG="no", -lz -lm)
++  LIBS="-lpng -lz $LIBS", HAVE_PNG="no", -lz -lm)
+ if test "x$HAVE_PNG" = xyes; then
+   AC_DEFINE(HAVE_LIBPNG, 1, [Define if you have libpng])
+ fi
+--
+2.40.0
+
