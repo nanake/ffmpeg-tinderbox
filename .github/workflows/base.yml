@@ -1,21 +1,16 @@
-name: Windows Cross Compiled
+name: Base image
 
 on:
-  push:
-    branches-ignore:
-      - 'dependabot/**'
-
   workflow_dispatch:
 
 jobs:
-  build_targets:
-    name: Build target-variant image
+  build_bases:
+    name: Build base image
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
         target: [win32, win64]
-        variant: [nonfree, nonfree-shared]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -33,45 +28,20 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.dodosolsollalasol }}
 
-      - name: Generate Dockerfile
-        run: ./generate.sh ${{ matrix.target }} ${{ matrix.variant }}
-
       - name: Image Name
         id: imagename
         run: |
-          IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}"
+          IMG="ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}"
           echo "image=${IMG/ /-}:latest" >> $GITHUB_OUTPUT
           echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
 
-      - name: Build variant image
+      - name: Build base image
         uses: docker/build-push-action@v4
         with:
-          context: .
+          context: images/base-${{ matrix.target }}
           outputs: type=registry,oci-mediatypes=true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
           cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
           tags: ${{ steps.imagename.outputs.image }}
           provenance: false
 
-  build_ffmpeg:
-    name: Build ffmpeg
-    needs: build_targets
-    runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        target: [win32, win64]
-        variant: [nonfree, nonfree-shared]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Build ffmpeg
-        run: ./build.sh ${{ matrix.target }} ${{ matrix.variant }}
-
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: ffmpeg
-          path: artifacts/
-          retention-days: 1
