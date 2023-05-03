@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENAL_REPO="https://github.com/kcat/openal-soft.git"
-OPENAL_COMMIT="d3875f333fb6abe2f39d82caca329414871ae53b"
+OPENAL_COMMIT="d5e5b211b89de63667eab71faa7e9a13a0b7992d"
 
 ffbuild_enabled() {
     return 0
