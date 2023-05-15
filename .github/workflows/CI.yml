@@ -49,7 +49,7 @@ jobs:
           context: .
           outputs: type=registry,oci-mediatypes=true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
-          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
+          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max,ignore-error=true
           tags: ${{ steps.imagename.outputs.image }}
           provenance: false
 
