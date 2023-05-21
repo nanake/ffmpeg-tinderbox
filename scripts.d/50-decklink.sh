@@ -1,8 +1,7 @@
 #!/bin/bash
 
-# https://notabug.org/RiCON/decklink-headers.git
 DECKLINK_REPO="https://github.com/nanake/decklink-headers.git"
-DECKLINK_COMMIT="SDK/12.4"
+DECKLINK_COMMIT="SDK/12.4.2"
 
 ffbuild_enabled() {
     [[ $VARIANT == *nonfree* ]] || return -1
