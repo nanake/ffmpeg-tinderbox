@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LILV_REPO="https://github.com/lv2/lilv.git"
-LILV_COMMIT="99540a8f30408d15339ececc4c28f27e2e2f06ab"
+LILV_COMMIT="d564baafed0863813a87d872f8663134e74228c8"
 
 ffbuild_enabled() {
     return 0
