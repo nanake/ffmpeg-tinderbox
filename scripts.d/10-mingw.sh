@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="813b571407b1049a8f6edc87c0d69919775b21d4"
+MINGW_COMMIT="b1900827318b31fda2a4c040917fe978ef6e75c4"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return -1
@@ -31,7 +31,6 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="/usr/$FFBUILD_TOOLCHAIN"
         --host="$FFBUILD_TOOLCHAIN"
-        --with-default-win32-winnt="0x601"
         --enable-idl
     )
 

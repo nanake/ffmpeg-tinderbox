@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ONEVPL_REPO="https://github.com/oneapi-src/oneVPL.git"
-ONEVPL_COMMIT="fcabffb463299a8792c6baed69afbb69236ba6cb"
+ONEVPL_COMMIT="e12ace9761bb52786409e830f619916b86e87fc5"
 
 ffbuild_enabled() {
     return 0
