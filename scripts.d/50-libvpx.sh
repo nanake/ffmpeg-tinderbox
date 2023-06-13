@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --enable-{static,pic,vp9-highbitdepth,vp9-postproc}
+        --enable-{static,pic,vp9-highbitdepth}
         --disable-{shared,docs,examples,tools,unit-tests}
     )
 
