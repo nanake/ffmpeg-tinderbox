@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM debian:bookworm-slim AS base
+FROM debian:trixie-slim AS base
 
 RUN <<EOF
     apt update
