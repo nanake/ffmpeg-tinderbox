@@ -1,24 +1,28 @@
 #!/bin/bash
 
-LIBSR_SRC="https://github.com/nanake/libsamplerate/releases/download/0.2.2/libsamplerate-0.2.2-1-mingw-w64.tar.xz"
+LIBSR_REPO="https://github.com/libsndfile/libsamplerate.git"
+LIBSR_COMMIT="22bd06eb114850ebe31981eb794d150a95439fef"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$LIBSR_SRC" | tar xJ
-    cd libsamplerate*
+    git-mini-clone "$LIBSR_REPO" "$LIBSR_COMMIT" libsr
+    cd libsr
 
-    if [[ $TARGET == win64 ]]; then
-        cd x86_64*
-    elif [[ $TARGET == win32 ]]; then
-        cd i686*
-    else
-        echo "Unknown target"
-        return -1
-    fi
+    mkdir build
+    cd build
 
-    cp -r include/. "$FFBUILD_PREFIX"/include/.
-    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_{SHARED_LIBS,TESTING}=NO \
+        -DLIBSAMPLERATE_EXAMPLES=OFF \
+        -DLIBSAMPLERATE_INSTALL=YES \
+        -GNinja \
+        ..
+    ninja -j$(nproc)
+    ninja install
 }

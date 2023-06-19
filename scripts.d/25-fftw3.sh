@@ -1,24 +1,32 @@
 #!/bin/bash
 
-FFTW3_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10-1-mingw-w64.tar.xz"
+FFTW_SRC="https://fftw.org/pub/fftw/fftw-3.3.10.tar.gz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$FFTW3_SRC" | tar xJ
+    curl -L "$FFTW_SRC" | tar xz
     cd fftw*
 
-    if [[ $TARGET == win64 ]]; then
-        cd x86_64*
-    elif [[ $TARGET == win32 ]]; then
-        cd i686*
+    local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --disable-{shared,doc,fortran}
+        --enable-{static,avx,avx2,maintainer-mode,sse2,threads}
+        --with-{combined-threads,incoming-stack-boundary=2,our-malloc}
+    )
+
+    if [[ $TARGET == win* ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
+        )
     else
         echo "Unknown target"
         return -1
     fi
 
-    cp -r include/. "$FFBUILD_PREFIX"/include/.
-    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
+    ./bootstrap.sh "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }

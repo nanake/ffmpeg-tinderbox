@@ -1,26 +1,38 @@
 #!/bin/bash
 
-LAME_SRC="https://github.com/nanake/lame/releases/download/3.100/lame-3.100-1-mingw-w64.tar.xz"
+LAME_REPO="https://github.com/nanake/lame.git"
+LAME_COMMIT="5ac0145e612c72a9417af7ac6f9d3b5b93671a2d"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$LAME_SRC" | tar xJ
-    cd lame*
+    git-mini-clone "$LAME_REPO" "$LAME_COMMIT" lame
+    cd lame
 
-    if [[ $TARGET == win64 ]]; then
-        cd x86_64*
-    elif [[ $TARGET == win32 ]]; then
-        cd i686*
+    autoreconf -i
+
+    local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --disable-{shared,cpml,decoder,frontend,gtktest}
+        --enable-{static,nasm}
+    )
+
+    if [[ $TARGET == win* ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
+        )
     else
         echo "Unknown target"
         return -1
     fi
 
-    cp -r include/. "$FFBUILD_PREFIX"/include/.
-    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
+    export CFLAGS="$CFLAGS -DNDEBUG"
+
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {

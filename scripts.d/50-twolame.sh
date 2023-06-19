@@ -1,26 +1,40 @@
 #!/bin/bash
 
-TWOLAME_SRC="https://github.com/nanake/twolame/releases/download/0.4.0/twolame-0.4.0-1-mingw-w64.tar.xz"
+TWOLAME_REPO="https://github.com/njh/twolame.git"
+TWOLAME_COMMIT="90b694b6125dbe23a346bd5607a7fb63ad2785dc"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$TWOLAME_SRC" | tar xJ
-    cd twolame*
+    git-mini-clone "$TWOLAME_REPO" "$TWOLAME_COMMIT" twolame
+    cd twolame
 
-    if [[ $TARGET == win64 ]]; then
-        cd x86_64*
-    elif [[ $TARGET == win32 ]]; then
-        cd i686*
+    NOCONFIGURE=1 ./autogen.sh
+    touch doc/twolame.1
+
+    local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --disable-{shared,sndfile}
+        --enable-static
+        --with-pic
+    )
+
+    if [[ $TARGET == win* ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
+        )
     else
         echo "Unknown target"
         return -1
     fi
 
-    cp -r include/. "$FFBUILD_PREFIX"/include/.
-    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
+
+    sed -i 's/Cflags:/Cflags: -DLIBTWOLAME_STATIC/' "$FFBUILD_PREFIX"/lib/pkgconfig/twolame.pc
 }
 
 ffbuild_configure() {

@@ -38,6 +38,11 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
+    export CC="${CC/${FFBUILD_CROSS_PREFIX}/}"
+    export CXX="${CXX/${FFBUILD_CROSS_PREFIX}/}"
+    export AR="${AR/${FFBUILD_CROSS_PREFIX}/}"
+    export RANLIB="${RANLIB/${FFBUILD_CROSS_PREFIX}/}"
+
     ./Configure "${myconf[@]}"
 
     make -j$(nproc)

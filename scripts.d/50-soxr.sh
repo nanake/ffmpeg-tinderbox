@@ -1,27 +1,31 @@
 #!/bin/bash
 
 # https://sourceforge.net/p/soxr/code/ci/master/tree/
-SOXR_SRC="https://github.com/nanake/libsoxr/releases/download/0.1.3/libsoxr-0.1.3-1-mingw-w64.tar.xz"
+SOXR_REPO="https://github.com/nanake/libsoxr.git"
+SOXR_COMMIT="945b592b70470e29f917f4de89b4281fbbd540c0"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$SOXR_SRC" | tar xJ
-    cd libsoxr*
+    git-mini-clone "$SOXR_REPO" "$SOXR_COMMIT" soxr
+    cd soxr
 
-    if [[ $TARGET == win64 ]]; then
-        cd x86_64*
-    elif [[ $TARGET == win32 ]]; then
-        cd i686*
-    else
-        echo "Unknown target"
-        return -1
-    fi
+    mkdir build && cd build
 
-    cp -r include/. "$FFBUILD_PREFIX"/include/.
-    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DWITH_OPENMP=ON \
+        -DBUILD_{TESTS,EXAMPLES,SHARED_LIBS}=OFF \
+        -GNinja \
+        ..
+    ninja -j$(nproc)
+    ninja install
+
+    echo "Libs.private: -lgomp" >> "$FFBUILD_PREFIX"/lib/pkgconfig/soxr.pc
 }
 
 ffbuild_configure() {
