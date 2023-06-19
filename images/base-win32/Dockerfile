@@ -59,13 +59,20 @@ EOF
 
 COPY cross.meson toolchain.cmake /
 
-ENV FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=i686-w64-mingw32- --arch=i686 --target-os=mingw32" \
-    FFBUILD_TOOLCHAIN=i686-w64-mingw32 \
-    FFBUILD_CROSS_PREFIX=i686-w64-mingw32- \
+ENV FFBUILD_TOOLCHAIN=i686-w64-mingw32
+ENV FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=${FFBUILD_TOOLCHAIN}- --arch=i686 --target-os=mingw32" \
+    FFBUILD_CROSS_PREFIX=${FFBUILD_TOOLCHAIN}- \
     FFBUILD_PREFIX=/opt/ffbuild \
     FFBUILD_CMAKE_TOOLCHAIN=/toolchain.cmake \
     PKG_CONFIG=pkg-config \
     PKG_CONFIG_LIBDIR=/opt/ffbuild/lib/pkgconfig:/opt/ffbuild/share/pkgconfig \
+    CC="${FFBUILD_TOOLCHAIN}-gcc" \
+    CXX="${FFBUILD_TOOLCHAIN}-g++" \
+    LD="${FFBUILD_TOOLCHAIN}-ld" \
+    AR="${FFBUILD_TOOLCHAIN}-gcc-ar" \
+    RANLIB="${FFBUILD_TOOLCHAIN}-gcc-ranlib" \
+    NM="${FFBUILD_TOOLCHAIN}-gcc-nm" \
+    DLLTOOL="${FFBUILD_TOOLCHAIN}-dlltool" \
     CFLAGS="-static-libgcc -static-libstdc++ -I/opt/ffbuild/include -O2 -pipe -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
     CXXFLAGS="-static-libgcc -static-libstdc++ -I/opt/ffbuild/include -O2 -pipe -D_FORTIFY_SOURCE=2 -fstack-protector-strong" \
     LDFLAGS="-static-libgcc -static-libstdc++ -L/opt/ffbuild/lib -O2 -pipe -fstack-protector-strong"

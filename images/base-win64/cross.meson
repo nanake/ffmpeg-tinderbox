@@ -1,9 +1,14 @@
+[constants]
+arch = 'x86_64-w64-mingw32'
+
 [binaries]
-c = 'x86_64-w64-mingw32-gcc'
-cpp = 'x86_64-w64-mingw32-g++'
-ar = 'x86_64-w64-mingw32-ar'
-strip = 'x86_64-w64-mingw32-strip'
-windres = 'x86_64-w64-mingw32-windres'
+c = arch + '-gcc'
+cpp = arch + '-g++'
+ar = arch + '-gcc-ar'
+ranlib = arch + '-gcc-ranlib'
+strip = arch + '-strip'
+windres = arch + '-windres'
+dlltool = arch + '-dlltool'
 exe_wrapper = ['wine']
 
 [properties]
