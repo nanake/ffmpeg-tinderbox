@@ -34,9 +34,9 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    echo --enable-fontconfig
+    echo --enable-libfontconfig
 }
 
 ffbuild_unconfigure() {
-    echo --disable-fontconfig
+    echo --disable-libfontconfig
 }
