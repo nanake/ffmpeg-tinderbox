@@ -33,3 +33,11 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 }
+
+ffbuild_configure() {
+    echo --enable-libharfbuzz
+}
+
+ffbuild_unconfigure() {
+    echo --disable-libharfbuzz
+}
