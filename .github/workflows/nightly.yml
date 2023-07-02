@@ -34,8 +34,11 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [win32, win64]
+        target: [ucrt64, win32, win64]
         variant: [nonfree, nonfree-shared]
+        exclude:
+          - target: ucrt64
+            variant: nonfree-shared
     steps:
       - name: Checkout
         uses: actions/checkout@v3
