@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="00935aaabf266b7fa61688dede5f2a24d0d73da0"
+JXL_COMMIT="5f3cc36bca9e43cf78aa5b819b74b387c638cac5"
 
 ffbuild_enabled() {
     return 0
@@ -15,7 +15,7 @@ ffbuild_dockerbuild() {
     mkdir build && cd build
 
     # Fix AVX2 proc (64bit) crash by highway due to unaligned stack memory
-    if [[ $TARGET == win64 ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
         export CXXFLAGS="$CXXFLAGS -Wa,-muse-unaligned-vector-move"
         export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
     fi

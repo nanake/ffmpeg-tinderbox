@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         --enable-pic
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
             --cross-prefix="$FFBUILD_CROSS_PREFIX"

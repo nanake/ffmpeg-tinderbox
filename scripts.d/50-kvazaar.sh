@@ -4,6 +4,7 @@ KVAZAAR_REPO="https://github.com/ultravideo/kvazaar.git"
 KVAZAAR_COMMIT="e001c6a867068b448354d955363bd2ff7caf33d2"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

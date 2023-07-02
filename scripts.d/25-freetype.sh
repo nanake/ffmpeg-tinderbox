@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FREETYPE_REPO="https://gitlab.freedesktop.org/freetype/freetype.git"
-FREETYPE_COMMIT="5c00a46805d6423fc45b4ba2c0f2e22dd0450d73"
+FREETYPE_COMMIT="e4586d960f339cf75e2e0b34aee30a0ed8353c0d"
 
 ffbuild_enabled() {
     return 0
@@ -11,17 +11,26 @@ ffbuild_dockerbuild() {
     git-mini-clone "$FREETYPE_REPO" "$FREETYPE_COMMIT" freetype
     cd freetype
 
-    mkdir build && cd build
+    ./autogen.sh
 
-    cmake \
-        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
-        -DCMAKE_BUILD_TYPE=Release \
-        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DBUILD_SHARED_LIBS=OFF \
-        -GNinja \
-        ..
-    ninja -j$(nproc)
-    ninja install
+    local myconf=(
+        --prefix="$FFBUILD_PREFIX"
+        --disable-shared
+        --enable-static
+    )
+
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
+        myconf+=(
+            --host="$FFBUILD_TOOLCHAIN"
+        )
+    else
+        echo "Unknown target"
+        return -1
+    fi
+
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {

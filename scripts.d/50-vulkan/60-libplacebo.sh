@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PLACEBO_REPO="https://github.com/haasn/libplacebo.git"
-PLACEBO_COMMIT="6377e058becb8e3899ea565dc7077b241d5fe481"
+PLACEBO_COMMIT="a03718eecf1d6da2d02ffeacb858e48331702a4b"
 
 ffbuild_enabled() {
     return 0
@@ -24,7 +24,7 @@ ffbuild_dockerbuild() {
         -Dvulkan-registry="$FFBUILD_PREFIX"/share/vulkan/registry/vk.xml
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

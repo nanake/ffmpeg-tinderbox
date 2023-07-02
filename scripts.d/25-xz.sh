@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XZ_REPO="https://github.com/xz-mirror/xz.git"
-XZ_COMMIT="1dbe12b90cff79bb51923733ac0840747b4b4131"
+XZ_COMMIT="86118ea320f867e09e98a8682cc08cbbdfd640e2"
 
 ffbuild_enabled() {
     return 0
@@ -11,7 +11,7 @@ ffbuild_dockerbuild() {
     git-mini-clone "$XZ_REPO" "$XZ_COMMIT" xz
     cd xz
 
-    ./autogen.sh --no-po4a
+    ./autogen.sh --no-po4a --no-doxygen
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -20,7 +20,7 @@ ffbuild_dockerbuild() {
         --with-pic
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )

@@ -16,14 +16,6 @@ ffbuild_dockerbuild() {
         --static
     )
 
-    if [[ $TARGET == win* ]]; then
-        export CC="${FFBUILD_CROSS_PREFIX}gcc"
-        export AR="${FFBUILD_CROSS_PREFIX}ar"
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
     ./configure "${myconf[@]}"
     make -j$(nproc)
     make install

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SDL_SRC="https://github.com/libsdl-org/SDL/releases/download/release-2.26.5/SDL2-devel-2.26.5-mingw.tar.gz"
+SDL_SRC="https://github.com/libsdl-org/SDL/releases/download/release-2.28.1/SDL2-devel-2.28.1-mingw.tar.gz"
 
 ffbuild_enabled() {
     return 0
@@ -10,7 +10,7 @@ ffbuild_dockerbuild() {
     curl -L "$SDL_SRC" | tar xz
     cd SDL*
 
-    if [[ $TARGET == win64 ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
         cd x86_64-w64-mingw32
     elif [[ $TARGET == win32 ]]; then
         cd i686-w64-mingw32

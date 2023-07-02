@@ -1,10 +1,10 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="b38a7d3e8016d920f02aad09187e4a5f6ae46246"
+MINGW_COMMIT="bbae5ec1db4800fcea233d347aead81097f9cb25"
 
 ffbuild_enabled() {
-    [[ $TARGET == win* ]] || return -1
+    [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]] || return -1
     return 0
 }
 
@@ -33,6 +33,12 @@ ffbuild_dockerbuild() {
         --host="$FFBUILD_TOOLCHAIN"
         --enable-idl
     )
+
+    if [[ $TARGET != ucrt64 ]]; then
+        myconf+=(
+            --with-default-msvcrt=msvcrt
+        )
+    fi
 
     ./configure "${myconf[@]}"
     make -j$(nproc)

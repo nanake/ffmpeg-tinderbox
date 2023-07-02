@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENMPT_REPO="https://github.com/OpenMPT/openmpt.git"
-OPENMPT_COMMIT="b27ffaf7fbaac5792684fd21145dee143f9d5a74"
+OPENMPT_COMMIT="4cf991c546eb633f5000ed80b6040f59f2de8129"
 
 ffbuild_enabled() {
     return 0
@@ -41,9 +41,16 @@ ffbuild_dockerbuild() {
         NO_FLAC=1
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
         myconf+=(
-            CONFIG=mingw64-"$TARGET"
+            CONFIG=mingw-w64
+            WINDOWS_ARCH=amd64
+        )
+        export CPPFLAGS="$CPPFLAGS -DMPT_WITH_MINGWSTDTHREADS"
+    elif [[ $TARGET == win32 ]]; then
+        myconf+=(
+            CONFIG=mingw-w64
+            WINDOWS_ARCH=x86
         )
         export CPPFLAGS="$CPPFLAGS -DMPT_WITH_MINGWSTDTHREADS"
     else

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RUBBERBAND_REPO="https://github.com/breakfastquay/rubberband.git"
-RUBBERBAND_COMMIT="82dab93ecf44c9b1203289c0118760b7331b2156"
+RUBBERBAND_COMMIT="1eddafd7a7c8b64e377d64ee5e87ead881a32a48"
 
 ffbuild_enabled() {
     return 0
@@ -20,7 +20,7 @@ ffbuild_dockerbuild() {
         -Dresampler=libsamplerate
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

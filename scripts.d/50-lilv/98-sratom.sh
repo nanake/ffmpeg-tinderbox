@@ -1,9 +1,10 @@
 #!/bin/bash
 
 SRATOM_REPO="https://github.com/lv2/sratom.git"
-SRATOM_COMMIT="6805327a511242ce9697ccfb98be4569d8883e33"
+SRATOM_COMMIT="b97b447d77fbf172260b4b40f184959f59c3623e"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

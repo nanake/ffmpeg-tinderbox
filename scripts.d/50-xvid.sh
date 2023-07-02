@@ -14,7 +14,7 @@ ffbuild_dockerbuild() {
 
     # The original code fails on a two-digit major...
     sed -i\
-        -e 's/GCC_MAJOR=.*/GCC_MAJOR=10/' \
+        -e 's/GCC_MAJOR=.*/GCC_MAJOR=12/' \
         -e 's/GCC_MINOR=.*/GCC_MINOR=0/' \
         configure.in
 
@@ -24,7 +24,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )

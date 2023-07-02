@@ -1,9 +1,10 @@
 #!/bin/bash
 
 ZIX_REPO="https://github.com/drobilla/zix.git"
-ZIX_COMMIT="a13ae5ad9dc70075740f11139f1db96cc79faa59"
+ZIX_COMMIT="a5c18d52a5351430d370084f25aaf7d166f7afd5"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
         LIBDIR_NAME=lib
         CC="$FFBUILD_CROSS_PREFIX"gcc
         CXX="$FFBUILD_CROSS_PREFIX"g++
-        AR="$FFBUILD_CROSS_PREFIX"ar
+        AR="$FFBUILD_CROSS_PREFIX"gcc-ar
     )
 
     if [[ $TARGET == win32 ]]; then
@@ -26,7 +26,7 @@ ffbuild_dockerbuild() {
             OS=mingw_nt
             ARCH=i686
         )
-    elif [[ $TARGET == win64 ]]; then
+    elif [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
         myconf+=(
             OS=mingw_nt
             ARCH=x86_64

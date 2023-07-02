@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DAV1D_REPO="https://github.com/videolan/dav1d.git"
-DAV1D_COMMIT="2373fda303d46489c1ec269dc66369a31663cb25"
+DAV1D_COMMIT="616bfd1506a8a75c6a358e578cbec9ca11931502"
 
 ffbuild_enabled() {
     return 0
@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -Dlogging=false
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

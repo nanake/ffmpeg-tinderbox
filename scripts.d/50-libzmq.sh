@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZMQ_REPO="https://github.com/zeromq/libzmq.git"
-ZMQ_COMMIT="5657b4586f24ec433930e8ece02ddba7afcf0fe0"
+ZMQ_COMMIT="ecc63d0d3b0e1a62c90b58b1ccdb5ac16cb2400a"
 
 ffbuild_enabled() {
     return 0
@@ -20,7 +20,7 @@ ffbuild_dockerbuild() {
         --disable-Werror
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )

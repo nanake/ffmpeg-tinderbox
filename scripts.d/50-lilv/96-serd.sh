@@ -4,6 +4,7 @@ SERD_REPO="https://github.com/drobilla/serd.git"
 SERD_COMMIT="dbf48d099a78d2075e224549a28e690d56a6d503"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

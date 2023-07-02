@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVPX_REPO="https://github.com/webmproject/libvpx.git"
-LIBVPX_COMMIT="8cee267d3d056ea006e0b5bb380742e3da0a5480"
+LIBVPX_COMMIT="dcb91aa3ddc21586a9bc9d3ee9c270ad1b1a5fe1"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --disable-{shared,docs,examples,tools,unit-tests}
     )
 
-    if [[ $TARGET == win64 ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
         myconf+=(
             --target=x86_64-win64-gcc
         )

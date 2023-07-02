@@ -1,9 +1,10 @@
 #!/bin/bash
 
 LILV_REPO="https://github.com/lv2/lilv.git"
-LILV_COMMIT="caad4f5554fd77b61a0907a67bab90bc656d86ad"
+LILV_COMMIT="54b32c1949d60225602a7161d5d6c4853230307a"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

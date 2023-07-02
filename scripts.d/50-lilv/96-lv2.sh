@@ -4,6 +4,7 @@ LV2_REPO="https://github.com/lv2/lv2.git"
 LV2_COMMIT="bb6a2103c7adf3c1339728915d7f1497ee98dcbf"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

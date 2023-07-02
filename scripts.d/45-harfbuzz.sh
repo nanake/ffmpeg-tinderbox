@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HARFBUZZ_REPO="https://github.com/harfbuzz/harfbuzz.git"
-HARFBUZZ_COMMIT="db700b5670d9475cc8ed4880cc9447b232c5e432"
+HARFBUZZ_COMMIT="47b5ee6789ca9125cc4299da1f3a3c05300dff78"
 
 ffbuild_enabled() {
     return 0
@@ -20,7 +20,7 @@ ffbuild_dockerbuild() {
         -D{benchmark,cairo,docs,glib,gobject,icu,introspection,tests}"=disabled"
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

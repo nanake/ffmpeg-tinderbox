@@ -4,6 +4,7 @@ SORD_REPO="https://github.com/drobilla/sord.git"
 SORD_COMMIT="46f4bcbe04330645a11d00e56a7754cc1386bc45"
 
 ffbuild_enabled() {
+    [[ $TARGET == ucrt64 ]] && return -1
     return 0
 }
 

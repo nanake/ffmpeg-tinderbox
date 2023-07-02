@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20230613"
+RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20230627"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
@@ -8,13 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    if [[ $TARGET == win64 ]]; then
-        wget -O rav1e.zip "${RAV1E_SRC_PREFIX}/rav1e-windows-gnu-sse4.zip"
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
+    wget -O rav1e.zip "${RAV1E_SRC_PREFIX}/rav1e-windows-gnu-sse4.zip"
     unzip rav1e.zip
     cd rav1e-*
 

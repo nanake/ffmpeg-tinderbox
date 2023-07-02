@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ARIBCAPTION_REPO="https://github.com/xqq/libaribcaption"
+ARIBCAPTION_REPO="https://github.com/xqq/libaribcaption.git"
 ARIBCAPTION_COMMIT="d333768309a8a757f0f3879b44737bce69444022"
 
 ffbuild_enabled() {
@@ -21,6 +21,10 @@ ffbuild_dockerbuild() {
         ..
     ninja -j$(nproc)
     ninja install
+
+    if [[ $TARGET == ucrt64 ]]; then
+        sed -i 's/-l\/.*\/lib\/libstdc++.a/-lstdc++/' "$FFBUILD_PREFIX"/lib/pkgconfig/libaribcaption.pc
+    fi
 }
 
 ffbuild_configure() {

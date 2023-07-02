@@ -11,17 +11,19 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LIBBLURAY_REPO" "$LIBBLURAY_COMMIT" libbluray
     cd libbluray
 
+    git submodule update --init --recursive --depth 1
+
     ./bootstrap
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --enable-static
         --disable-{shared,bdjava-jar,doxygen-{doc,dot,html,pdf,ps},examples}
-        --without-{fontconfig,libxml2}
+        --without-{external-libudfread,fontconfig,freetype,libxml2}
         --with-pic
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VMAF_REPO="https://github.com/Netflix/vmaf.git"
-VMAF_COMMIT="5ee0051cd7b1337e033558910c30525d73edfd76"
+VMAF_COMMIT="98bdd77b296da207ab42c3113ec8f30de58db197"
 
 ffbuild_enabled() {
     return 0
@@ -24,7 +24,7 @@ ffbuild_dockerbuild() {
         -Denable_{docs,tests}"=false"
     )
 
-    if [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )
