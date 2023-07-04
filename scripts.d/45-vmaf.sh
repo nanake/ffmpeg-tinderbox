@@ -19,7 +19,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
-        --default-library=static
+        -Ddefault_library=static
         -D{built_in_models,enable_float}"=true"
         -Denable_{docs,tests}"=false"
     )
@@ -33,7 +33,7 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    meson "${myconf[@]}" ../libvmaf
+    meson setup "${myconf[@]}" ../libvmaf
     ninja -j"$(nproc)"
     ninja install
 

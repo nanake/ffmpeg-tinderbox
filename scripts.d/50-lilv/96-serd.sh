@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
-        --default-library=static
+        -Ddefault_library=static
         -Dstatic=true
         -D{docs,tests,tools}"=disabled"
     )
@@ -31,7 +31,7 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    meson "${myconf[@]}" ..
+    meson setup "${myconf[@]}" ..
     ninja -j"$(nproc)"
     ninja install
 }
