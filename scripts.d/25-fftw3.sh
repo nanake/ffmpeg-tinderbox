@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FFTW_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10-2-mingw-w64.tar.xz"
+FFTW_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10-3-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     return 0
@@ -8,7 +8,7 @@ ffbuild_enabled() {
 
 ffbuild_dockerbuild() {
     if [[ $TARGET == ucrt64 ]]; then
-      FFTW_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10-ucrt-mingw-w64.tar.xz"
+      FFTW_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10-ucrt-1-mingw-w64.tar.xz"
     fi
 
     curl -L "$FFTW_SRC" | tar xJ

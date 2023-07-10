@@ -1,7 +1,6 @@
 #!/bin/bash
 
-XAVS2_REPO="https://github.com/pkuvcl/xavs2.git"
-XAVS2_COMMIT="eae1e8b9d12468059bdd7dee893508e470fa83d8"
+XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/git-eae1e8b/xavs2-git-eae1e8b-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -10,31 +9,15 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone "$XAVS2_REPO" xavs2
-    cd xavs2
-    git checkout "$XAVS2_COMMIT"
-    cd build/linux
-
-    local myconf=(
-        --disable-{avs,cli,ffms,gpac,lavf,lsmash,swscale}
-        --enable-{static,pic}
-        --extra-asflags="-w-macro-params-legacy"
-        --prefix="$FFBUILD_PREFIX"
-    )
-
-    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-            --cross-prefix="$FFBUILD_CROSS_PREFIX"
-        )
-    else
-        echo "Unknown target"
-        return -1
+    if [[ $TARGET == ucrt64 ]]; then
+      XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/git-eae1e8b/xavs2-git-eae1e8b-ucrt-mingw-w64.tar.xz"
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
+    curl -L "$XAVS2_SRC" | tar xJ
+    cd xavs2*/x86_64*
+
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
 }
 
 ffbuild_configure() {

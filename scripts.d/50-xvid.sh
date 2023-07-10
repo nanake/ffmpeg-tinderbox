@@ -1,7 +1,6 @@
 #!/bin/bash
 
-XVID_REPO="https://github.com/nanake/xvidcore.git"
-XVID_COMMIT="1fd3f3fb34e89597fc47200c65fb25107f19de11"
+XVID_SRC="https://github.com/nanake/xvidcore/releases/download/git-1fd3f3f/xvidcore-git-1fd3f3f-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -9,35 +8,24 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$XVID_REPO" "$XVID_COMMIT" xvid
-    cd xvid/build/generic
+    if [[ $TARGET == ucrt64 ]]; then
+      XVID_SRC="https://github.com/nanake/xvidcore/releases/download/git-1fd3f3f/xvidcore-git-1fd3f3f-ucrt-mingw-w64.tar.xz"
+    fi
 
-    # The original code fails on a two-digit major...
-    sed -i\
-        -e 's/GCC_MAJOR=.*/GCC_MAJOR=12/' \
-        -e 's/GCC_MINOR=.*/GCC_MINOR=0/' \
-        configure.in
+    curl -L "$XVID_SRC" | tar xJ
+    cd xvid*
 
-    ./bootstrap.sh
-
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-    )
-
-    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
+    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+        cd x86_64*
+    elif [[ $TARGET == win32 ]]; then
+        cd i686*
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j$(nproc)
-    make install
-
-    rm "$FFBUILD_PREFIX"/{bin/libxvidcore.dll,lib/libxvidcore.dll.a}
+    cp -r include/. "$FFBUILD_PREFIX"/include/.
+    cp -r lib/. "$FFBUILD_PREFIX"/lib/.
 }
 
 ffbuild_configure() {

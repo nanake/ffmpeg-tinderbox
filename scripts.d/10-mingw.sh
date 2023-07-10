@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="bbae5ec1db4800fcea233d347aead81097f9cb25"
+MINGW_COMMIT="3638d5e9a6f28354bc3e18f04ba0d97e2cc3b44c"
 
 ffbuild_enabled() {
     [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]] || return -1
