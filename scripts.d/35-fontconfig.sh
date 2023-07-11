@@ -1,36 +1,36 @@
 #!/bin/bash
 
-FONTCONFIG_SRC="https://www.freedesktop.org/software/fontconfig/release/fontconfig-2.14.2.tar.xz"
+FC_REPO="https://gitlab.freedesktop.org/fontconfig/fontconfig.git"
+FC_COMMIT="7e2a1b2577e8d90ea5be3f14091e809ac7742438"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$FONTCONFIG_SRC" | tar xJ
-    cd fontconfig*
+    git-mini-clone "$FC_REPO" "$FC_COMMIT" fc
+    cd fc
 
-    mkdir build && cd build
+    ./autogen.sh --noconf
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --buildtype=release
-        -Ddefault_library=static
-        -D{doc,tests,tools}"=disabled"
+        --disable-{shared,docs}
+        --enable-{static,iconv,libxml2}
     )
 
     if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
-            --cross-file=/cross.meson
+            --host="$FFBUILD_TOOLCHAIN"
         )
     else
         echo "Unknown target"
         return -1
     fi
 
-    meson setup "${myconf[@]}" ..
-    ninja -j$(nproc)
-    ninja install
+    ./configure "${myconf[@]}"
+    make -j$(nproc)
+    make install
 }
 
 ffbuild_configure() {
