@@ -1,21 +1,23 @@
 #!/bin/bash
 
-GMP_SRC="https://ftp.gnu.org/gnu/gmp/gmp-6.2.1.tar.xz"
+GMP_REPO="https://github.com/BtbN/gmplib.git"
+GMP_COMMIT="1d7f62515fc8f5109fabace9592d863417f17c37"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    curl -L "$GMP_SRC" | tar xJ
-    cd gmp*
+    git-mini-clone "$GMP_REPO" "$GMP_COMMIT" gmp
+    cd gmp
 
-    autoreconf -i
+    ./.bootstrap
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
         --enable-static
+        --enable-maintainer-mode
         --with-pic
     )
 
