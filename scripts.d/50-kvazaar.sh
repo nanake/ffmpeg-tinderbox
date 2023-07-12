@@ -1,7 +1,7 @@
 #!/bin/bash
 
 KVAZAAR_REPO="https://github.com/ultravideo/kvazaar.git"
-KVAZAAR_COMMIT="589ed477d55560250dcc1dd2ea6a31b517545ebf"
+KVAZAAR_COMMIT="49dc5fcaf4b3aab2e9edb74b7b820b41a18b6b10"
 
 ffbuild_enabled() {
     return 0
@@ -20,12 +20,7 @@ ffbuild_dockerbuild() {
         --with-pic
     )
 
-    if [[ $TARGET == ucrt64 ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-        export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
-    elif [[ $TARGET == win* ]]; then
+    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )
