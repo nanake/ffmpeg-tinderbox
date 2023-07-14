@@ -3,8 +3,8 @@ set -e
 git fetch --tags
 TAGS=( $(git tag -l "build-*" | sort -r) )
 
-KEEP_LATEST=12
-KEEP_MONTHLY=6
+KEEP_LATEST=20
+KEEP_MONTHLY=12
 
 LATEST_TAGS=()
 MONTHLY_TAGS=()
