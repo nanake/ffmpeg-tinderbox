@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="3638d5e9a6f28354bc3e18f04ba0d97e2cc3b44c"
+MINGW_COMMIT="0f4a2abd6995566a48ad46e05f2c968787bcc311"
 
 ffbuild_enabled() {
     [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]] || return -1
@@ -28,14 +28,20 @@ ffbuild_dockerbuild() {
     unset LDFLAGS
     unset PKG_CONFIG_LIBDIR
 
+    SYSROOT="$($CC -print-sysroot)"
+
     local myconf=(
-        --prefix="/usr/$FFBUILD_TOOLCHAIN"
         --host="$FFBUILD_TOOLCHAIN"
         --enable-idl
     )
 
-    if [[ $TARGET != ucrt64 ]]; then
+    if [[ $TARGET == ucrt64 ]]; then
         myconf+=(
+            --prefix="$SYSROOT/mingw"
+        )
+    else
+        myconf+=(
+            --prefix="/usr/$FFBUILD_TOOLCHAIN"
             --with-default-msvcrt=msvcrt
         )
     fi
@@ -47,12 +53,21 @@ ffbuild_dockerbuild() {
     cd ../mingw-w64-libraries/winpthreads
 
     local myconf=(
-        --prefix="/usr/$FFBUILD_TOOLCHAIN"
         --host="$FFBUILD_TOOLCHAIN"
         --with-pic
         --disable-shared
         --enable-static
     )
+
+    if [[ $TARGET == ucrt64 ]]; then
+        myconf+=(
+            --prefix="$SYSROOT/mingw"
+        )
+    else
+        myconf+=(
+            --prefix="/usr/$FFBUILD_TOOLCHAIN"
+        )
+    fi
 
     ./configure "${myconf[@]}"
     make -j$(nproc)
