@@ -1,7 +1,7 @@
 #!/bin/bash
 
 AVISYNTH_REPO="https://github.com/AviSynth/AviSynthPlus.git"
-AVISYNTH_COMMIT="ad0d546cd2fd5eadf3b4d29df24bf3f6713d9707"
+AVISYNTH_COMMIT="fc5b9bc41fd47001b7da39ea777d29c0ede2a2a7"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -11,6 +11,7 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$AVISYNTH_REPO" "$AVISYNTH_COMMIT" avisynth
     cd avisynth
+    git fetch --depth=1 origin +refs/tags/*:refs/tags/*
 
     mkdir build && cd build
 
