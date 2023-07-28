@@ -18,14 +18,12 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DWITH_OPENMP=ON \
+        -DWITH_OPENMP=OFF \
         -DBUILD_{TESTS,EXAMPLES,SHARED_LIBS}=OFF \
         -GNinja \
         ..
     ninja -j$(nproc)
     ninja install
-
-    echo "Libs.private: -lgomp" >> "$FFBUILD_PREFIX"/lib/pkgconfig/soxr.pc
 }
 
 ffbuild_configure() {
@@ -34,12 +32,4 @@ ffbuild_configure() {
 
 ffbuild_unconfigure() {
     echo --disable-libsoxr
-}
-
-ffbuild_ldflags() {
-    echo -pthread
-}
-
-ffbuild_libs() {
-    echo -lgomp
 }
