@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="0f4a2abd6995566a48ad46e05f2c968787bcc311"
+MINGW_COMMIT="868b4a0773c5d09685635785dacad00a6dbae9f3"
 
 ffbuild_enabled() {
     [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]] || return -1
@@ -23,10 +23,7 @@ ffbuild_dockerbuild() {
 
     cd mingw-w64-headers
 
-    unset CFLAGS
-    unset CXXFLAGS
-    unset LDFLAGS
-    unset PKG_CONFIG_LIBDIR
+    unset CFLAGS CXXFLAGS LDFLAGS PKG_CONFIG_LIBDIR
 
     SYSROOT="$($CC -print-sysroot)"
 

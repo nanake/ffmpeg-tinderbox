@@ -15,8 +15,8 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --enable-static
         --disable-shared
+        --enable-static
     )
 
     if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GMP_REPO="https://github.com/BtbN/gmplib.git"
-GMP_COMMIT="1d7f62515fc8f5109fabace9592d863417f17c37"
+GMP_COMMIT="98a1f1bbab377f94815ee19211bcc4b94b09e085"
 
 ffbuild_enabled() {
     return 0
@@ -16,8 +16,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
-        --enable-static
-        --enable-maintainer-mode
+        --enable-{static,maintainer-mode}
         --with-pic
     )
 

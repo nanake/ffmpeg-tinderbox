@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVPX_REPO="https://github.com/webmproject/libvpx.git"
-LIBVPX_COMMIT="9ad950a9c4f8906fcdabb3402db1a17a9d99ee4c"
+LIBVPX_COMMIT="d62edaf41f8ffb3f1bc3e7f7b449c63258666d9c"
 
 ffbuild_enabled() {
     return 0
@@ -13,8 +13,8 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --enable-{static,pic,vp9-highbitdepth}
         --disable-{shared,docs,examples,tools,unit-tests}
+        --enable-{static,pic,vp9-highbitdepth}
     )
 
     if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
