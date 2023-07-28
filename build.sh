@@ -53,7 +53,10 @@ FFMPEG_REPO="${FFMPEG_REPO_OVERRIDE:-$FFMPEG_REPO}"
 GIT_BRANCH="${GIT_BRANCH:-master}"
 GIT_BRANCH="${GIT_BRANCH_OVERRIDE:-$GIT_BRANCH}"
 
-docker run --rm -i "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild "$IMAGE" bash -s <<EOF
+BUILD_SCRIPT="$(mktemp)"
+trap "rm -f -- '$BUILD_SCRIPT'" EXIT
+
+cat <<EOF >"$BUILD_SCRIPT"
     set -xe
     cd /ffbuild
     rm -rf ffmpeg prefix
@@ -67,6 +70,10 @@ docker run --rm -i "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild "$IMAGE" bash -s <<E
     make -j\$(nproc)
     make install
 EOF
+
+[[ -t 1 ]] && TTY_ARG="-t" || TTY_ARG=""
+
+docker run --rm -i $TTY_ARG "${UIDARGS[@]}" -v $PWD/ffbuild:/ffbuild -v "$BUILD_SCRIPT":/build.sh "$IMAGE" bash /build.sh
 
 mkdir -p artifacts
 ARTIFACTS_PATH="$PWD/artifacts"
