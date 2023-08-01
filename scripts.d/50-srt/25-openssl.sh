@@ -19,7 +19,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    if [[ $TARGET == win64 ]]; then
         myconf+=(
             # (win64) install libraries onto lib not lib64
             # otherwise srt fails to find libcrypto

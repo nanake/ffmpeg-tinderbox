@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -D{built_tools,test}"=false"
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
+    if [[ $TARGET == win* ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

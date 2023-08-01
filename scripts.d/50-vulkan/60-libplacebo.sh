@@ -24,7 +24,7 @@ ffbuild_dockerbuild() {
         -Dvulkan-registry="$FFBUILD_PREFIX"/share/vulkan/registry/vk.xml
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
+    if [[ $TARGET == win* ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

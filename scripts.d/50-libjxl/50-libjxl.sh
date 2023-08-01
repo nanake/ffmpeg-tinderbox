@@ -15,7 +15,7 @@ ffbuild_dockerbuild() {
     mkdir build && cd build
 
     # Fix AVX2 proc (64bit) crash by highway due to unaligned stack memory
-    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    if [[ $TARGET == win64 ]]; then
         export CXXFLAGS="$CXXFLAGS -Wa,-muse-unaligned-vector-move"
         export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
     fi
@@ -34,8 +34,7 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 
-    echo "Libs.private: -lstdc++ -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
-    echo "Libs.private: -lstdc++ -ladvapi32" >> "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_threads.pc
+    echo "Libs.private: -lstdc++ -ladvapi32" | tee -a "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
 }
 
 ffbuild_configure() {

@@ -30,7 +30,7 @@ ffbuild_dockerbuild() {
         --without-{doxygen,x}
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
+    if [[ $TARGET == win* ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
         )

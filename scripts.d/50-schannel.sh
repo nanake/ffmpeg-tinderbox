@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ffbuild_enabled() {
-    [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]
+    [[ $TARGET == win* ]]
 }
 
 ffbuild_dockerstage() {

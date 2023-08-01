@@ -24,16 +24,17 @@ ffbuild_dockerbuild() {
         -DSHADERC_ENABLE_WERROR_COMPILE=OFF \
         -DSHADERC_SKIP_{COPYRIGHT_CHECK,EXAMPLES,TESTS}=ON \
         -DSPIRV_{TOOLS_BUILD_STATIC,SKIP_EXECUTABLES}=ON \
+        -DSPIRV_WERROR=OFF \
         -GNinja \
         ..
     ninja -j$(nproc)
     ninja install
 
     # for some reason, this does not get installed...
+    # https://github.com/google/shaderc/issues/1228
     cp libshaderc_util/libshaderc_util.a "$FFBUILD_PREFIX"/lib
 
-    echo "Libs: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/shaderc_combined.pc
-    echo "Libs: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/shaderc_static.pc
+    echo "Libs: -lstdc++" | tee -a "$FFBUILD_PREFIX"/lib/pkgconfig/shaderc_{combined,static}.pc
 
     cp "$FFBUILD_PREFIX"/lib/pkgconfig/{shaderc_combined,shaderc}.pc
 

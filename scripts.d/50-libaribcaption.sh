@@ -22,9 +22,7 @@ ffbuild_dockerbuild() {
     ninja -j$(nproc)
     ninja install
 
-    if [[ $TARGET == ucrt64 ]]; then
-        sed -i 's/-l\/.*\/lib\/libstdc++.a/-lstdc++/' "$FFBUILD_PREFIX"/lib/pkgconfig/libaribcaption.pc
-    fi
+    sed -i 's/-l\/.*\/lib\/libstdc++.a/-lstdc++/' "$FFBUILD_PREFIX"/lib/pkgconfig/libaribcaption.pc
 }
 
 ffbuild_configure() {

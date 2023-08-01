@@ -10,7 +10,7 @@ ffbuild_dockerbuild() {
     curl -L "$SDL_SRC" | tar xz
     cd SDL*
 
-    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    if [[ $TARGET == win64 ]]; then
         cd x86_64-w64-mingw32
     elif [[ $TARGET == win32 ]]; then
         cd i686-w64-mingw32

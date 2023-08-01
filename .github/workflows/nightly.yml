@@ -34,7 +34,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        target: [ucrt64, win32, win64]
+        target: [win32, win64]
         variant: [nonfree, nonfree-shared]
     steps:
       - name: Checkout

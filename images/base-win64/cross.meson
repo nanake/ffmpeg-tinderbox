@@ -1,5 +1,5 @@
 [constants]
-arch = 'x86_64-w64-mingw32'
+arch = 'x86_64-w64-mingw32ucrt'
 
 [binaries]
 c = arch + '-gcc'

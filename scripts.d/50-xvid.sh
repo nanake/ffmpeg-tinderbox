@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XVID_SRC="https://github.com/nanake/xvidcore/releases/download/git-1fd3f3f/xvidcore-git-1fd3f3f-mingw-w64.tar.xz"
+XVID_SRC="https://github.com/nanake/xvidcore/releases/download/git-1fd3f3f/xvidcore-git-1fd3f3f-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -8,14 +8,10 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    if [[ $TARGET == ucrt64 ]]; then
-      XVID_SRC="https://github.com/nanake/xvidcore/releases/download/git-1fd3f3f/xvidcore-git-1fd3f3f-ucrt-mingw-w64.tar.xz"
-    fi
-
     curl -L "$XVID_SRC" | tar xJ
     cd xvid*
 
-    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    if [[ $TARGET == win64 ]]; then
         cd x86_64*
     elif [[ $TARGET == win32 ]]; then
         cd i686*

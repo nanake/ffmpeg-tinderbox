@@ -41,7 +41,7 @@ ffbuild_dockerbuild() {
         NO_FLAC=1
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    if [[ $TARGET == win64 ]]; then
         myconf+=(
             CONFIG=mingw-w64
             WINDOWS_ARCH=amd64

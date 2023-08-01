@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --enable-{static,pic,vp9-highbitdepth}
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    if [[ $TARGET == win64 ]]; then
         myconf+=(
             --target=x86_64-win64-gcc
         )

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/git-eae1e8b/xavs2-git-eae1e8b-mingw-w64.tar.xz"
+XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/git-eae1e8b/xavs2-git-eae1e8b-1-mingw-w64.tar.xz"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -9,10 +9,6 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    if [[ $TARGET == ucrt64 ]]; then
-      XAVS2_SRC="https://github.com/nanake/xavs2/releases/download/git-eae1e8b/xavs2-git-eae1e8b-ucrt-mingw-w64.tar.xz"
-    fi
-
     curl -L "$XAVS2_SRC" | tar xJ
     cd xavs2*/x86_64*
 

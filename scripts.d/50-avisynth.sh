@@ -11,7 +11,7 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$AVISYNTH_REPO" "$AVISYNTH_COMMIT" avisynth
     cd avisynth
-    git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+    git fetch --depth=1 origin '+refs/tags/*:refs/tags/*'
 
     mkdir build && cd build
 

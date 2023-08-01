@@ -26,7 +26,7 @@ ffbuild_dockerbuild() {
             OS=mingw_nt
             ARCH=i686
         )
-    elif [[ $TARGET =~ ^(ucrt64|win64)$ ]]; then
+    elif [[ $TARGET == win64 ]]; then
         myconf+=(
             OS=mingw_nt
             ARCH=x86_64

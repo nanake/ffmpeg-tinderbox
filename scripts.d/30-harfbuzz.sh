@@ -20,7 +20,7 @@ ffbuild_dockerbuild() {
         -D{benchmark,cairo,docs,glib,gobject,icu,introspection,tests}"=disabled"
     )
 
-    if [[ $TARGET =~ ^(ucrt64|win(64|32))$ ]]; then
+    if [[ $TARGET == win* ]]; then
         myconf+=(
             --cross-file=/cross.meson
         )

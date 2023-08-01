@@ -1,63 +1,71 @@
 # syntax=docker/dockerfile:latest
-FROM debian:trixie-slim AS base
+FROM fedora:rawhide AS base
 
 RUN <<EOF
-    apt update
-    DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
+    cat >>/etc/dnf/dnf.conf <<-SETOPT
+		assumeyes=True
+		install_weak_deps=False
+		max_parallel_downloads=20
+	SETOPT
+    dnf5 install \
         autoconf \
         automake \
-        autopoint \
-        build-essential \
-        ca-certificates \
+        byacc \
         clang \
         cmake \
-        curl \
-        gawk \
-        gettext \
+        gcc \
+        gcc-c++ \
+        gettext-devel \
         git \
+        glibc-devel \
         gperf \
-        libc6-dev \
         libtool \
         meson \
         nasm \
         ninja-build \
-        pkgconf \
-        python-is-python3 \
-        python3-apt \
-        python3-distutils \
-        python3-mako \
+        patch \
+        perl-FindBin \
+        perl-IPC-Cmd \
+        pkgconf-pkg-config \
+        python-unversioned-command \
+        python3 \
         ragel \
-        texi2html \
         texinfo \
         unzip \
         wget \
+        which \
         xxd \
         yasm
-    update-ca-certificates
+    dnf5 clean all
     git config --global user.email "builder@localhost"
     git config --global user.name "Builder"
     git config --global advice.detachedHead false
 EOF
 
-RUN --mount=src=.,dst=/input \
+RUN --mount=src=.,dst=/input <<EOF
     for s in /input/*.sh; do cp $s /usr/bin/$(echo $s | sed -e 's|.*/||' -e 's/\.sh$//'); done
-
-FROM base AS build
-
-RUN <<EOF
-    DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
-        binutils-mingw-w64-i686 \
-        gcc-mingw-w64-i686-posix \
-        g++-mingw-w64-i686-posix
-    rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll*
-    rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s*
-    rm /usr/lib/gcc/*-w64-mingw32/*/*.dll.a
-    rm /usr/*-w64-mingw32/lib/*.dll.a
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
-    mkdir /opt/ffbuild
+    cp input/cross.meson input/toolchain.cmake /
 EOF
 
-COPY cross.meson toolchain.cmake /
+FROM base AS toolchain
+
+RUN <<EOF
+    dnf5 install \
+        mingw32-binutils \
+        mingw32-crt \
+        mingw32-filesystem \
+        mingw32-gcc \
+        mingw32-gcc-c++ \
+        mingw32-headers \
+        mingw32-libgcc \
+        mingw32-libgomp \
+        mingw32-libstdc++ \
+        mingw32-winpthreads-static
+    dnf5 clean all
+    find /usr/*mingw*/* -type f -name "*.dll*" -delete
+    rm -rf /tmp/* /usr/share/doc/* /var/cache/* /var/log/* /var/tmp/*
+    mkdir /opt/ffbuild
+EOF
 
 ENV FFBUILD_TOOLCHAIN=i686-w64-mingw32
 ENV FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=${FFBUILD_TOOLCHAIN}- --arch=i686 --target-os=mingw32" \

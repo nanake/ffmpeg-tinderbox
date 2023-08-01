@@ -1,65 +1,73 @@
 # syntax=docker/dockerfile:latest
-FROM debian:trixie-slim AS base
+FROM fedora:rawhide AS base
 
 RUN <<EOF
-    apt update
-    DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
+    cat >>/etc/dnf/dnf.conf <<-SETOPT
+		assumeyes=True
+		install_weak_deps=False
+		max_parallel_downloads=20
+	SETOPT
+    dnf5 install \
         autoconf \
         automake \
-        autopoint \
-        build-essential \
-        ca-certificates \
+        byacc \
         clang \
         cmake \
-        curl \
-        gawk \
-        gettext \
+        gcc \
+        gcc-c++ \
+        gettext-devel \
         git \
+        glibc-devel \
         gperf \
-        libc6-dev \
         libtool \
         meson \
         nasm \
         ninja-build \
-        pkgconf \
-        python-is-python3 \
-        python3-apt \
-        python3-distutils \
-        python3-mako \
+        patch \
+        perl-FindBin \
+        perl-IPC-Cmd \
+        pkgconf-pkg-config \
+        python-unversioned-command \
+        python3 \
         ragel \
-        texi2html \
         texinfo \
         unzip \
         wget \
+        which \
         xxd \
         yasm
-    update-ca-certificates
+    dnf5 clean all
     git config --global user.email "builder@localhost"
     git config --global user.name "Builder"
     git config --global advice.detachedHead false
 EOF
 
-RUN --mount=src=.,dst=/input \
+RUN --mount=src=.,dst=/input <<EOF
     for s in /input/*.sh; do cp $s /usr/bin/$(echo $s | sed -e 's|.*/||' -e 's/\.sh$//'); done
+    cp input/cross.meson input/toolchain.cmake /
+EOF
 
-FROM base AS build
+FROM base AS toolchain
 
 RUN <<EOF
-    DEBIAN_FRONTEND=noninteractive apt -y --no-install-recommends install \
-        binutils-mingw-w64-x86-64 \
-        gcc-mingw-w64-x86-64-posix \
-        g++-mingw-w64-x86-64-posix
-    rm /usr/lib/gcc/*-w64-mingw32/*/libstdc++*.dll*
-    rm /usr/lib/gcc/*-w64-mingw32/*/libgcc_s*
-    rm /usr/lib/gcc/*-w64-mingw32/*/*.dll.a
-    rm /usr/*-w64-mingw32/lib/*.dll.a
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
+    dnf5 install \
+        ucrt64-binutils \
+        ucrt64-crt \
+        ucrt64-filesystem \
+        ucrt64-gcc \
+        ucrt64-gcc-c++ \
+        ucrt64-headers \
+        ucrt64-libgcc \
+        ucrt64-libgomp \
+        ucrt64-libstdc++ \
+        ucrt64-winpthreads-static
+    dnf5 clean all
+    find /usr/*mingw*/* -type f -name "*.dll*" -delete
+    rm -rf /tmp/* /usr/share/doc/* /var/cache/* /var/log/* /var/tmp/*
     mkdir /opt/ffbuild
 EOF
 
-COPY cross.meson toolchain.cmake /
-
-ENV FFBUILD_TOOLCHAIN=x86_64-w64-mingw32
+ENV FFBUILD_TOOLCHAIN=x86_64-w64-mingw32ucrt
 ENV FFBUILD_TARGET_FLAGS="--pkg-config=pkg-config --cross-prefix=${FFBUILD_TOOLCHAIN}- --arch=x86_64 --target-os=mingw32" \
     FFBUILD_CROSS_PREFIX=${FFBUILD_TOOLCHAIN}- \
     FFBUILD_PREFIX=/opt/ffbuild \
