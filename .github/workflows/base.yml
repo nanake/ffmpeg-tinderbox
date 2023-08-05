@@ -39,9 +39,9 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: images/base-${{ matrix.target }}
-          outputs: type=registry,oci-mediatypes=true
+          outputs: type=registry,oci-mediatypes=true,compression=zstd,compression-level=7,force-compression=true
           cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
-          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max
+          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max,oci-mediatypes=true,compression=zstd,compression-level=7
           tags: ${{ steps.imagename.outputs.image }}
           provenance: false
 
