@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GMP_REPO="https://github.com/BtbN/gmplib.git"
-GMP_COMMIT="9b3bc1d6f15d7f53a0d9411ba176a5aef485c7a6"
+GMP_COMMIT="570be16d32f8dc222011db107327fd04b511dfd3"
 
 ffbuild_enabled() {
     return 0

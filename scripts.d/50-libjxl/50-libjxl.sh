@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="e6c54106fb7da0c7da57ee2e661ff1ef3e80553c"
+JXL_COMMIT="88cb6b8bb1e04e7e4effbaf34d7f22ea30729073"
 
 ffbuild_enabled() {
     return 0
