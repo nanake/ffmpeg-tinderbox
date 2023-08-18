@@ -20,6 +20,14 @@ ffbuild_dockerbuild() {
         export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
     fi
 
+    # _Float16 type is supported with SSE2 enabled
+    # FIXME: https://github.com/google/highway/issues/1663
+    # https://github.com/google/highway/pull/1664
+    if [[ $TARGET == win32 ]]; then
+        export CXXFLAGS="$CXXFLAGS -msse2 -mfpmath=sse"
+        export CFLAGS="$CFLAGS -msse2 -mfpmath=sse"
+    fi
+
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
