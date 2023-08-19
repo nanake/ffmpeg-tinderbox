@@ -12,20 +12,16 @@ ffbuild_dockerbuild() {
     cd jxl
     git submodule update --init --recursive --depth 1 --recommend-shallow third_party/{highway,skcms}
 
+    # FIXME: remove this when the fix is on libjxl
+    # update highway to get https://github.com/google/highway/commit/a23bfa7
+    git submodule update --remote third_party/highway
+
     mkdir build && cd build
 
     # Fix AVX2 proc (64bit) crash by highway due to unaligned stack memory
     if [[ $TARGET == win64 ]]; then
         export CXXFLAGS="$CXXFLAGS -Wa,-muse-unaligned-vector-move"
         export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
-    fi
-
-    # _Float16 type is supported with SSE2 enabled
-    # FIXME: https://github.com/google/highway/issues/1663
-    # https://github.com/google/highway/pull/1664
-    if [[ $TARGET == win32 ]]; then
-        export CXXFLAGS="$CXXFLAGS -msse2 -mfpmath=sse"
-        export CFLAGS="$CFLAGS -msse2 -mfpmath=sse"
     fi
 
     cmake \
