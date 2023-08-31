@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="06ce6cb513c442bfe9a0a9ad7df0d6d5f17dc07d"
+JXL_COMMIT="5d20fbe1cfcdb54bcc7880fc8a59bb9047d8c60f"
 
 ffbuild_enabled() {
     return 0
@@ -11,10 +11,6 @@ ffbuild_dockerbuild() {
     git-mini-clone "$JXL_REPO" "$JXL_COMMIT" jxl
     cd jxl
     git submodule update --init --recursive --depth 1 --recommend-shallow third_party/{highway,skcms}
-
-    # FIXME: remove this when the fix is on libjxl
-    # update highway to get https://github.com/google/highway/commit/a23bfa7
-    git submodule update --remote third_party/highway
 
     mkdir build && cd build
 

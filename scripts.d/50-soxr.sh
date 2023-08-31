@@ -20,6 +20,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DWITH_OPENMP=OFF \
         -DBUILD_{TESTS,EXAMPLES,SHARED_LIBS}=OFF \
+        -DDOC_INSTALL_DIR="$FFBUILD_PREFIX"/share/doc \
         -GNinja \
         ..
     ninja -j$(nproc)

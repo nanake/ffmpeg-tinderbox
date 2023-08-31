@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZVBI_REPO="https://github.com/zapping-vbi/zvbi.git"
-ZVBI_COMMIT="v0.2.41"
+ZVBI_COMMIT="v0.2.42"
 
 ffbuild_enabled() {
     return 0
@@ -43,8 +43,6 @@ ffbuild_dockerbuild() {
     make -C src -j$(nproc)
     make -C src install
     make SUBDIRS=. install
-
-    sed -i "s/\/[^ ]*libiconv.a/-liconv/" "$FFBUILD_PREFIX"/lib/pkgconfig/zvbi-0.2.pc
 }
 
 ffbuild_configure() {
