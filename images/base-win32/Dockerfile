@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:latest
-FROM fedora:rawhide AS base
+FROM ghcr.io/nanake/fedora:rawhide AS base
 
 RUN <<EOF
     cat >>/etc/dnf/dnf.conf <<-SETOPT
@@ -63,7 +63,7 @@ RUN <<EOF
         mingw32-winpthreads-static
     dnf5 clean all
     find /usr/*mingw*/* -type f -name "*.dll*" -delete
-    rm -rf /tmp/* /usr/share/doc/* /var/cache/* /var/log/* /var/tmp/*
+    rm -rf /tmp/* /usr/share/doc/* /var/cache/* /var/lib/dnf/history.* /var/log/* /var/tmp/*
     mkdir /opt/ffbuild
 EOF
 
