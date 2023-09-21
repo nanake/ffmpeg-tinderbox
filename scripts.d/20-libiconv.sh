@@ -34,7 +34,7 @@ ffbuild_dockerbuild() {
 
     ./autogen.sh
     ./configure "${myconf[@]}"
-    make -j$(nproc)
+    make -j"$(nproc)"
     make install
 }
 

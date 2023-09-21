@@ -45,6 +45,6 @@ ffbuild_dockerbuild() {
 
     ./Configure "${myconf[@]}"
 
-    make -j$(nproc)
+    make -j"$(nproc)"
     make install_sw
 }

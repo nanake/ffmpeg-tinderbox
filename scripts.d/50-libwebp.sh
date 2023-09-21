@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -DWEBP_BUILD_{{C,D,GIF2,IMG2,V}WEBP,ANIM_UTILS,EXTRAS,WEBPINFO,WEBPMUX}=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

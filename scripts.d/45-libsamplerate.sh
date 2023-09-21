@@ -23,6 +23,6 @@ ffbuild_dockerbuild() {
         -DLIBSAMPLERATE_INSTALL=YES \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }

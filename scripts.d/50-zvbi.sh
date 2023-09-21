@@ -40,7 +40,7 @@ ffbuild_dockerbuild() {
     fi
 
     ./configure "${myconf[@]}"
-    make -C src -j$(nproc)
+    make -C src -j"$(nproc)"
     make -C src install
     make SUBDIRS=. install
 }

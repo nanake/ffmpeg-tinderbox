@@ -23,7 +23,7 @@ ffbuild_dockerbuild() {
         -DUSE_STATIC_LIBSTDCXX=ON \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     echo "Libs.private: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/srt.pc

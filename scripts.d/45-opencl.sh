@@ -30,7 +30,7 @@ ffbuild_dockerbuild() {
         -DBUILD_{SHARED_LIBS,TESTING}=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     cat >"$FFBUILD_PREFIX"/lib/pkgconfig/OpenCL.pc <<EOF

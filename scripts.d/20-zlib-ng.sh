@@ -23,7 +23,7 @@ ffbuild_dockerbuild() {
         -DWITH_GTEST=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

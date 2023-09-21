@@ -37,7 +37,7 @@ all: 12bit/libx265.a 10bit/libx265.a 8bit/libx265.a
 .PHONY: all
 EOF
 
-        make -j$(nproc)
+        make -j"$(nproc)"
 
         cd 8bit
         mv ../12bit/libx265.a ../8bit/libx265_main12.a
@@ -56,7 +56,7 @@ EOF
         mkdir 8bit
         cd 8bit
         cmake "${common_config[@]}" ../source
-        make -j$(nproc)
+        make -j"$(nproc)"
     fi
 
     make install

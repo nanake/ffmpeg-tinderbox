@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -DLIBXML2_WITH_{CATALOG,DEBUG,HTML,HTTP,ICONV,LZMA,PROGRAMS,PYTHON,TESTS,ZLIB}=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     sed -i "s|^prefix=.*|prefix=${FFBUILD_PREFIX}|" "$FFBUILD_PREFIX"/lib/pkgconfig/libxml-2.0.pc

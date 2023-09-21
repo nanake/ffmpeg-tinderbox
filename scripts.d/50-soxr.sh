@@ -23,7 +23,7 @@ ffbuild_dockerbuild() {
         -DDOC_INSTALL_DIR="$FFBUILD_PREFIX"/share/doc \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

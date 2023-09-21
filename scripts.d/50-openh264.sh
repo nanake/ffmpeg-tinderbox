@@ -36,7 +36,7 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    make -j$(nproc) "${myconf[@]}" install-static
+    make -j"$(nproc)" "${myconf[@]}" install-static
 }
 
 ffbuild_configure() {

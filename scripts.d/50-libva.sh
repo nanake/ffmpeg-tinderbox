@@ -33,7 +33,7 @@ ffbuild_dockerbuild() {
     fi
 
     meson setup "${myconf[@]}" ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

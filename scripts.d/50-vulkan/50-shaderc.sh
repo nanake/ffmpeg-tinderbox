@@ -27,7 +27,7 @@ ffbuild_dockerbuild() {
         -DSPIRV_WERROR=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     # for some reason, this does not get installed...

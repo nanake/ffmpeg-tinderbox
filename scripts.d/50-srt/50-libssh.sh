@@ -22,7 +22,7 @@ ffbuild_dockerbuild() {
         -DWITH_{EXAMPLES,SERVER}=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     {

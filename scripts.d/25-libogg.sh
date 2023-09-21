@@ -20,6 +20,6 @@ ffbuild_dockerbuild() {
         -D{BUILD_SHARED_LIBS,INSTALL_DOCS}=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }

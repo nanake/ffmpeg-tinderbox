@@ -24,7 +24,7 @@ ffbuild_dockerbuild() {
         -DCOMPILE_10BIT=ON \
         -GNinja \
         ../..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

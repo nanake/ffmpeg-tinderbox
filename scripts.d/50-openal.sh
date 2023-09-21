@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -DALSOFT_{EXAMPLES,UTILS,INSTALL_{AMBDEC_PRESETS,CONFIG,EXAMPLES,HRTF_DATA,UTILS}}=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     sed -i 's/Libs.private.*/& -lstdc++ -lole32/' "$FFBUILD_PREFIX"/lib/pkgconfig/openal.pc

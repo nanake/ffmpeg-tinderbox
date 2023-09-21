@@ -22,7 +22,7 @@ ffbuild_dockerbuild() {
         -DENABLE_AVX512=ON \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

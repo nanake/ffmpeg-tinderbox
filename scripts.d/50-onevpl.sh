@@ -23,7 +23,7 @@ ffbuild_dockerbuild() {
         -DINSTALL_EXAMPLE_CODE=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     rm -rf "$FFBUILD_PREFIX"/{etc/vpl,share/vpl}

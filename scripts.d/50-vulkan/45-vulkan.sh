@@ -19,7 +19,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     cat >"$FFBUILD_PREFIX"/lib/pkgconfig/vulkan.pc <<EOF

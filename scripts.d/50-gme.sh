@@ -22,7 +22,7 @@ ffbuild_dockerbuild() {
         -DENABLE_UBSAN=OFF \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 }
 

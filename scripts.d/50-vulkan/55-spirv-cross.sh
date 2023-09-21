@@ -26,7 +26,7 @@ ffbuild_dockerbuild() {
         -DSPIRV_CROSS_{FORCE_PIC,STATIC}=ON \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     cat >"$FFBUILD_PREFIX"/lib/pkgconfig/spirv-cross-c-shared.pc <<EOF

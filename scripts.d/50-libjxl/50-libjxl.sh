@@ -32,7 +32,7 @@ ffbuild_dockerbuild() {
         -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     echo "Libs.private: -lstdc++ -ladvapi32" | tee -a "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc

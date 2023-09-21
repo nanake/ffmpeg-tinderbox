@@ -58,7 +58,7 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    make -j$(nproc) "${myconf[@]}" all install
+    make -j"$(nproc)" "${myconf[@]}" all install
 }
 
 ffbuild_configure() {

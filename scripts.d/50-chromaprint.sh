@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -DFFT_LIB=fftw3 \
         -GNinja \
         ..
-    ninja -j$(nproc)
+    ninja -j"$(nproc)"
     ninja install
 
     {

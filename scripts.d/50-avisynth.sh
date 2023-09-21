@@ -22,7 +22,7 @@ ffbuild_dockerbuild() {
         -DHEADERS_ONLY=ON \
         -GNinja \
         ..
-    ninja -j$(nproc) VersionGen
+    ninja -j"$(nproc)" VersionGen
     ninja install
 }
 
