@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DECKLINK_REPO="https://github.com/nanake/decklink-headers.git"
-DECKLINK_COMMIT="SDK/12.6"
+DECKLINK_COMMIT="SDK/12.7"
 
 ffbuild_enabled() {
     [[ $VARIANT == *nonfree* ]] || return -1

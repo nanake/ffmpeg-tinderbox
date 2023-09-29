@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VMAF_REPO="https://github.com/Netflix/vmaf.git"
-VMAF_COMMIT="265263ffd51b4c7d3c585a2a9dd7d541b2ddfece"
+VMAF_COMMIT="6947c56b9cb62608bac1557b729ced4405232a62"
 
 ffbuild_enabled() {
     return 0
@@ -11,16 +11,13 @@ ffbuild_dockerbuild() {
     git-mini-clone "$VMAF_REPO" "$VMAF_COMMIT" vmaf
     cd vmaf
 
-    # Kill build of unused and broken tools
-    echo > libvmaf/tools/meson.build
-
     mkdir build && cd build
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         -Ddefault_library=static
-        -D{built_in_models,enable_float}"=true"
+        -D{built_in_models,enable_avx512}"=true"
         -Denable_{docs,tests}"=false"
     )
 
@@ -37,7 +34,7 @@ ffbuild_dockerbuild() {
     ninja -j"$(nproc)"
     ninja install
 
-    sed -i 's/Libs.private.*/& -lstdc++/; t; $ a Libs.private: -lstdc++' "$FFBUILD_PREFIX"/lib/pkgconfig/libvmaf.pc
+    echo "Libs.private: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/libvmaf.pc
 }
 
 ffbuild_configure() {
