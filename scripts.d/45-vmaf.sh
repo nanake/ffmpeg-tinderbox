@@ -11,6 +11,8 @@ ffbuild_dockerbuild() {
     git-mini-clone "$VMAF_REPO" "$VMAF_COMMIT" vmaf
     cd vmaf
 
+    sed -i "/subdir('tools')/d" libvmaf/meson.build
+
     mkdir build && cd build
 
     local myconf=(

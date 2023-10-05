@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WEBP_REPO="https://github.com/webmproject/libwebp.git"
-WEBP_COMMIT="05c469843ce3947a63f5ac7ac2c3baa5df2c167d"
+WEBP_COMMIT="cdbf88aed27c6e3ff8453754e1f1631806fffe4f"
 
 ffbuild_enabled() {
     return 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/Vulkan-Headers.git"
-HEADERS_VERSION="1.3.265"
+HEADERS_VERSION="1.3.266"
 
 ffbuild_enabled() {
     return 0

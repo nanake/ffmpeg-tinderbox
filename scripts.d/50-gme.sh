@@ -1,7 +1,7 @@
 #!/bin/bash
 
-GME_REPO="https://bitbucket.org/mpyne/game-music-emu.git"
-GME_COMMIT="6cd4bdb69be304f58c9253fb08b8362f541b3b4b"
+GME_REPO="https://github.com/libgme/game-music-emu.git"
+GME_COMMIT="0521df9f7c0005acc860a27316bbc70706e747c7"
 
 ffbuild_enabled() {
     return 0
