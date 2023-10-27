@@ -1,16 +1,15 @@
 #!/bin/bash
 
 GME_REPO="https://github.com/libgme/game-music-emu.git"
-GME_COMMIT="935295234086482e6d36be5db787cfee4f0b4aea"
+GME_COMMIT="f40f2e30670a524f30d4d371cc618f30cc6b4326"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git clone --filter=tree:0 --branch=master --single-branch "$GME_REPO" gme
+    git-mini-clone "$GME_REPO" "$GME_COMMIT" gme
     cd gme
-    git checkout "$GME_COMMIT"
 
     mkdir build && cd build
 
@@ -18,8 +17,10 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DCMAKE_DISABLE_FIND_PACKAGE_SDL2=TRUE \
         -DBUILD_SHARED_LIBS=OFF \
         -DENABLE_UBSAN=OFF \
+        -DGME_UNRAR=OFF \
         -GNinja \
         ..
     ninja -j"$(nproc)"

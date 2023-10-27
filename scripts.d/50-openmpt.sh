@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENMPT_REPO="https://github.com/OpenMPT/openmpt.git"
-OPENMPT_COMMIT="f4549c87ab1b43895e4d19970afe4f1342204f0f"
+OPENMPT_COMMIT="e1c92c9113e4caab6e369712ffc72ea90c1fc5c3"
 
 ffbuild_enabled() {
     return 0
@@ -14,7 +14,6 @@ ffbuild_dockerbuild() {
     local myconf=(
         PREFIX="$FFBUILD_PREFIX"
         CXXSTDLIB_PCLIBSPRIVATE="-lstdc++"
-        VERBOSE=2
         STATIC_LIB=1
         SHARED_LIB=0
         DYNLINK=0
