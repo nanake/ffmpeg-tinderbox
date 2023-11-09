@@ -15,6 +15,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
+        -Dauto_features=disabled
         -Ddefault_library=static
         -Dfft=fftw
         -Dresampler=libsamplerate
