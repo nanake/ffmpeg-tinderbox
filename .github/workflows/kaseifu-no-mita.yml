@@ -38,7 +38,7 @@ jobs:
         image_name: [fedora,base-win32,base-win64,win32-nonfree,win64-nonfree]
     steps:
       - name: Prune untagged pkgs
-        uses: actions/github-script@v6
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.dodosolsollalasol }}
           script: |
