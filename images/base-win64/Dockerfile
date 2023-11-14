@@ -2,11 +2,7 @@
 FROM ghcr.io/nanake/fedora:rawhide AS base
 
 RUN <<EOF
-    cat >>/etc/dnf/dnf.conf <<-SETOPT
-		assumeyes=True
-		install_weak_deps=False
-		max_parallel_downloads=20
-	SETOPT
+    dnf5 config-manager setopt assumeyes=True install_weak_deps=False max_parallel_downloads=20
     dnf5 install \
         autoconf \
         automake \
