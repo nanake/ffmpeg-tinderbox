@@ -28,7 +28,7 @@ RUN <<EOF
         ragel \
         texinfo \
         unzip \
-        wget \
+        wget2 \
         which \
         xxd \
         yasm
