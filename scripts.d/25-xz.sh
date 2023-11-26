@@ -1,7 +1,7 @@
 #!/bin/bash
 
-XZ_REPO="https://github.com/xz-mirror/xz.git"
-XZ_COMMIT="74c3449d8b816a724b12ebce7417e00fb597309a"
+XZ_REPO="https://github.com/tukaani-project/xz.git"
+XZ_COMMIT="12b89bcc9915090eb42ae638e565af44b6832a23"
 
 ffbuild_enabled() {
     return 0
@@ -11,27 +11,20 @@ ffbuild_dockerbuild() {
     git-mini-clone "$XZ_REPO" "$XZ_COMMIT" xz
     cd xz
 
-    ./autogen.sh --no-po4a --no-doxygen
+    mkdir build && cd build
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,doc,lzmadec,lzmainfo,nls,scripts,xz,xzdec}
-        --enable-static
-        --with-pic
-    )
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
+        -DENABLE_THREADS=posix \
+        -DCMAKE_USE_PTHREADS_INIT=ON \
+        -GNinja \
+        ..
 
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
-    make -j"$(nproc)"
-    make install
+    ninja -j"$(nproc)"
+    ninja install
 }
 
 ffbuild_configure() {
