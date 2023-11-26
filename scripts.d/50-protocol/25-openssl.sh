@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENSSL_REPO="https://github.com/openssl/openssl.git"
-OPENSSL_COMMIT="openssl-3.2.0-beta1"
+OPENSSL_COMMIT="openssl-3.2.0"
 
 ffbuild_enabled() {
     return 0
@@ -12,10 +12,11 @@ ffbuild_dockerbuild() {
     cd openssl
 
     local myconf=(
+        no-{apps,docs,ec2m,legacy,module,shared,tests}
+        no-{ssl,ssl3-method}
+        no-{dh,dsa,md4,mdc2,rc2,rc4,sm2,sm3,sm4}
         threads
         zlib
-        no-{apps,docs,ecx,legacy,module,shared,ssl,tests}
-        enable-{camellia,ec,srp}
         --prefix="$FFBUILD_PREFIX"
     )
 
