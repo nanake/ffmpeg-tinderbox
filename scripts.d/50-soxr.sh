@@ -18,8 +18,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_{EXAMPLES,SHARED_LIBS,TESTS}=OFF \
         -DWITH_OPENMP=OFF \
-        -DBUILD_{TESTS,EXAMPLES,SHARED_LIBS}=OFF \
         -DDOC_INSTALL_DIR="$FFBUILD_PREFIX"/share/doc \
         -GNinja \
         ..

@@ -13,8 +13,7 @@ ffbuild_dockerbuild() {
     cd uavs3d
     git checkout "$UAVS3D_COMMIT"
 
-    mkdir build/linux
-    cd build/linux
+    mkdir build/linux && cd build/linux
 
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \

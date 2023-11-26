@@ -1,7 +1,7 @@
 #!/bin/bash
 
-PLACEBO_REPO="https://github.com/BtbN/libplacebo.git"
-PLACEBO_COMMIT="patch-1"
+PLACEBO_REPO="https://github.com/haasn/libplacebo.git"
+PLACEBO_COMMIT="795600a44b03fcd52c055981a403ad60ee5d027a"
 
 ffbuild_enabled() {
     return 0
@@ -11,6 +11,9 @@ ffbuild_dockerbuild() {
     git-mini-clone "$PLACEBO_REPO" "$PLACEBO_COMMIT" placebo
     cd placebo
     git submodule update --init --recursive --depth 1
+
+    # Don't define PL_EXPORT for static build
+    sed -i 's/DPL_EXPORT/DPL_STATIC/' src/meson.build
 
     mkdir build && cd build
 

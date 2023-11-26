@@ -11,16 +11,15 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LIBSR_REPO" "$LIBSR_COMMIT" libsr
     cd libsr
 
-    mkdir build
-    cd build
+    mkdir build && cd build
 
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DBUILD_{SHARED_LIBS,TESTING}=NO \
+        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
         -DLIBSAMPLERATE_EXAMPLES=OFF \
-        -DLIBSAMPLERATE_INSTALL=YES \
+        -DLIBSAMPLERATE_INSTALL=ON \
         -GNinja \
         ..
     ninja -j"$(nproc)"
