@@ -1,7 +1,7 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="d3a69dbeef78f036969a2500f949f931df857e17"
+JXL_COMMIT="9b82fa101c033da8a1afecda4b87ae3c6562aa68"
 
 ffbuild_enabled() {
     return 0
@@ -36,6 +36,9 @@ ffbuild_dockerbuild() {
     ninja install
 
     echo "Libs.private: -lstdc++ -ladvapi32" | tee -a "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
+
+    rm "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_cms.pc
+    sed -i "s/libjxl_cms//g" "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
 }
 
 ffbuild_configure() {
