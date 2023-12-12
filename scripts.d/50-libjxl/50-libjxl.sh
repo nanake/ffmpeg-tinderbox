@@ -38,7 +38,7 @@ ffbuild_dockerbuild() {
     echo "Libs.private: -lstdc++ -ladvapi32" | tee -a "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
 
     rm "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_cms.pc
-    sed -i "s/libjxl_cms//g" "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
+    sed -i "s/libjxl_cms//g" "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
 }
 
 ffbuild_configure() {
