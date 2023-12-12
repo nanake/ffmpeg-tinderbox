@@ -33,9 +33,9 @@ RUN <<EOF
         xxd \
         yasm
     dnf5 clean all
-    git config --global user.email "builder@localhost"
-    git config --global user.name "Builder"
-    git config --global advice.detachedHead false
+    git config --system user.email "builder@localhost"
+    git config --system user.name "Builder"
+    git config --system advice.detachedHead false
 EOF
 
 RUN --mount=src=.,dst=/input <<EOF
