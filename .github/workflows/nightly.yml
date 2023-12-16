@@ -53,7 +53,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg
+          name: ffmpeg-${{ matrix.target }}-${{ matrix.variant }}
           path: artifacts/
           retention-days: 1
 
@@ -68,7 +68,6 @@ jobs:
       - name: Download artifacts
         uses: actions/download-artifact@v4
         with:
-          name: ffmpeg
           path: artifacts
 
       - name: Create release
@@ -77,11 +76,17 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           set -xe
+
           BUILDID=$(date +'%Y-%m-%d-%H-%M')
           STUB=$(find artifacts -iname '*.7z' | head -1 | xargs -I{} basename {})
           REV=$(echo $STUB | cut -d'-' -f5)
           NTAG=$(echo $STUB | cut -d'-' -f3)
+
           TITLE="Build $BUILDID @ $REV"
-          BODY="Built from FFmpeg/FFmpeg@$REV"
+          RELNOTE="Built from FFmpeg/FFmpeg@$REV"
           TAGNAME="build-$BUILDID-n$NTAG"
-          gh release create $TAGNAME $(for a in artifacts/*.7z; do echo $a; done) -t "$TITLE" -n "$BODY"
+
+          gh release create "$TAGNAME" \
+            --title "$TITLE" \
+            --notes "$RELNOTE" \
+            artifacts/*/*.7z
