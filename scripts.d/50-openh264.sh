@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENH264_REPO="https://github.com/cisco/openh264.git"
-OPENH264_COMMIT="fd66e67ac6136aff80b1567488568ba1ed7e8fb8"
+OPENH264_COMMIT="cfbd5896606b91638c8871ee91776dee31625bd5"
 
 ffbuild_enabled() {
     return 0

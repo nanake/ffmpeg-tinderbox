@@ -19,6 +19,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
+        -DBROTLI_BUILD_TOOLS=OFF \
         -DBROTLI_DISABLE_TESTS=ON \
         -GNinja \
         ..

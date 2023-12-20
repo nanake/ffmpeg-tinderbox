@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SVTAV1_REPO="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
-SVTAV1_COMMIT="5fbddb53b3dc1a32f35ade563e2f6d32dc500417"
+SVTAV1_COMMIT="59645eea34e2815b627b8293aa3af254eddd0d69"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
@@ -18,7 +18,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DBUILD_{DEC,SHARED_LIBS,TESTING,APPS}=OFF \
+        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
+        -DBUILD_{APPS,DEC}=OFF \
         -DENABLE_AVX512=ON \
         -GNinja \
         ..

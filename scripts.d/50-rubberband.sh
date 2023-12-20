@@ -1,7 +1,7 @@
 #!/bin/bash
 
 RUBBERBAND_REPO="https://github.com/breakfastquay/rubberband.git"
-RUBBERBAND_COMMIT="6cd48ab2c711eb32da25fd1953d6f7f1d5e2cba3"
+RUBBERBAND_COMMIT="9ea386261b502d321bb4ded22b27ece4e5d37c68"
 
 ffbuild_enabled() {
     return 0
