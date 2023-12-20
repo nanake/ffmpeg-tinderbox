@@ -1,16 +1,26 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="9b82fa101c033da8a1afecda4b87ae3c6562aa68"
+JXL_COMMIT="761a2d048411485bfef56705990043e846f1186e"
 
 ffbuild_enabled() {
     return 0
 }
 
+ffbuild_dockerstage() {
+    to_df "RUN --mount=src=${SELF},dst=/stage.sh --mount=src=patches/libjxl,dst=/patches run_stage /stage.sh"
+}
+
 ffbuild_dockerbuild() {
     git-mini-clone "$JXL_REPO" "$JXL_COMMIT" jxl
     cd jxl
-    git submodule update --init --recursive --depth 1 --recommend-shallow third_party/{highway,skcms}
+
+    for patch in /patches/*.patch; do
+        echo "Applying $patch"
+        git am < "$patch"
+    done
+
+    git submodule update --init --recursive --depth 1 --recommend-shallow third_party/highway
 
     mkdir build && cd build
 
@@ -26,19 +36,16 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
         -DBUILD_{SHARED_LIBS,TESTING}=OFF \
-        -DJPEGXL_{BUNDLE_LIBPNG,EMSCRIPTEN,STATIC}=OFF \
-        -DJPEGXL_ENABLE_{BENCHMARK,DEVTOOLS,DOXYGEN,EXAMPLES,JNI,JPEGLI,MANPAGES,PLUGINS,SJPEG,TOOLS,VIEWERS}=OFF \
+        -DJPEGXL_BUNDLE_LIBPNG=OFF \
+        -DJPEGXL_ENABLE_{BENCHMARK,DEVTOOLS,DOXYGEN,EXAMPLES,JNI,JPEGLI,MANPAGES,PLUGINS,SJPEG,SKCMS,TOOLS,VIEWERS}=OFF \
         -DJPEGXL_ENABLE_AVX512{,_ZEN4}=ON \
-        -DJPEGXL_FORCE_SYSTEM_BROTLI=ON \
+        -DJPEGXL_FORCE_SYSTEM_{BROTLI,LCMS2}=ON \
         -GNinja \
         ..
     ninja -j"$(nproc)"
     ninja install
 
     echo "Libs.private: -lstdc++ -ladvapi32" | tee -a "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
-
-    rm "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl_cms.pc
-    sed -i "s/libjxl_cms//g" "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl.pc
 }
 
 ffbuild_configure() {

@@ -1,0 +1,22 @@
+From 93892bf37c21e224ded4a314de04180207bcae4b Mon Sep 17 00:00:00 2001
+From: Timo Rothenpieler <timo@rothenpieler.org>
+Date: Wed, 20 Dec 2023 01:02:21 +0100
+Subject: [PATCH] Fix linking order of jxl_cms dependencies
+
+---
+ lib/jxl/libjxl_cms.pc.in | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lib/jxl/libjxl_cms.pc.in b/lib/jxl/libjxl_cms.pc.in
+index d7f9612c693..eb740281302 100644
+--- a/lib/jxl/libjxl_cms.pc.in
++++ b/lib/jxl/libjxl_cms.pc.in
+@@ -7,7 +7,7 @@ Name: libjxl_cms
+ Description: CMS support library for libjxl
+ Version: @JPEGXL_LIBRARY_VERSION@
+ Requires.private: @JPEGXL_CMS_LIBRARY_REQUIRES@
+-Libs: @JXL_CMS_PK_LIBS@ -L${libdir} -ljxl_cms
++Libs: -L${libdir} -ljxl_cms @JXL_CMS_PK_LIBS@
+ Libs.private: -lm
+ Cflags: -I${includedir}
+ Cflags.private: -DJXL_CMS_STATIC_DEFINE
