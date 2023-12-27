@@ -1,24 +1,15 @@
 #!/bin/bash
 
 JXL_REPO="https://github.com/libjxl/libjxl.git"
-JXL_COMMIT="3e3a706755dee2c7af7bed34980484489ab6b123"
+JXL_COMMIT="5d4e7c45acdaa66bc3245910d97d95322bf9d234"
 
 ffbuild_enabled() {
     return 0
 }
 
-ffbuild_dockerstage() {
-    to_df "RUN --mount=src=${SELF},dst=/stage.sh --mount=src=patches/libjxl,dst=/patches run_stage /stage.sh"
-}
-
 ffbuild_dockerbuild() {
     git-mini-clone "$JXL_REPO" "$JXL_COMMIT" jxl
     cd jxl
-
-    for patch in /patches/*.patch; do
-        echo "Applying $patch"
-        git am < "$patch"
-    done
 
     git submodule update --init --recursive --depth 1 --recommend-shallow third_party/highway
 
