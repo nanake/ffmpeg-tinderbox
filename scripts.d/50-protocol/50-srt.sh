@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SRT_REPO="https://github.com/Haivision/srt.git"
-SRT_COMMIT="b1c0be20d2ef7d4d1ec9897eb49c194ea7c98993"
+SRT_COMMIT="633e3eafcf3f7ee22528b93ab0569f338a0a56fb"
 
 ffbuild_enabled() {
     return 0
@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DENABLE_{SHARED,APPS}=OFF \
-        -DENABLE_{STATIC,AEAD_API_PREVIEW,CXX_DEPS,ENCRYPTION}=ON \
+        -DENABLE_{STATIC,CXX_DEPS,ENCRYPTION}=ON \
         -DUSE_ENCLIB=openssl-evp \
         -DUSE_STATIC_LIBSTDCXX=ON \
         -GNinja \
