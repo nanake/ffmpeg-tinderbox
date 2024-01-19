@@ -1,30 +1,21 @@
 #!/bin/bash
 
 ZVBI_REPO="https://github.com/zapping-vbi/zvbi.git"
-ZVBI_COMMIT="v0.2.42"
+ZVBI_COMMIT="b4cef506bbaa7b8bffb07a5566328c7766dbab42"
 
 ffbuild_enabled() {
     return 0
-}
-
-ffbuild_dockerstage() {
-    to_df "RUN --mount=src=${SELF},dst=/stage.sh --mount=src=patches/zvbi,dst=/patches run_stage /stage.sh"
 }
 
 ffbuild_dockerbuild() {
     git-mini-clone "$ZVBI_REPO" "$ZVBI_COMMIT" zvbi
     cd zvbi
 
-    for patch in /patches/*.patch; do
-        echo "Applying $patch"
-        git am < "$patch"
-    done
-
     autoreconf -i
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,bktr,dvb,nls,proxy}
+        --disable-{shared,bktr,dvb,examples,nls,proxy,tests}
         --enable-static
         --with-pic
         --without-{doxygen,x}
