@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENH264_REPO="https://github.com/cisco/openh264.git"
-OPENH264_COMMIT="cfbd5896606b91638c8871ee91776dee31625bd5"
+OPENH264_COMMIT="4f01c15b2199daf16924caa53f77a52e8b559260"
 
 ffbuild_enabled() {
     return 0
@@ -16,9 +16,6 @@ ffbuild_dockerbuild() {
         BUILDTYPE=Release
         DEBUGSYMBOLS=False
         LIBDIR_NAME=lib
-        CC="$FFBUILD_CROSS_PREFIX"gcc
-        CXX="$FFBUILD_CROSS_PREFIX"g++
-        AR="$FFBUILD_CROSS_PREFIX"gcc-ar
     )
 
     if [[ $TARGET == win32 ]]; then
