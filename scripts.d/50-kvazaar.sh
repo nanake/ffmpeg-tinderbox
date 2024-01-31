@@ -13,6 +13,9 @@ ffbuild_dockerbuild() {
 
     mkdir kvzbuild && cd kvzbuild
 
+    # Fix AVX2 segfault due to unaligned stack
+    export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
+
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
