@@ -1,7 +1,7 @@
 #!/bin/bash
 
 KVAZAAR_REPO="https://github.com/ultravideo/kvazaar.git"
-KVAZAAR_COMMIT="98573ff59b5d888738248ee4696875d3670ec772"
+KVAZAAR_COMMIT="bb01f4411bc10e42ed5315db8ed6bd4f5a1345b6"
 
 ffbuild_enabled() {
     return 0
@@ -11,27 +11,18 @@ ffbuild_dockerbuild() {
     git-mini-clone "$KVAZAAR_REPO" "$KVAZAAR_COMMIT" kvazaar
     cd kvazaar
 
-    ./autogen.sh
+    mkdir kvzbuild && cd kvzbuild
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-shared
-        --enable-static
-        --with-pic
-    )
-
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
-    make -j"$(nproc)"
-    make install
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DBUILD_TESTS=OFF \
+        -GNinja \
+        ..
+    ninja -j"$(nproc)"
+    ninja install
 
     echo "Cflags.private: -DKVZ_STATIC_LIB" >> "$FFBUILD_PREFIX"/lib/pkgconfig/kvazaar.pc
 }
