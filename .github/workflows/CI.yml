@@ -21,7 +21,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create and Boot docker-container Driver
-        uses: docker/setup-buildx-action@master
+        uses: docker/setup-buildx-action@v3
         with:
           config-inline: |
             [worker.oci]
