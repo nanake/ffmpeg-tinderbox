@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENAL_REPO="https://github.com/kcat/openal-soft.git"
-OPENAL_COMMIT="cb24fe6f28865dd82ad67f485a0ecee51e6fe2bb"
+OPENAL_COMMIT="05c94a670d0b357260598741b52497e34e6e17aa"
 
 ffbuild_enabled() {
     return 0
@@ -24,7 +24,7 @@ ffbuild_dockerbuild() {
     ninja -j"$(nproc)"
     ninja install
 
-    sed -i 's/Libs.private.*/& -lstdc++ -lole32/' "$FFBUILD_PREFIX"/lib/pkgconfig/openal.pc
+    sed -i 's/Libs.private.*/& -lstdc++ -lole32 -luuid/' "$FFBUILD_PREFIX"/lib/pkgconfig/openal.pc
 }
 
 ffbuild_configure() {
