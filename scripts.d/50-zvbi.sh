@@ -11,6 +11,12 @@ ffbuild_dockerbuild() {
     git-mini-clone "$ZVBI_REPO" "$ZVBI_COMMIT" zvbi
     cd zvbi
 
+    # workaround for C type errors in GCC 14
+    # GCC 14 turns error on implicit function declarations by default
+    # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=91092
+    # this basically restoring the GCC 13 behavior
+    export CFLAGS="$CFLAGS -Wno-error=implicit-function-declaration"
+
     autoreconf -i
 
     local myconf=(
