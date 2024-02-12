@@ -8,6 +8,10 @@ ffbuild_dockerstage() {
     return 0
 }
 
+ffbuild_dockerlayer() {
+    return 0
+}
+
 ffbuild_dockerbuild() {
     return 0
 }
