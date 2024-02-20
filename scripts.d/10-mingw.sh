@@ -54,7 +54,7 @@ ffbuild_dockerbuild() {
     )
 
     ./configure "${myconf[@]}"
-    make -j$(nproc)
+    make -j"$(nproc)"
     make install DESTDIR="/opt/mingw"
 }
 

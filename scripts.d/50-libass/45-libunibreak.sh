@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBUNIBREAK_REPO="https://github.com/adah1972/libunibreak.git"
-LIBUNIBREAK_COMMIT="a9bbc766c4dd5e4700ab296c1743788bbbd9d782"
+LIBUNIBREAK_COMMIT="8b69e1e73c10739fbd5843f69d07018763194e70"
 
 ffbuild_enabled() {
     return 0
