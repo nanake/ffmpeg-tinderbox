@@ -8,7 +8,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    wget2 -O rav1e.zip "${RAV1E_SRC_PREFIX}/rav1e-windows-gnu-avx2.zip"
+    wget -O rav1e.zip "${RAV1E_SRC_PREFIX}/rav1e-windows-gnu-avx2.zip"
     unzip rav1e.zip
     cd rav1e-*
 
