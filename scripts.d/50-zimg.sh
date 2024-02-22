@@ -23,6 +23,8 @@ ffbuild_dockerbuild() {
     if [[ $TARGET == win* ]]; then
         myconf+=(
             --host="$FFBUILD_TOOLCHAIN"
+            PTHREAD_CFLAGS="-pthread"
+            PTHREAD_LIBS="-lpthread"
         )
     else
         echo "Unknown target"
