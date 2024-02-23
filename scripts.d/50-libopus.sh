@@ -19,6 +19,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_{SHARED_LIBS,TESTING}=OFF \
         -DOPUS_BUILD_{PROGRAMS,SHARED_LIBRARY,TESTING}=OFF \
+        -DOPUS_FORTIFY_SOURCE=OFF \
         -GNinja \
         ..
     ninja -j"$(nproc)"
