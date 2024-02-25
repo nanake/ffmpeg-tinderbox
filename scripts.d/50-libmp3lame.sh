@@ -11,8 +11,6 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LAME_REPO" "$LAME_COMMIT" lame
     cd lame
 
-    autoreconf -i
-
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-{shared,cpml,decoder,frontend,gtktest}

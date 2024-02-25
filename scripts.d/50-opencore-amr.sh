@@ -11,8 +11,6 @@ ffbuild_dockerbuild() {
     curl -L "$OAMR_SRC" | tar xz
     cd opencore*
 
-    autoreconf -i
-
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-{shared,examples}
