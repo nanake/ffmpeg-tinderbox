@@ -21,6 +21,7 @@ ffbuild_dockerbuild() {
         -DBUILD_{EXAMPLES,SHARED_LIBS,TESTS}=OFF \
         -DWITH_OPENMP=OFF \
         -DDOC_INSTALL_DIR="$FFBUILD_PREFIX"/share/doc \
+        -Wno-dev \
         -GNinja \
         ..
     ninja -j"$(nproc)"
