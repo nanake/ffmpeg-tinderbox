@@ -10,16 +10,16 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone "$XAVS2_REPO" xavs2
+    git clone --filter=tree:0 --branch=master --single-branch "$XAVS2_REPO" xavs2
     cd xavs2
     git checkout "$XAVS2_COMMIT"
     cd build/linux
 
     local myconf=(
+        --prefix="$FFBUILD_PREFIX"
         --disable-{avs,cli,ffms,gpac,lavf,lsmash,swscale}
         --enable-{static,pic}
         --extra-asflags="-w-macro-params-legacy"
-        --prefix="$FFBUILD_PREFIX"
     )
 
     if [[ $TARGET == win64 ]]; then
