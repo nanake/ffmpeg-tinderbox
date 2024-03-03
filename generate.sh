@@ -28,7 +28,7 @@ to_df() {
 
 to_df "# syntax=docker/dockerfile:latest"
 to_df "FROM ${REGISTRY}/${OWNER}/base-${TARGET}:latest AS base"
-to_df "ENV TARGET=$TARGET VARIANT=${VARIANT%-shared} OWNER=$OWNER REPO=$REPO ADDINS_STR=$ADDINS_STR"
+to_df "ENV TARGET=$TARGET VARIANT=${VARIANT%-shared} OWNER=$OWNER REPO=$REPO"
 
 PREVLAYER="base"
 for ID in $(ls -1d scripts.d/??-* | sed -s 's|^.*/\(..\).*|\1|' | sort -u); do

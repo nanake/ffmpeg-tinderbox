@@ -34,7 +34,7 @@ OWNER="${OWNER,,}"
 REPO="${GITHUB_REPOSITORY:-nanake/ffmpeg-tinderbox}"
 REPO="${REPO,,}"
 TARGET_IMAGE="${REGISTRY}/${OWNER}/base-${TARGET}:latest"
-IMAGE="${REGISTRY}/${OWNER}/${TARGET}-${VARIANT%-shared}${ADDINS_STR:+-}${ADDINS_STR}:latest"
+IMAGE="${REGISTRY}/${OWNER}/${TARGET}-${VARIANT%-shared}:latest"
 
 ffbuild_dockerstage() {
     to_df "RUN --mount=src=${SELF},dst=/stage.sh run_stage /stage.sh"
