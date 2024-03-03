@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-cli
+        --disable-{cli,win32thread}
         --enable-pic
     )
 
