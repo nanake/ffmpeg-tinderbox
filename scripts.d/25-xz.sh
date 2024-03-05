@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XZ_REPO="https://github.com/tukaani-project/xz.git"
-XZ_COMMIT="5d8d915ebe2e345820a0f54d1baf8d7d4824c0c7"
+XZ_COMMIT="72d2933bfae514e0dbb123488e9f1eb7cf64175f"
 
 ffbuild_enabled() {
     return 0
