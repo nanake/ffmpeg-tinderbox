@@ -83,7 +83,7 @@ jobs:
           REF="${{ matrix.target }}-${{ matrix.variant }}"
           echo "arte_factum=${REF// /-}" >> $GITHUB_OUTPUT
 
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-${{ steps.dicitur.outputs.arte_factum }}

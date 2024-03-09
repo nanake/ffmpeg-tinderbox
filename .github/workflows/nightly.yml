@@ -56,7 +56,7 @@ jobs:
           REF="${{ matrix.target }}-${{ matrix.variant }}"
           echo "arte_factum=${REF// /-}" >> $GITHUB_OUTPUT
 
-      - name: Upload artifacts
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
           name: ffmpeg-${{ steps.dicitur.outputs.arte_factum }}
@@ -84,7 +84,7 @@ jobs:
           set -xe
 
           BUILDID=$(date +'%Y-%m-%d-%H-%M')
-          STUB=$(find artifacts -iname '*.7z' | head -1 | xargs -I{} basename {})
+          STUB=$(find artifacts -iname '*.zst' | head -1 | xargs -I{} basename {})
           REV=$(echo $STUB | cut -d'-' -f5)
           NTAG=$(echo $STUB | cut -d'-' -f3)
 
@@ -95,4 +95,4 @@ jobs:
           gh release create "$TAGNAME" \
             --title "$TITLE" \
             --notes "$RELNOTE" \
-            artifacts/*/*.7z
+            artifacts/*/*.zst

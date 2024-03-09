@@ -84,7 +84,7 @@ mkdir -p "ffbuild/pkgroot/$BUILD_NAME"
 package_variant ffbuild/prefix "ffbuild/pkgroot/$BUILD_NAME"
 
 cd ffbuild/pkgroot
-7z a -mx=9 "${ARTIFACTS_PATH}/${BUILD_NAME}.7z" "$BUILD_NAME"
+tar -I 'zstdmt -9 --long' -cf "${ARTIFACTS_PATH}/${BUILD_NAME}.tar.zst" "$BUILD_NAME"
 cd -
 
 rm -rf ffbuild
