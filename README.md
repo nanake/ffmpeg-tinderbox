@@ -12,7 +12,6 @@ Ensure you have the following tools installed on your system:
 
 - **Bash**
 - **Docker**
-- **7z** (`p7zip-plugins` for fedora, `7zip` for debian-based)
 
 ***Targets, Variants and Addins***
 
@@ -63,7 +62,7 @@ To create a `shared` build of FFmpeg, append `-shared` to the `VARIANT` name. Fo
 ```console
 ./build.sh win64 gpl-shared
 ```
-Upon successful build completion, an archive of the build files will be available in the `artifacts` folder.
+Upon successful build completion, the build artifacts will be available in the `artifacts` folder.
 
 ---
 

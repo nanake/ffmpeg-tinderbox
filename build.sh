@@ -83,8 +83,12 @@ BUILD_NAME="ffmpeg-${FFMPEG_VERSION//-g/-git-}-${TARGET}-${VARIANT}${ADDINS_STR:
 mkdir -p "ffbuild/pkgroot/$BUILD_NAME"
 package_variant ffbuild/prefix "ffbuild/pkgroot/$BUILD_NAME"
 
-cd ffbuild/pkgroot
-tar -I 'zstdmt -9 --long' -cf "${ARTIFACTS_PATH}/${BUILD_NAME}.tar.zst" "$BUILD_NAME"
-cd -
+if [[ -n "$GITHUB_ACTIONS" ]]; then
+    cd ffbuild/pkgroot
+    tar -I 'zstdmt -9 --long' -cf "${ARTIFACTS_PATH}/${BUILD_NAME}.tar.zst" "$BUILD_NAME"
+    cd -
+else
+    mv "ffbuild/pkgroot/$BUILD_NAME" "${ARTIFACTS_PATH}"
+fi
 
 rm -rf ffbuild
