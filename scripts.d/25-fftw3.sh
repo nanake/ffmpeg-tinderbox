@@ -12,8 +12,8 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,doc,fortran}
-        --enable-{static,avx,avx2,maintainer-mode,sse2,threads}
+        --disable-{shared,dependency-tracking,doc,fortran}
+        --enable-{static,avx,avx2,sse2,threads}
         --with-{combined-threads,incoming-stack-boundary=2,our-malloc}
     )
 

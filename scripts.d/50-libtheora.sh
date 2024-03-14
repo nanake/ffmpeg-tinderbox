@@ -15,7 +15,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,doc,examples,oggtest,spec,vorbistest}
+        --disable-{shared,doc,dependency-tracking,examples,maintainer-mode,oggtest,spec,vorbistest}
         --enable-static
         --with-pic
     )

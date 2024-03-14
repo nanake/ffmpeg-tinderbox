@@ -15,10 +15,9 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
+        --disable-{shared,dependency-tracking,doc,maintainer-mode}
         --enable-static
         --with-pic
-        --disable-doc
     )
 
     if [[ $TARGET == win* ]]; then

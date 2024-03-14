@@ -16,7 +16,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,sndfile}
+        --disable-{shared,dependency-tracking,maintainer-mode,sndfile}
         --enable-static
         --with-pic
     )
@@ -33,8 +33,6 @@ ffbuild_dockerbuild() {
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
     make install
-
-    sed -i 's/Cflags:/Cflags: -DLIBTWOLAME_STATIC/' "$FFBUILD_PREFIX"/lib/pkgconfig/twolame.pc
 }
 
 ffbuild_configure() {

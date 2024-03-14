@@ -16,7 +16,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-shared
-        --enable-{static,maintainer-mode}
+        --enable-static
         --with-pic
     )
 

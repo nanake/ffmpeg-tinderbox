@@ -15,7 +15,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,bktr,dvb,examples,nls,proxy,tests}
+        --disable-{shared,bktr,dependency-tracking,dvb,examples,nls,proxy,tests}
         --enable-static
         --with-pic
         --without-{doxygen,x}

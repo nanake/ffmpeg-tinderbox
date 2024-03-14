@@ -16,7 +16,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-shared
+        --disable-{shared,dependency-tracking}
         --enable-static
     )
 

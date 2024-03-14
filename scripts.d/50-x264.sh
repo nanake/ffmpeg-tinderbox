@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X264_REPO="https://code.videolan.org/videolan/x264.git"
-X264_COMMIT="be4f0200ed007c466fd96185c39cde2a2d60ef50"
+X264_COMMIT="de1bea534ff74195d1205cb5d50dab815bb7bc23"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -13,9 +13,9 @@ ffbuild_dockerbuild() {
     cd x264
 
     local myconf=(
-        --disable-{cli,lavf,swscale}
-        --enable-{static,pic}
         --prefix="$FFBUILD_PREFIX"
+        --disable-{cli,lavf,swscale,win32thread}
+        --enable-{static,pic}
     )
 
     if [[ $TARGET == win* ]]; then

@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
         -DCMAKE_BUILD_TYPE=Release
         -DENABLE_{SHARED,CLI}"=OFF"
-        -DCMAKE_ASM_NASM_FLAGS=-w-macro-params-legacy
+        -Wno-dev
     )
 
     if [[ $TARGET != *32 ]]; then
@@ -44,7 +44,7 @@ EOF
         mv ../10bit/libx265.a ../8bit/libx265_main10.a
         mv libx265.a libx265_main.a
 
-        ${FFBUILD_CROSS_PREFIX}ar -M <<EOF
+        "${FFBUILD_CROSS_PREFIX}"ar -M <<EOF
 CREATE libx265.a
 ADDLIB libx265_main.a
 ADDLIB libx265_main10.a

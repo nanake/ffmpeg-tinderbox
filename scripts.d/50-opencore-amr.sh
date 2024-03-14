@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,examples}
+        --disable-{shared,dependency-tracking,examples}
         --enable-{static,amrnb-encoder,amrnb-decoder}
         --with-pic
     )

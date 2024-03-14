@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVPX_REPO="https://github.com/webmproject/libvpx.git"
-LIBVPX_COMMIT="a571299b07a75e8011e51654d56eecb2c6c84b8c"
+LIBVPX_COMMIT="8c36d36bccb1af490bf201dd754294db82cebbc3"
 
 ffbuild_enabled() {
     return 0
@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,docs,examples,tools,unit-tests}
+        --disable-{shared,dependency-tracking,docs,examples,tools,unit-tests}
         --enable-{static,pic,vp9-highbitdepth}
     )
 

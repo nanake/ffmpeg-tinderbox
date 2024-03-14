@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,cpml,decoder,frontend,gtktest}
+        --disable-{shared,cpml,decoder,dependency-tracking,frontend,gtktest}
         --enable-{static,nasm}
     )
 

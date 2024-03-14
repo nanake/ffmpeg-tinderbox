@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ONEVPL_REPO="https://github.com/oneapi-src/oneVPL.git"
+ONEVPL_REPO="https://github.com/intel/oneVPL.git"
 ONEVPL_COMMIT="383b5caac6df614e76ade5a07c4f53be702e9176"
 
 ffbuild_enabled() {

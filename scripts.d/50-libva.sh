@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVA_REPO="https://github.com/intel/libva.git"
-LIBVA_COMMIT="62e2f4d72c0a3a7cba01174283b313622936ad20"
+LIBVA_COMMIT="6f3e0684ff039be347b076e7c2f2a0b8a967778c"
 
 ffbuild_enabled() {
     return 0

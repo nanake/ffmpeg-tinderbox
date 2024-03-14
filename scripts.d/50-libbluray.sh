@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --enable-static
-        --disable-{shared,bdjava-jar,doxygen-{doc,dot,html,pdf,ps},examples}
+        --disable-{shared,bdjava-jar,dependency-tracking,doxygen-{doc,dot,html,pdf,ps},examples,extra-warnings}
         --without-{external-libudfread,fontconfig,freetype,libxml2}
         --with-pic
     )
@@ -31,6 +31,10 @@ ffbuild_dockerbuild() {
         echo "Unknown target"
         return -1
     fi
+
+    # 💥 symbol collision with FFmpeg
+    # since https://github.com/FFmpeg/FFmpeg/commit/c4de577
+    export CFLAGS="$CFLAGS -Ddec_init=libbluray_dec_init"
 
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
