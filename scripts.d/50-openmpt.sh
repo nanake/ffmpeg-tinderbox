@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENMPT_REPO="https://github.com/OpenMPT/openmpt.git"
-OPENMPT_COMMIT="ce2060545f3c86d4a37a2d5009267253251f93ed"
+OPENMPT_COMMIT="364489223fb314952b6e428e51f3bfc11813e6f1"
 
 ffbuild_enabled() {
     return 0
@@ -13,6 +13,7 @@ ffbuild_dockerbuild() {
 
     local myconf=(
         PREFIX="$FFBUILD_PREFIX"
+        CONFIG=mingw-w64
         CXXSTDLIB_PCLIBSPRIVATE="-lstdc++"
         STATIC_LIB=1
         SHARED_LIB=0
@@ -42,20 +43,18 @@ ffbuild_dockerbuild() {
 
     if [[ $TARGET == win64 ]]; then
         myconf+=(
-            CONFIG=mingw-w64
             WINDOWS_ARCH=amd64
         )
-        export CPPFLAGS="$CPPFLAGS -DMPT_WITH_MINGWSTDTHREADS"
     elif [[ $TARGET == win32 ]]; then
         myconf+=(
-            CONFIG=mingw-w64
             WINDOWS_ARCH=x86
         )
-        export CPPFLAGS="$CPPFLAGS -DMPT_WITH_MINGWSTDTHREADS"
     else
         echo "Unknown target"
         return -1
     fi
+
+    export CPPFLAGS="$CPPFLAGS -DMPT_WITH_MINGWSTDTHREADS"
 
     make -j"$(nproc)" "${myconf[@]}" all install
 }
