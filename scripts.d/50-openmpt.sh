@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENMPT_REPO="https://github.com/OpenMPT/openmpt.git"
-OPENMPT_COMMIT="364489223fb314952b6e428e51f3bfc11813e6f1"
+OPENMPT_COMMIT="c7a75aa1ad3b8632a0732e2ad7f52521a068b07b"
 
 ffbuild_enabled() {
     return 0

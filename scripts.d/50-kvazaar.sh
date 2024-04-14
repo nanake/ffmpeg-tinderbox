@@ -1,7 +1,7 @@
 #!/bin/bash
 
 KVAZAAR_REPO="https://github.com/ultravideo/kvazaar.git"
-KVAZAAR_COMMIT="d8c96881a92258dad799db8ce5a60138f16b4898"
+KVAZAAR_COMMIT="0711762a652b82fab4f09ff95e4886b02a45693b"
 
 ffbuild_enabled() {
     return 0
@@ -12,9 +12,6 @@ ffbuild_dockerbuild() {
     cd kvazaar
 
     mkdir kvzbuild && cd kvzbuild
-
-    # Fix AVX2 segfault due to unaligned stack
-    export CFLAGS="$CFLAGS -Wa,-muse-unaligned-vector-move"
 
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \

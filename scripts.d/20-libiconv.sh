@@ -2,7 +2,7 @@
 
 # https://git.savannah.gnu.org/gitweb/?p=libiconv.git
 LIBICONV_REPO="https://git.savannah.gnu.org/git/libiconv.git"
-LIBICONV_COMMIT="317dfadc6c68b3465205873b140200e5b0d0256f"
+LIBICONV_COMMIT="17a9a0721831bc747cd2ed6d15a111ed4c7dbcb0"
 
 ffbuild_enabled() {
     return 0
