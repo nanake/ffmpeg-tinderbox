@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LCMS_REPO="https://github.com/mm2/Little-CMS.git"
-LCMS_COMMIT="1176e61afea4b58c5f92c6f226cdb7b1c76797d5"
+LCMS_COMMIT="2daf5c5859e1b62b6633ca755074e4de02459241"
 
 ffbuild_enabled() {
     return 0
