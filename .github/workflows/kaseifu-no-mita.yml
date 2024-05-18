@@ -19,7 +19,7 @@ on:
 jobs:
   prune_old_releases:
     if: github.event.schedule == '0 23 * * TUE' || github.event.inputs.prune_tags == 'true'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
 
   prune_untagged_pkgs:
     if: github.event.schedule == '0 23 27 * *' || github.event.inputs.prune_pkgs == 'true'
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
