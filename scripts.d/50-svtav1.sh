@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SVTAV1_REPO="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
-SVTAV1_COMMIT="afbb5766ee34eb555d0929743ba59f5c534ec7ea"
+SVTAV1_COMMIT="6ef700b76ab059f53f8501c3cd8411d146356e60"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20240507"
+RAV1E_SRC_PREFIX="https://github.com/xiph/rav1e/releases/download/p20240514"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
@@ -12,7 +12,7 @@ ffbuild_dockerbuild() {
     unzip rav1e.zip
     cd rav1e-*
 
-    rm -r bin lib/*.dll.a
+    rm -rf bin lib/*.dll.a
     sed -i "s|^prefix=.*|prefix=${FFBUILD_PREFIX}|" lib/pkgconfig/rav1e.pc
 
     mkdir -p "$FFBUILD_PREFIX"/{include,lib/pkgconfig}

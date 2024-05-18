@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ASS_REPO="https://github.com/libass/libass.git"
-ASS_COMMIT="e400b53b3bcc1a7812029c3bfab14909a9a57326"
+ASS_COMMIT="61992a1143bca20f063d083aaf4b692bedbf5a93"
 
 ffbuild_enabled() {
     return 0
@@ -13,6 +13,7 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
+    # FIXME: remove once meson next release landed in rawhide
     cat >crossfile <<eot
 [binaries]
 nasm = 'nasm'
