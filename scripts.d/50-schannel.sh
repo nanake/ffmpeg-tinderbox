@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ffbuild_enabled() {
-    [[ $TARGET == win* ]]
+    [[ $TARGET == win* ]] && return -1
 }
 
 ffbuild_dockerstage() {

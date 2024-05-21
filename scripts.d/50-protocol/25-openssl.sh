@@ -49,3 +49,11 @@ ffbuild_dockerbuild() {
     make -j"$(nproc)"
     make install_sw
 }
+
+ffbuild_configure() {
+    echo --enable-openssl
+}
+
+ffbuild_unconfigure() {
+    echo --disable-openssl
+}
