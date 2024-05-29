@@ -19,7 +19,7 @@ jobs:
         run: |
           set -xe
           LATEST_RELEASE=$(gh api repos/${{ github.repository }}/releases/latest --jq '.body' | cut -d@ -f2)
-          FFMPEG_LATEST=$(git ls-remote https://github.com/FFmpeg/FFmpeg.git HEAD | cut -c1-9)
+          FFMPEG_LATEST=$(gh api repos/FFmpeg/FFmpeg/commits/master --jq '.sha' | cut -c1-9)
           if [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]]; then
             echo "status=skip" >> $GITHUB_OUTPUT
           else
