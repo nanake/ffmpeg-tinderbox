@@ -54,9 +54,24 @@ jobs:
           tags: ${{ steps.imagename.outputs.image }}
           provenance: false
 
+  ffmpeg_latest:
+    name: Get FFmpeg latest commit
+    needs: build_targets
+    runs-on: ubuntu-24.04
+    outputs:
+      commit: ${{ steps.sha.outputs.ffmpeg_commit }}
+    steps:
+      - name: Get FFmpeg latest commit
+        id: sha
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          sha=$(gh api repos/FFmpeg/FFmpeg/commits/master --jq '.sha')
+          echo "ffmpeg_commit=${sha}" >> "$GITHUB_OUTPUT"
+
   build_ffmpeg:
     name: Build ffmpeg
-    needs: build_targets
+    needs: ffmpeg_latest
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: false
@@ -76,6 +91,8 @@ jobs:
 
       - name: Build ffmpeg
         run: ./build.sh ${{ matrix.target }} ${{ matrix.variant }}
+        env:
+          FFMPEG_COMMIT: ${{ needs.ffmpeg_latest.outputs.commit }}
 
       - name: Replace spaces in artifact name
         id: artifact

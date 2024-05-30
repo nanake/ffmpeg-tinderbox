@@ -64,6 +64,10 @@ cat <<EOF >"$BUILD_SCRIPT"
     git clone --filter=tree:0 --branch='$GIT_BRANCH' --single-branch '$FFMPEG_REPO' ffmpeg
     cd ffmpeg
 
+    if [[ -n "$GITHUB_ACTIONS" ]]; then
+        git checkout "$FFMPEG_COMMIT"
+    fi
+
     ./configure --prefix=/ffbuild/prefix --pkg-config-flags="--static" \$FFBUILD_TARGET_FLAGS $FF_CONFIGURE \
         --extra-cflags="$FF_CFLAGS" --extra-cxxflags="$FF_CXXFLAGS" \
         --extra-ldflags="$FF_LDFLAGS" --extra-libs="$FF_LIBS"
