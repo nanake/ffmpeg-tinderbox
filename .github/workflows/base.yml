@@ -29,8 +29,8 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/base-${{ matrix.target }}"
-          echo "image=${IMG/ /-}:latest" >> $GITHUB_OUTPUT
-          echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
+          echo "image=${IMG/ /-}:latest" >> "$GITHUB_OUTPUT"
+          echo "cache=${IMG/ /-}:cache" >> "$GITHUB_OUTPUT"
 
       - name: Build base image
         uses: docker/build-push-action@v5

@@ -21,9 +21,9 @@ jobs:
           LATEST_RELEASE=$(gh api repos/${{ github.repository }}/releases/latest --jq '.body' | cut -d@ -f2)
           FFMPEG_LATEST=$(gh api repos/FFmpeg/FFmpeg/commits/master --jq '.sha' | cut -c1-9)
           if [[ "$LATEST_RELEASE" == "$FFMPEG_LATEST" ]]; then
-            echo "status=skip" >> $GITHUB_OUTPUT
+            echo "status=skip" >> "$GITHUB_OUTPUT"
           else
-            echo "status=proceed" >> $GITHUB_OUTPUT
+            echo "status=proceed" >> "$GITHUB_OUTPUT"
           fi
 
   build_ffmpeg:
@@ -50,16 +50,16 @@ jobs:
       - name: Build ffmpeg
         run: ./build.sh ${{ matrix.target }} ${{ matrix.variant }}
 
-      - name: Artifact name
-        id: dicitur
+      - name: Replace spaces in artifact name
+        id: artifact
         run: |
           REF="${{ matrix.target }}-${{ matrix.variant }}"
-          echo "arte_factum=${REF// /-}" >> $GITHUB_OUTPUT
+          echo "name=${REF// /-}" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg-${{ steps.dicitur.outputs.arte_factum }}
+          name: ffmpeg-${{ steps.artifact.outputs.name }}
           path: artifacts/
           retention-days: 1
 
@@ -85,8 +85,8 @@ jobs:
 
           BUILDID=$(date +'%Y-%m-%d-%H-%M')
           STUB=$(find artifacts -iname '*.zst' | head -1 | xargs -I{} basename {})
-          REV=$(echo $STUB | cut -d'-' -f5)
-          NTAG=$(echo $STUB | cut -d'-' -f3)
+          REV=$(echo "$STUB" | cut -d'-' -f5)
+          NTAG=$(echo "$STUB" | cut -d'-' -f3)
 
           TITLE="Build $BUILDID @ $REV"
           RELNOTE="Built from FFmpeg/FFmpeg@$REV"

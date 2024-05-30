@@ -41,8 +41,8 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}"
-          echo "image=${IMG/ /-}:latest" >> $GITHUB_OUTPUT
-          echo "cache=${IMG/ /-}:cache" >> $GITHUB_OUTPUT
+          echo "image=${IMG/ /-}:latest" >> "$GITHUB_OUTPUT"
+          echo "cache=${IMG/ /-}:cache" >> "$GITHUB_OUTPUT"
 
       - name: Build variant image
         uses: docker/build-push-action@v5
@@ -77,15 +77,15 @@ jobs:
       - name: Build ffmpeg
         run: ./build.sh ${{ matrix.target }} ${{ matrix.variant }}
 
-      - name: Artifact name
-        id: dicitur
+      - name: Replace spaces in artifact name
+        id: artifact
         run: |
           REF="${{ matrix.target }}-${{ matrix.variant }}"
-          echo "arte_factum=${REF// /-}" >> $GITHUB_OUTPUT
+          echo "name=${REF// /-}" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ffmpeg-${{ steps.dicitur.outputs.arte_factum }}
+          name: ffmpeg-${{ steps.artifact.outputs.name }}
           path: artifacts/
           retention-days: 1
