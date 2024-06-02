@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="05598db991767e79b3d701ca0979df050d82eb11"
+MINGW_COMMIT="561a057cebee2824f0cea44ebc785719ca873337"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return -1
@@ -18,6 +18,12 @@ ffbuild_dockerfinal() {
 }
 
 ffbuild_dockerbuild() {
+    # deps build bustage with undefined reference to `_imp___stat32i64'
+    # regressed by https://github.com/mingw-w64/mingw-w64/commit/4f96852
+    if [[ $TARGET == win32 ]]; then
+        MINGW_COMMIT="cc6afd4919d1721c19a1598570be22a00b04bae9"
+    fi
+
     git-mini-clone "$MINGW_REPO" "$MINGW_COMMIT" mingw
     cd mingw
 

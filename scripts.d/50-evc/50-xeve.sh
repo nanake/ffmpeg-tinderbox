@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XEVE_REPO="https://github.com/mpeg5/xeve.git"
-XEVE_COMMIT="d0298b5be7426db3e124244c70a094455551b86b"
+XEVE_COMMIT="0e655a850f71d5e5ab8f314ff24f627dde4fbfee"
 
 ffbuild_enabled() {
     return 0
@@ -13,10 +13,6 @@ ffbuild_dockerbuild() {
     git checkout "$XEVE_COMMIT"
 
     mkdir build && cd build
-
-    # FIXME: remove once PR merged
-    # 💥 symbol collision with xevd
-    export CFLAGS="$CFLAGS -Dmc_filter_bilin_horz_sse=xeve_mc_filter_bilin_horz_sse -Dmc_filter_bilin_vert_sse=xeve_mc_filter_bilin_vert_sse"
 
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
