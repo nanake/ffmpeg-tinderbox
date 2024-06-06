@@ -13,12 +13,6 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
-    # FIXME: remove once meson next release landed in rawhide
-    cat >crossfile <<eot
-[binaries]
-nasm = 'nasm'
-eot
-
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
@@ -28,7 +22,6 @@ eot
     if [[ $TARGET == win* ]]; then
         myconf+=(
             --cross-file=/cross.meson
-            --cross-file=crossfile
         )
     else
         echo "Unknown target"
