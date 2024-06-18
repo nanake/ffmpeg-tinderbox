@@ -33,7 +33,7 @@ jobs:
           echo "cache=${IMG/ /-}:cache" >> "$GITHUB_OUTPUT"
 
       - name: Build base image
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v6
         with:
           context: images/base-${{ matrix.target }}
           outputs: type=registry,oci-mediatypes=true,compression=zstd,compression-level=7
