@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ONEVPL_REPO="https://github.com/intel/oneVPL.git"
-ONEVPL_COMMIT="e71b1efc1263ae216569f62d018033ab5a850e00"
+ONEVPL_COMMIT="ca3b340fd20a8b1f373056af090f83b5f6098678"
 
 ffbuild_enabled() {
     return 0
