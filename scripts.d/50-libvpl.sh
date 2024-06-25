@@ -1,15 +1,15 @@
 #!/bin/bash
 
-ONEVPL_REPO="https://github.com/intel/oneVPL.git"
-ONEVPL_COMMIT="ca3b340fd20a8b1f373056af090f83b5f6098678"
+LIBVPL_REPO="https://github.com/intel/libvpl.git"
+LIBVPL_COMMIT="ca3b340fd20a8b1f373056af090f83b5f6098678"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$ONEVPL_REPO" "$ONEVPL_COMMIT" onevpl
-    cd onevpl
+    git-mini-clone "$LIBVPL_REPO" "$LIBVPL_COMMIT" libvpl
+    cd libvpl
 
     mkdir build && cd build
 
@@ -18,9 +18,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DCMAKE_INSTALL_LIBDIR=lib \
-        -DBUILD_{DEV,DISPATCHER}=ON \
-        -DBUILD_{PREVIEW,SHARED_LIBS,TESTS,TOOLS,TOOLS_ONEVPL_EXPERIMENTAL}=OFF \
-        -DINSTALL_EXAMPLE_CODE=OFF \
+        -DBUILD_{EXPERIMENTAL,SHARED_LIBS,TESTS}=OFF \
         -GNinja \
         ..
     ninja -j"$(nproc)"
