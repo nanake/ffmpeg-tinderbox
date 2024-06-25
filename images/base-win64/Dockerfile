@@ -46,17 +46,7 @@ EOF
 FROM base AS toolchain
 
 RUN <<EOF
-    dnf5 install \
-        ucrt64-binutils \
-        ucrt64-crt \
-        ucrt64-filesystem \
-        ucrt64-gcc \
-        ucrt64-gcc-c++ \
-        ucrt64-headers \
-        ucrt64-libgcc \
-        ucrt64-libgomp \
-        ucrt64-libstdc++ \
-        ucrt64-winpthreads-static
+    dnf5 install ucrt64-gcc{,-c++}
     dnf5 clean all
     find /usr/*mingw*/* -type f -name "*.dll*" -delete
     rm -rf /tmp/* /usr/share/doc/* /var/cache/* /var/lib/dnf/history.* /var/log/* /var/tmp/*
