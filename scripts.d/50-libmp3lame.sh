@@ -1,7 +1,8 @@
 #!/bin/bash
 
 LAME_REPO="https://github.com/nanake/lame.git"
-LAME_COMMIT="5ac0145e612c72a9417af7ac6f9d3b5b93671a2d"
+LAME_COMMIT="00747fa150a63f11d03c611b8cf1dacf972f03bd"
+
 
 ffbuild_enabled() {
     return 0
@@ -10,6 +11,8 @@ ffbuild_enabled() {
 ffbuild_dockerbuild() {
     git-mini-clone "$LAME_REPO" "$LAME_COMMIT" lame
     cd lame
+
+    autoreconf -i
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -26,7 +29,7 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    export CFLAGS="$CFLAGS -DNDEBUG"
+    export CFLAGS="$CFLAGS -DNDEBUG -Wno-error=incompatible-pointer-types"
 
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
