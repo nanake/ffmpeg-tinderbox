@@ -46,7 +46,7 @@ EOF
 FROM base AS toolchain
 
 RUN <<EOF
-    dnf5 install mingw32-gcc{,-c++}
+    dnf5 install mingw32-{gcc{,-c++},libgomp}
     dnf5 clean all
     find /usr/*mingw*/* -type f -name "*.dll*" -delete
     rm -rf /tmp/* /usr/share/doc/* /var/cache/* /var/lib/dnf/history.* /var/log/* /var/tmp/*
