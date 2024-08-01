@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XZ_REPO="https://github.com/tukaani-project/xz.git"
-XZ_COMMIT="a4f2e20d8466369b1bb277c66f75c9e4ba9cc378"
+XZ_COMMIT="bf901dee5d4c46609645e50311c0cb2dfdcf9738"
 
 ffbuild_enabled() {
     return 0
@@ -17,9 +17,9 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
-        -DENABLE_THREADS=posix \
         -DCMAKE_USE_PTHREADS_INIT=ON \
+        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
+        -DXZ_{DOC,TOOL_{LZMAINFO,XZ,XZDEC}}=OFF \
         -GNinja \
         ..
 
