@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HARFBUZZ_REPO="https://github.com/harfbuzz/harfbuzz.git"
-HARFBUZZ_COMMIT="5c7eb854051dd01702578b9aeb30116079660150"
+HARFBUZZ_COMMIT="2edc371e97d6d2c5ad0e085b26e9af0123501647"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,8 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         -Ddefault_library=static
-        -D{benchmark,cairo,docs,glib,gobject,icu,introspection,tests}"=disabled"
+        -Dgdi=enabled
+        -D{benchmark,cairo,chafa,docs,glib,gobject,icu,introspection,tests,utilities}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then

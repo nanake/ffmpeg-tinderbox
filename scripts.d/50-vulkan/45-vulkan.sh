@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/Vulkan-Headers.git"
-HEADERS_VERSION="1.3.290"
+HEADERS_VERSION="1.3.292"
 
 ffbuild_enabled() {
     return 0
@@ -17,6 +17,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DVULKAN_HEADERS_ENABLE_INSTALL=YES \
+        -DVULKAN_HEADERS_ENABLE_{MODULE,TESTS}=NO \
         -GNinja \
         ..
     ninja -j"$(nproc)"
