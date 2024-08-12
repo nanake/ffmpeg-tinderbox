@@ -11,32 +11,29 @@ ffbuild_dockerbuild() {
     git-mini-clone "$ZMQ_REPO" "$ZMQ_COMMIT" zmq
     cd zmq
 
-    ./autogen.sh
+    mkdir build && cd build
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,dependency-tracking,maintainer-mode,Werror}
-        --enable-static
-    )
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DBUILD_{SHARED_LIBS,SHARED,TESTS}=OFF \
+        -DENABLE_DRAFTS=OFF \
+        -DENABLE_INTRINSICS=ON \
+        -DPOLLER=epoll \
+        -DZMQ_BUILD_TESTS=OFF \
+        -DZMQ_HAVE_IPC=OFF \
+        -DZMQ_WIN32_WINNT=0x0A00 \
+        -GNinja \
+        ..
+    ninja -j"$(nproc)"
+    ninja install
 
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-        )
-        # 💥 avoid symbol collision with libssh
-        export CFLAGS="$CFLAGS -Dsha1_init=zmq_sha1_init"
-        export CXXFLAGS="$CFLAGS -Dsha1_init=zmq_sha1_init"
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
-    make -j"$(nproc)"
-    make install
-
-    sed -i 's/-lpthread/& -lws2_32/' "$FFBUILD_PREFIX"/lib/pkgconfig/libzmq.pc
-    echo "Cflags.private: -DZMQ_STATIC" >> "$FFBUILD_PREFIX"/lib/pkgconfig/libzmq.pc
+    # TODO, FIXME: remove once merged https://github.com/zeromq/libzmq/pull/4706
+    {
+        echo "Cflags.private: -DZMQ_STATIC"
+        echo "Libs.private: -liphlpapi -lws2_32"
+    } >> "$FFBUILD_PREFIX"/lib/pkgconfig/libzmq.pc
 }
 
 ffbuild_configure() {
