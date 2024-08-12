@@ -4,7 +4,7 @@ HEADERS_REPO="https://github.com/KhronosGroup/OpenCL-Headers.git"
 HEADERS_COMMIT="d79beab14769efdff4ff9106cdc47268575d6891"
 
 LOADER_REPO="https://github.com/KhronosGroup/OpenCL-ICD-Loader.git"
-LOADER_COMMIT="c2cbdb33605ef9cfa02aa2a77e9cd7306c57e32a"
+LOADER_COMMIT="3d27d7ca04d29fabe608a2372ce693601bcc4e81"
 
 ffbuild_enabled() {
     return 0
