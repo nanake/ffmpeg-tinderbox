@@ -29,11 +29,7 @@ ffbuild_dockerbuild() {
     ninja -j"$(nproc)"
     ninja install
 
-    # TODO, FIXME: remove once merged https://github.com/zeromq/libzmq/pull/4706
-    {
-        echo "Cflags.private: -DZMQ_STATIC"
-        echo "Libs.private: -liphlpapi -lws2_32"
-    } >> "$FFBUILD_PREFIX"/lib/pkgconfig/libzmq.pc
+    echo "Cflags.private: -DZMQ_STATIC" >> "$FFBUILD_PREFIX"/lib/pkgconfig/libzmq.pc
 }
 
 ffbuild_configure() {
