@@ -23,8 +23,6 @@ ffbuild_dockerbuild() {
         ..
     ninja -j"$(nproc)"
     ninja install
-
-    sed -i 's|/[^ ]*libstdc++.a|-lstdc++|' "$FFBUILD_PREFIX"/lib/pkgconfig/libaribcaption.pc
 }
 
 ffbuild_configure() {

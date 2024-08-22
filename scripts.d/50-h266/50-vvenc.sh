@@ -23,8 +23,6 @@ ffbuild_dockerbuild() {
         ..
     ninja -j"$(nproc)"
     ninja install
-
-    sed -i 's|/[^ ]*libstdc++.a|stdc++|' "$FFBUILD_PREFIX"/lib/pkgconfig/libvvenc.pc
 }
 
 ffbuild_configure() {

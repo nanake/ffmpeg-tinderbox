@@ -9,7 +9,7 @@ set(CMAKE_RC_COMPILER ${triple}-windres)
 set(CMAKE_RANLIB ${triple}-gcc-ranlib)
 set(CMAKE_AR ${triple}-gcc-ar)
 
-set(CMAKE_FIND_ROOT_PATH /usr/${triple} /opt/ffbuild)
+set(CMAKE_FIND_ROOT_PATH /usr/${triple}/sysroot/mingw /opt/ffbuild)
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
 set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)
