@@ -9,7 +9,6 @@ ranlib = arch + '-gcc-ranlib'
 strip = arch + '-strip'
 windres = arch + '-windres'
 dlltool = arch + '-dlltool'
-nasm = 'nasm'
 exe_wrapper = ['wine']
 
 [properties]
