@@ -19,6 +19,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release
         -DENABLE_{SHARED,CLI}"=OFF"
         -Wno-dev
+        -GNinja
     )
 
     if [[ $TARGET != *32 ]]; then
@@ -28,16 +29,19 @@ ffbuild_dockerbuild() {
         cmake "${common_config[@]}" -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_{10,12}BIT=ON -S source -B 8bit &
         wait
 
-        cat >Makefile <<"EOF"
-all: 12bit/libx265.a 10bit/libx265.a 8bit/libx265.a
+        cat >build.ninja <<"EOF"
+rule build_lib
+  command = ninja -C $in
 
-%/libx265.a:
-	$(MAKE) -C $(subst /libx265.a,,$@)
+build 12bit/libx265.a: build_lib 12bit
+build 10bit/libx265.a: build_lib 10bit
+build 8bit/libx265.a: build_lib 8bit
 
-.PHONY: all
+build all: phony 12bit/libx265.a 10bit/libx265.a 8bit/libx265.a
+default all
 EOF
 
-        make -j"$(nproc)"
+        ninja -j"$(nproc)"
 
         cd 8bit
         mv ../12bit/libx265.a ../8bit/libx265_main12.a
@@ -56,12 +60,10 @@ EOF
         mkdir 8bit
         cd 8bit
         cmake "${common_config[@]}" ../source
-        make -j"$(nproc)"
+        ninja -j"$(nproc)"
     fi
 
-    make install
-
-    echo "Libs.private: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/x265.pc
+    ninja install
 }
 
 ffbuild_configure() {
@@ -70,12 +72,4 @@ ffbuild_configure() {
 
 ffbuild_unconfigure() {
     echo --disable-libx265
-}
-
-ffbuild_cflags() {
-    return 0
-}
-
-ffbuild_ldflags() {
-    return 0
 }
