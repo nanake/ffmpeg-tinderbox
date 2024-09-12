@@ -36,12 +36,9 @@ FF_CXXFLAGS="$(xargs <<< "$FF_CXXFLAGS")"
 FF_LDFLAGS="$(xargs <<< "$FF_LDFLAGS")"
 FF_LIBS="$(xargs <<< "$FF_LIBS")"
 
-TESTFILE="uidtestfile"
-rm -f "$TESTFILE"
-docker run --rm -v "$PWD:/uidtestdir" "$IMAGE" touch "/uidtestdir/$TESTFILE"
-DOCKERUID="$(stat -c "%u" "$TESTFILE")"
-rm -f "$TESTFILE"
-[[ "$DOCKERUID" != "$(id -u)" ]] && UIDARGS=( -u "$(id -u):$(id -g)" ) || UIDARGS=()
+if ! docker info --format '{{.SecurityOptions}}' | grep -qE '(^|\s)name=rootless($|\s)'; then
+    UIDARGS=(-u "$(id -u):$(id -g)")
+fi
 
 rm -rf ffbuild
 mkdir ffbuild
