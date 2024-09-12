@@ -34,6 +34,20 @@ ffbuild_dockerbuild() {
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
     make install DESTDIR="/opt/mingw"
+
+    cd ../mingw-w64-libraries/winpthreads
+
+    local myconf=(
+        --prefix="$SYSROOT/mingw"
+        --host="$FFBUILD_TOOLCHAIN"
+        --with-pic
+        --disable-shared
+        --enable-static
+    )
+
+    ./configure "${myconf[@]}"
+    make -j"$(nproc)"
+    make install DESTDIR="/opt/mingw"
 }
 
 ffbuild_configure() {
