@@ -92,7 +92,7 @@ jobs:
           REV=$(echo "$STUB" | cut -d'-' -f5)
           NTAG=$(echo "$STUB" | cut -d'-' -f3)
 
-          TITLE="Build $BUILDID @ $REV"
+          TITLE="Build $BUILDID"
           RELNOTE="Built from FFmpeg/FFmpeg@$REV"
           TAGNAME="build-$BUILDID-n$NTAG"
 
