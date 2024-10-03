@@ -35,7 +35,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        image_name: [fedora,base-win32,base-win64,win32-nonfree,win64-nonfree]
+        image_name: [fedora,base-win64,win64-nonfree]
     steps:
       - name: Prune untagged pkgs
         uses: actions/github-script@v7
