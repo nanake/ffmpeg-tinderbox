@@ -8,9 +8,9 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone --filter=tree:0 --branch=master --single-branch "$ZIMG_REPO" zimg
+    git-mini-clone "$ZIMG_REPO" "$ZIMG_COMMIT" zimg
     cd zimg
-    git checkout "$ZIMG_COMMIT"
+
     git submodule update --init --recursive --depth 1
 
     ./autogen.sh
