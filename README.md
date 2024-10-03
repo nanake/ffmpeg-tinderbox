@@ -66,6 +66,79 @@ Upon successful build completion, the build artifacts will be available in the `
 
 ---
 
+## Enabled libraries
+
+- iconv
+- libxml2
+- zlib
+- libfreetype
+- libfribidi
+- gmp
+- lzma
+- libharfbuzz
+- libfontconfig
+- libvorbis
+- opencl
+- libvmaf
+- amf
+- avisynth
+- chromaprint
+- cuda-llvm
+- decklink
+- ffnvcodec
+- libaribcaption
+- libass
+- libbluray
+- libdav1d
+- libdavs2
+- libdvdnav
+- libdvdread
+- libfdk-aac
+- libgme
+- libjxl
+- libkvazaar
+- liblc3
+- libmp3lame
+- libopencore-amrnb
+- libopencore-amrwb
+- libopenh264
+- libopenjpeg
+- libopenmpt
+- libopus
+- libplacebo
+- librav1e
+- librist
+- librubberband
+- libshaderc
+- libsnappy
+- libsoxr
+- libsrt
+- libssh
+- libsvtav1
+- libtheora
+- libtwolame
+- libuavs3d
+- libvidstab
+- libvpl
+- libvpx
+- libvvenc
+- libwebp
+- libx264
+- libx265
+- libxavs2
+- libxevd
+- libxeve
+- libzimg
+- libzmq
+- libzvbi
+- openal
+- schannel
+- sdl2
+- vaapi
+- vulkan
+
+---
+
 ###  Acknowledgments
 
 The foundation for this build script comes from the work of [BtbN](https://github.com/BtbN/FFmpeg-Builds).
