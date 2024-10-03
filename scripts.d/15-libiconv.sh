@@ -1,21 +1,14 @@
 #!/bin/bash
 
-# https://git.savannah.gnu.org/gitweb/?p=libiconv.git
-LIBICONV_REPO="https://git.savannah.gnu.org/git/libiconv.git"
-LIBICONV_COMMIT="0d94621c1e182f5a13a9504523afcb01ec546b37"
+ICONV_SRC="https://ftp.gnu.org/pub/gnu/libiconv/libiconv-1.17.tar.gz"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git clone "$LIBICONV_REPO" libiconv
-    cd libiconv
-    git checkout "$LIBICONV_COMMIT"
-
-    ./autopull.sh --one-time
-
-    unset CC CFLAGS
+    curl -L "$ICONV_SRC" | tar xz
+    cd libiconv*
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
@@ -33,7 +26,6 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    ./autogen.sh
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
     make install
