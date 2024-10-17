@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VVENC_REPO="https://github.com/fraunhoferhhi/vvenc.git"
-VVENC_COMMIT="0e7d4d34b00eedfccc79a3014f9701ae3599dcc0"
+VVENC_COMMIT="7acfabaee049ddcb4d135361a4a296983a6198e4"
 
 ffbuild_enabled() {
     return 0
