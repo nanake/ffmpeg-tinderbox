@@ -18,7 +18,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
-        -DVVENC_ENABLE_LINK_TIME_OPT=OFF \
+        -DVVENC_ENABLE_{LINK_TIME_OPT,WERROR}=OFF \
+        -DVVENC_LIBRARY_ONLY=ON \
         -GNinja \
         ..
     ninja -j"$(nproc)"
