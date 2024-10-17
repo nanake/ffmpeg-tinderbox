@@ -1,14 +1,15 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/Vulkan-Headers.git"
-HEADERS_VERSION="1.3.297"
+HEADERS_COMMIT="v1.3.298"
+HEADERS_TAGFILTER="v?.*.*"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$HEADERS_REPO" "v$HEADERS_VERSION" vkheaders
+    git-mini-clone "$HEADERS_REPO" "$HEADERS_COMMIT" vkheaders
     cd vkheaders
 
     mkdir build && cd build
@@ -21,7 +22,6 @@ ffbuild_dockerbuild() {
         -DVULKAN_HEADERS_ENABLE_{MODULE,TESTS}=NO \
         -GNinja \
         ..
-    ninja -j"$(nproc)"
     ninja install
 
     cat >"$FFBUILD_PREFIX"/lib/pkgconfig/vulkan.pc <<EOF
@@ -29,7 +29,7 @@ prefix=$FFBUILD_PREFIX
 includedir=\${prefix}/include
 
 Name: vulkan
-Version: $HEADERS_VERSION
+Version: ${HEADERS_COMMIT:1}
 Description: Vulkan (Headers Only)
 Cflags: -I\${includedir}
 EOF

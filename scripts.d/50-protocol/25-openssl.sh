@@ -2,6 +2,7 @@
 
 OPENSSL_REPO="https://github.com/openssl/openssl.git"
 OPENSSL_COMMIT="openssl-3.3.2"
+OPENSSL_TAGFILTER="openssl-3.3.*"
 
 ffbuild_enabled() {
     return 0
