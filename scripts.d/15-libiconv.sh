@@ -5,7 +5,7 @@ LIBICONV_REPO="https://github.com/nanake/libiconv.git"
 LIBICONV_COMMIT="eed6782cbb4651876e3c8b27ea53273f230ee8e2"
 
 GNULIB_REPO="https://github.com/coreutils/gnulib.git"
-GNULIN_COMMIT="e44763ddcb12fd04ed0290c3eb8c27e959cd98f1"
+GNULIB_COMMIT="e44763ddcb12fd04ed0290c3eb8c27e959cd98f1"
 
 ffbuild_enabled() {
     return 0
@@ -16,7 +16,7 @@ ffbuild_dockerbuild() {
     cd libiconv
     git checkout "$LIBICONV_COMMIT"
 
-    git-mini-clone "$GNULIB_REPO" "$GNULIN_COMMIT" gnulib
+    git-mini-clone "$GNULIB_REPO" "$GNULIB_COMMIT" gnulib
 
     unset CC CFLAGS
 
