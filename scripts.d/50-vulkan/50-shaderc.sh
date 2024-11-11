@@ -11,6 +11,8 @@ ffbuild_dockerbuild() {
     git-mini-clone "$SHADERC_REPO" "$SHADERC_COMMIT" shaderc
     cd shaderc
 
+    sed -i 's/d0e67c58134377f065a509845ca6b7d463f5b487/9c644fcb5b9a1a9c975c50a790fd14c5451292b0/' DEPS
+
     ./utils/git-sync-deps
 
     mkdir build && cd build
