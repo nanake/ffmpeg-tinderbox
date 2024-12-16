@@ -36,6 +36,9 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
+    # FIXME: Autogen encountered an error after upgrading to automake-1.17-1.fc42
+    sed -i 's/aclocal-1.16/aclocal/' libcharset/Makefile.devel
+
     ./autogen.sh
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
