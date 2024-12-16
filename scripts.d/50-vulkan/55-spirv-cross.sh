@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SPIRV_CROSS_REPO="https://github.com/KhronosGroup/SPIRV-Cross.git"
-SPIRV_CROSS_COMMIT="9040e0d25dc545a6d725276bdbd0362791c81f14"
+SPIRV_CROSS_COMMIT="6173e24b31f09a0c3217103a130e74c4ddec14a6"
 
 ffbuild_enabled() {
     return 0
