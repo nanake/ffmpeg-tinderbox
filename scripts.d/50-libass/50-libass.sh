@@ -17,6 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         -Ddefault_library=static
+        -D{checkasm,compare,fuzz,profile,test}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then
