@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LC3_REPO="https://github.com/google/liblc3.git"
-LC3_COMMIT="bb85f7dde4195bfc0fca9e9c7c2eed0f8694203c"
+LC3_COMMIT="0b28bf28ee44b413568afeabebc1b3cab1ad1b56"
 
 ffbuild_enabled() {
     return 0
