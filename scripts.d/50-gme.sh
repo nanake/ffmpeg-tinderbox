@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GME_REPO="https://github.com/libgme/game-music-emu.git"
-GME_COMMIT="8a2a331d6da17de14a4656a6e6c6db9d2cdc3362"
+GME_COMMIT="e5a910a55b03fe898111880e3e1c1c02e442956c"
 
 ffbuild_enabled() {
     return 0
