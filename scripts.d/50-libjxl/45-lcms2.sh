@@ -18,6 +18,7 @@ ffbuild_dockerbuild() {
         --buildtype=release
         -Ddefault_library=static
         -D{fastfloat,threaded}"=true"
+        -Dtests=disabled
     )
 
     if [[ $TARGET == win* ]]; then
