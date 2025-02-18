@@ -1,5 +1,7 @@
 #!/bin/bash
 
+SCRIPT_SKIP="1"
+
 SVTAV1_REPO="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
 SVTAV1_COMMIT="b76ad955ba5a8321b11855e5172741ec3e3a5dd8"
 
