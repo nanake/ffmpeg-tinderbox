@@ -13,6 +13,9 @@ ffbuild_dockerbuild() {
     cd x265
     git checkout "$X265_COMMIT"
 
+    # workaround for gcc-15
+    sed -i '/#include <limits>/a #include <cstdint>' source/dynamicHDR10/json11/json11.cpp
+
     local common_config=(
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
