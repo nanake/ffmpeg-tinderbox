@@ -13,6 +13,9 @@ ffbuild_dockerbuild() {
 
     git submodule update --init --recursive --depth 1
 
+    # workaround for GCC-15
+    sed -i '/#include "state.h"/a #include <cstdint>' graphengine/graphengine/graph.cpp
+
     ./autogen.sh
 
     local myconf=(
