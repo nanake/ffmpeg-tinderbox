@@ -84,7 +84,7 @@ package_variant ffbuild/prefix "ffbuild/pkgroot/$BUILD_NAME"
 
 if [[ -n "$GITHUB_ACTIONS" ]]; then
     cd ffbuild/pkgroot
-    tar -I 'zstdmt -9 --long' -cf "${ARTIFACTS_PATH}/${BUILD_NAME}.tar.zst" "$BUILD_NAME"
+    tar -I 'zstdmt -9 --long=31 --zstd=windowLog=31' -cf "${ARTIFACTS_PATH}/${BUILD_NAME}.tar.zst" "$BUILD_NAME"
     cd -
 else
     mv "ffbuild/pkgroot/$BUILD_NAME" "${ARTIFACTS_PATH}"
