@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZIMG_REPO="https://github.com/sekrit-twc/zimg.git"
-ZIMG_COMMIT="8d594c9f4f4a8c3b59be3bb16e47fbfc9ce37709"
+ZIMG_COMMIT="81042fcca70f2e4668e41fa731f5ebbcf10b64fb"
 
 ffbuild_enabled() {
     return 0
@@ -12,9 +12,6 @@ ffbuild_dockerbuild() {
     cd zimg
 
     git submodule update --init --recursive --depth 1
-
-    # workaround for GCC-15
-    sed -i '/#include "state.h"/a #include <cstdint>' graphengine/graphengine/graph.cpp
 
     ./autogen.sh
 
