@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
     cd openssl
 
     local myconf=(
-        no-{apps,docs,ec2m,legacy,module,shared,tests}
+        no-{apps,docs,ec2m,engine,legacy,module,shared,tests}
         no-{ssl,ssl3-method}
         no-{dh,dsa,md4,mdc2,rc2,rc4,sm2,sm3,sm4}
         threads
