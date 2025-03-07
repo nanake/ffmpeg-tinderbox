@@ -18,6 +18,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DCMAKE_INSTALL_LIBDIR=lib \
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
         -DBUILD_{EXAMPLES,EXPERIMENTAL,SHARED_LIBS,TESTS}=OFF \
         -DINSTALL_EXAMPLES=OFF \
         -GNinja \

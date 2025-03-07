@@ -16,10 +16,14 @@ ffbuild_dockerbuild() {
     # workaround for gcc-15
     sed -i '/#include <limits>/a #include <cstdint>' source/dynamicHDR10/json11/json11.cpp
 
+    # compatibility with CMake 4.0
+    sed -i 's/CMP0025 OLD/CMP0025 NEW/; s/CMP0054 OLD/CMP0054 NEW/' source/CMakeLists.txt
+
     local common_config=(
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
         -DCMAKE_BUILD_TYPE=Release
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         -DENABLE_ALPHA=ON
         -DENABLE_{SHARED,CLI}"=OFF"
         -Wno-dev
