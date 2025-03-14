@@ -1,7 +1,7 @@
 #!/bin/bash
 
 MINGW_REPO="https://github.com/mingw-w64/mingw-w64.git"
-MINGW_COMMIT="079e6092b3c49a791e2d36282781827c75d12bba"
+MINGW_COMMIT="9c27617e016f966803a16e84d878f71565e12074"
 
 ffbuild_enabled() {
     [[ $TARGET == win* ]] || return -1
@@ -24,21 +24,55 @@ ffbuild_dockerbuild() {
     unset CFLAGS CXXFLAGS LDFLAGS PKG_CONFIG_LIBDIR
 
     SYSROOT="$($CC -print-sysroot)"
+    MINGW_PREFIX="/opt/mingw/${SYSROOT#/}/mingw"
 
     local myconf=(
-        --prefix="$SYSROOT/mingw"
+        --prefix="$MINGW_PREFIX"
         --host="$FFBUILD_TOOLCHAIN"
         --enable-idl
     )
 
+    if [[ $TARGET == win32 ]]; then
+        myconf+=(
+            --with-default-msvcrt=msvcrt
+        )
+    fi
+
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
-    make install DESTDIR="/opt/mingw"
+    make install
+
+    cd ../mingw-w64-crt
+
+    local myconf=(
+        --prefix="$MINGW_PREFIX"
+        --host="$FFBUILD_TOOLCHAIN"
+    )
+
+    if [[ $TARGET == win32 ]]; then
+        myconf+=(
+            --disable-lib64
+            --enable-lib32
+            --with-default-msvcrt=msvcrt
+        )
+    elif [[ $TARGET == win64 ]]; then
+        myconf+=(
+            --disable-lib32
+            --enable-lib64
+        )
+    else
+        echo "Unknown target"
+        return -1
+    fi
+
+    ./configure "${myconf[@]}"
+    make -j"$(nproc)"
+    make install
 
     cd ../mingw-w64-libraries/winpthreads
 
     local myconf=(
-        --prefix="$SYSROOT/mingw"
+        --prefix="$MINGW_PREFIX"
         --host="$FFBUILD_TOOLCHAIN"
         --with-pic
         --disable-shared
@@ -47,7 +81,7 @@ ffbuild_dockerbuild() {
 
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
-    make install DESTDIR="/opt/mingw"
+    make install
 }
 
 ffbuild_configure() {
