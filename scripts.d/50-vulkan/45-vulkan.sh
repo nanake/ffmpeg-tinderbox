@@ -1,7 +1,7 @@
 #!/bin/bash
 
 HEADERS_REPO="https://github.com/KhronosGroup/Vulkan-Headers.git"
-HEADERS_COMMIT="v1.4.310"
+HEADERS_COMMIT="v1.4.311"
 HEADERS_TAGFILTER="v?.*.*"
 
 ffbuild_enabled() {
