@@ -1,7 +1,7 @@
 #!/bin/bash
 
 X265_REPO="https://bitbucket.org/multicoreware/x265_git.git"
-X265_COMMIT="681f9f4c2fb5605af831e7923511075b229a8a50"
+X265_COMMIT="b354c009a60bcd6d7fc04014e200a1ee9c45c167"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
@@ -15,9 +15,6 @@ ffbuild_dockerbuild() {
 
     # workaround for gcc-15
     sed -i '/#include <limits>/a #include <cstdint>' source/dynamicHDR10/json11/json11.cpp
-
-    # compatibility with CMake 4.0
-    sed -i 's/CMP0025 OLD/CMP0025 NEW/; s/CMP0054 OLD/CMP0054 NEW/' source/CMakeLists.txt
 
     local common_config=(
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
