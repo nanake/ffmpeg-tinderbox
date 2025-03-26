@@ -1,6 +1,6 @@
 #!/bin/bash
 
-FFTW_SRC="https://fftw.org/pub/fftw/fftw-3.3.10.tar.gz"
+FFTW_SRC="https://github.com/nanake/fftw3/releases/download/fftw-3.3.10/fftw-3.3.10.tar.gz"
 
 ffbuild_enabled() {
     return 0
