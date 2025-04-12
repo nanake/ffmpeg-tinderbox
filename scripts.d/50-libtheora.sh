@@ -1,7 +1,7 @@
 #!/bin/bash
 
 THEORA_REPO="https://github.com/xiph/theora.git"
-THEORA_COMMIT="a3ee0f56702afb2b8c688ed583aabfbb921919c0"
+THEORA_COMMIT="b167cb4a3e3e2d3239d71f0ca2cbc25af4f2183c"
 
 ffbuild_enabled() {
     return 0

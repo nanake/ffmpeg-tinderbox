@@ -5,7 +5,7 @@ LIBICONV_REPO="https://github.com/nanake/libiconv.git"
 LIBICONV_COMMIT="d68ea07b28aa3c8d1959358b7da7e7f3ba148319"
 
 GNULIB_REPO="https://github.com/coreutils/gnulib.git"
-GNULIB_COMMIT="16a5aa623106fbab7eacb0dfd081288ae79c16cf"
+GNULIB_COMMIT="ccb60ee9ab0205cfd23066bd520d1a0c9c7a0a76"
 
 ffbuild_enabled() {
     return 0
