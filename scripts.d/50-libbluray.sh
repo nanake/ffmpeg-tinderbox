@@ -13,19 +13,19 @@ ffbuild_dockerbuild() {
 
     git submodule update --init --recursive --depth 1
 
-    ./bootstrap
+    mkdir build && cd build
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --enable-static
-        --disable-{shared,bdjava-jar,dependency-tracking,doxygen-{doc,dot,html,pdf,ps},examples,extra-warnings}
-        --without-{external-libudfread,fontconfig,freetype,libxml2}
-        --with-pic
+        --buildtype=release
+        -Ddefault_library=static
+        -D{bdj_jar,fontconfig,freetype,libxml2}"=disabled"
+        -D{enable_tools,java9}"=false"
     )
 
     if [[ $TARGET == win* ]]; then
         myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
+            --cross-file=/cross.meson
         )
     else
         echo "Unknown target"
@@ -36,9 +36,9 @@ ffbuild_dockerbuild() {
     # since https://github.com/FFmpeg/FFmpeg/commit/c4de577
     export CFLAGS="$CFLAGS -Ddec_init=libbluray_dec_init"
 
-    ./configure "${myconf[@]}"
-    make -j"$(nproc)"
-    make install
+    meson setup "${myconf[@]}" ..
+    ninja -j"$(nproc)"
+    ninja install
 }
 
 ffbuild_configure() {
