@@ -99,6 +99,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - libkvazaar
 - liblc3
 - libmp3lame
+- liboapv
 - libopencore-amrnb
 - libopencore-amrwb
 - libopenh264
