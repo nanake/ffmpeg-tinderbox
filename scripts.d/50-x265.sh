@@ -20,7 +20,6 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX"
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN"
         -DCMAKE_BUILD_TYPE=Release
-        -DCMAKE_POLICY_VERSION_MINIMUM=3.5
         -DENABLE_ALPHA=ON
         -DENABLE_{SHARED,CLI}"=OFF"
         -Wno-dev
