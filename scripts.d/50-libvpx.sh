@@ -32,9 +32,6 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    # semaphore.h does not contain timespec definition
-    sed -i '/#include <semaphore.h>/i #include <sys/timeb.h>' vp8/common/threading.h
-
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
     make install
