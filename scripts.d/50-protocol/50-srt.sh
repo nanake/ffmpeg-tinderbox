@@ -26,8 +26,6 @@ ffbuild_dockerbuild() {
         ..
     ninja -j"$(nproc)"
     ninja install
-
-    echo "Libs.private: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/srt.pc
 }
 
 ffbuild_configure() {
