@@ -98,6 +98,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - libjxl
 - libkvazaar
 - liblc3
+- liblcevc-dec
 - libmp3lame
 - liboapv
 - libopencore-amrnb
