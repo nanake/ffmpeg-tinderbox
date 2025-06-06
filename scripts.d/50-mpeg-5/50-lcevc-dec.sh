@@ -14,7 +14,6 @@ ffbuild_dockerbuild() {
 
     curl -L https://github.com/v-novaltd/LCEVCdec/pull/23.patch | git apply
 
-    sed -i '/#include <string>/a #include <cstdint>' src/api/src/log.h
     sed -i '127s/WIN32/MSVC/' cmake/modules/VNovaSetup.cmake
     sed -i 's/__declspec(dllexport)//; s/__declspec(dllimport)//' include/LCEVC/lcevc.h
 
@@ -34,8 +33,11 @@ ffbuild_dockerbuild() {
     ninja install
 
     rm -rf "$FFBUILD_PREFIX"/lib/objects-Release
-    sed -i 's|-lstdc++ -lm -llcevc_dec_api|-llcevc_dec_api -lstdc++ -lm|' "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
-    echo "Cflags.private: -DVNEnablePublicAPIExport" >> "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
+    sed -i '/^Libs:/s/-lstdc++ -lm //' "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
+    {
+        echo "Libs.private: -lstdc++ -lm"
+        echo "Cflags.private: -DVNEnablePublicAPIExport"
+    } >> "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
 }
 
 ffbuild_configure() {
