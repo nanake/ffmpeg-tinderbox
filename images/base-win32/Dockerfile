@@ -9,7 +9,6 @@ RUN <<EOF
         byacc \
         clang \
         cmake \
-        gawk \
         gcc \
         gcc-c++ \
         gettext-devel \
