@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZMQ_REPO="https://github.com/zeromq/libzmq.git"
-ZMQ_COMMIT="798a689df1a7945f556d5404311c6ccebb282788"
+ZMQ_COMMIT="b91a6201307b72beb522300366aad763d19b1456"
 
 ffbuild_enabled() {
     return 0
@@ -17,7 +17,6 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
         -DBUILD_{SHARED_LIBS,SHARED,TESTS}=OFF \
         -DENABLE_DRAFTS=OFF \
         -DENABLE_INTRINSICS=ON \
