@@ -21,7 +21,7 @@ ffbuild_dockerbuild() {
         -DALSOFT_{EXAMPLES,UTILS}=OFF \
         -DALSOFT_INSTALL_{AMBDEC_PRESETS,CONFIG,EXAMPLES,HRTF_DATA,UTILS}=OFF \
         -DALSOFT_BACKEND_{JACK,OPENSL,PIPEWIRE,PORTAUDIO,PULSEAUDIO}=OFF \
-        -DCMAKE_CXX_FLAGS="-I../gsl/include" \
+        -DCMAKE_CXX_FLAGS="${CXXFLAGS} -I../gsl/include" \
         -GNinja \
         ..
     ninja -j"$(nproc)"
