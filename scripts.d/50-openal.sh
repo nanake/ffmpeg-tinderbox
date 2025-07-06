@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENAL_REPO="https://github.com/kcat/openal-soft.git"
-OPENAL_COMMIT="78f62702080aed3c4c5935acd35d333b0074bb39"
+OPENAL_COMMIT="0ce2355e91aa4729e3f091261469940020d1636a"
 
 ffbuild_enabled() {
     return 0
@@ -21,7 +21,6 @@ ffbuild_dockerbuild() {
         -DALSOFT_{EXAMPLES,UTILS}=OFF \
         -DALSOFT_INSTALL_{AMBDEC_PRESETS,CONFIG,EXAMPLES,HRTF_DATA,UTILS}=OFF \
         -DALSOFT_BACKEND_{JACK,OPENSL,PIPEWIRE,PORTAUDIO,PULSEAUDIO}=OFF \
-        -DCMAKE_CXX_FLAGS="${CXXFLAGS} -I../gsl/include" \
         -GNinja \
         ..
     ninja -j"$(nproc)"
