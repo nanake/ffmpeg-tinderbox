@@ -38,27 +38,8 @@ jobs:
         image_name: [fedora,base-win64,win64-nonfree]
     steps:
       - name: Prune untagged pkgs
-        uses: actions/github-script@v7
+        uses: dataaxiom/ghcr-cleanup-action@v1
         with:
-          github-token: ${{ secrets.dodosolsollalasol }}
-          script: |
-            // list package versions
-            const list_package_versions = await github.request(`GET /user/packages/container/${{ matrix.image_name }}/versions`, {
-              per_page: 100
-            });
-
-            // get only the versions with no tags
-            const versions_to_prune = list_package_versions.data.filter(version => version.metadata.container.tags.length === 0);
-
-            // get the ids of the versions to prune
-            const ids_to_prune = versions_to_prune.map(version => version.id);
-
-            // delete all the versions in parallel
-            const prune_results = await Promise.all(ids_to_prune.map(id => {
-              return github.request(`DELETE /user/packages/container/${{ matrix.image_name }}/versions/${id}`)
-                .then(result => {
-                  return `✂️ prune ${id} ${result.status === 204 ? "🎉 success" : "❌ failure"}`;
-                });
-            }));
-
-            prune_results.forEach(message => console.log(message));
+          delete-untagged: true
+          packages: ${{ matrix.image_name }}
+          token: ${{ secrets.dodosolsollalasol }}
