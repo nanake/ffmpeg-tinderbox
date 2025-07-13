@@ -16,6 +16,11 @@ ffbuild_dockerbuild() {
     # https://code.videolan.org/videolan/libplacebo/-/merge_requests/682
     sed -i "/c_args:/s/'-DPL_EXPORT'/'-DPL_STATIC'/" src/meson.build
 
+    # FIXME: parse the file, then hand the root Element to VkXML
+    # fixes `TypeError: expected an Element, not ElementTree` since python v3.14.0b4
+    # https://github.com/haasn/libplacebo/issues/335
+    sed -i 's|\(registry = VkXML(ET.parse(xmlfile)\)|\1.getroot()|' src/vulkan/utils_gen.py
+
     mkdir build && cd build
 
     local myconf=(
