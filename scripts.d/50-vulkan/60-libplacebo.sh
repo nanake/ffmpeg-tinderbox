@@ -1,7 +1,7 @@
 #!/bin/bash
 
 PLACEBO_REPO="https://github.com/haasn/libplacebo.git"
-PLACEBO_COMMIT="686ed7e80dc711fe2f6af572f1b4f4c259791a25"
+PLACEBO_COMMIT="12509c0f1ee8c22ae163017f0a5e7b8a9d983a17"
 
 ffbuild_enabled() {
     return 0
@@ -15,11 +15,6 @@ ffbuild_dockerbuild() {
     # Don't define PL_EXPORT for static build
     # https://code.videolan.org/videolan/libplacebo/-/merge_requests/682
     sed -i "/c_args:/s/'-DPL_EXPORT'/'-DPL_STATIC'/" src/meson.build
-
-    # FIXME: parse the file, then hand the root Element to VkXML
-    # fixes `TypeError: expected an Element, not ElementTree` since python v3.14.0b4
-    # https://github.com/haasn/libplacebo/issues/335
-    sed -i 's|\(registry = VkXML(ET.parse(xmlfile)\)|\1.getroot()|' src/vulkan/utils_gen.py
 
     mkdir build && cd build
 
