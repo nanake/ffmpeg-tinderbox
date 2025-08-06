@@ -79,6 +79,7 @@ jobs:
         uses: actions/download-artifact@v5
         with:
           path: artifacts
+          merge-multiple: true
 
       - name: Create release
         id: create_release
@@ -99,4 +100,4 @@ jobs:
           gh release create "$TAGNAME" \
             --title "$TITLE" \
             --notes "$RELNOTE" \
-            artifacts/*/*.zst
+            artifacts/*.zst
