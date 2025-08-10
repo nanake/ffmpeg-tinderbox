@@ -13,11 +13,6 @@ ffbuild_dockerbuild() {
     git clone --filter=tree:0 $LCEVCDEC_REPO lcevc && cd lcevc
     git checkout $LCEVCDEC_COMMIT
 
-    # FIXME
-    # there's no a clean static-link. the public headers unconditionally
-    # apply __declspec(dllimport) to API symbols, even when linking statically
-    sed -i 's/__declspec(dllexport)//; s/__declspec(dllimport)//' src/pipeline/include/LCEVC/pipeline/detail/pipeline_api.h
-
     mkdir build && cd build
 
     cmake \
@@ -25,16 +20,13 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
+        -DVN_SDK_{DIAGNOSTICS_ASYNC,METRICS,PIPELINE_{CPU,LEGACY},SAMPLE_SOURCE,SIMD,THREADING}=OFF \
         -DVN_SDK_FFMPEG_LIBS_PACKAGE="" \
-        -DVN_SDK_SAMPLE_SOURCE=OFF \
         -GNinja \
         ..
 
     ninja -j"$(nproc)"
     ninja install
 
-    {
-        echo "Libs.private: -lstdc++ -lm"
-        echo "Cflags.private: -DVNEnablePipelineAPIExport"
-    } >> "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
+    echo "Libs.private: -llcevc_dec_pipeline -lstdc++ -lm" >> "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
 }
