@@ -29,6 +29,14 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
+    # https://gitlab.xiph.org/xiph/theora/-/issues/2343
+    # https://code.ffmpeg.org/FFmpeg/FFmpeg/issues/20185
+    if [[ $TARGET == win64 ]]; then
+        myconf+=(
+            --disable-asm
+        )
+    fi
+
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
     make install
