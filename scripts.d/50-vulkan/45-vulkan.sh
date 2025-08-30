@@ -1,17 +1,20 @@
 #!/bin/bash
 
-HEADERS_REPO="https://github.com/KhronosGroup/Vulkan-Headers.git"
-HEADERS_COMMIT="v1.4.325"
-HEADERS_TAGFILTER="v?.*.*"
+VULKAN_REPO="https://github.com/BtbN/Vulkan-Shim-Loader.git"
+VULKAN_COMMIT="9657ca8e395ef16c79b57c8bd3f4c1aebb319137"
 
 ffbuild_enabled() {
     return 0
 }
 
 ffbuild_dockerbuild() {
-    git-mini-clone "$HEADERS_REPO" "$HEADERS_COMMIT" vkheaders
-    cd vkheaders
+    git-mini-clone "$VULKAN_REPO" "$VULKAN_COMMIT" vulkan
+    cd vulkan
 
+    # Update Vulkan-Headers to the latest commit
+    git submodule update --init --remote
+
+    cd Vulkan-Headers
     mkdir build && cd build
 
     cmake \
@@ -24,15 +27,18 @@ ffbuild_dockerbuild() {
         ..
     ninja install
 
-    cat >"$FFBUILD_PREFIX"/lib/pkgconfig/vulkan.pc <<EOF
-prefix=$FFBUILD_PREFIX
-includedir=\${prefix}/include
+    cd ../..
+    mkdir build && cd build
 
-Name: vulkan
-Version: ${HEADERS_COMMIT:1}
-Description: Vulkan (Headers Only)
-Cflags: -I\${includedir}
-EOF
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DVULKAN_SHIM_IMPERSONATE=ON \
+        -GNinja \
+        ..
+    ninja "-j$(nproc)"
+    ninja install
 }
 
 ffbuild_configure() {

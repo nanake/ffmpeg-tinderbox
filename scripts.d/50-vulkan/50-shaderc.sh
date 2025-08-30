@@ -39,6 +39,21 @@ ffbuild_dockerbuild() {
     cp "$FFBUILD_PREFIX"/lib/pkgconfig/{shaderc_combined,shaderc}.pc
 
     rm "$FFBUILD_PREFIX"/lib/*.dll.a
+
+    # Build glslc for the host
+    mkdir ../native_build && cd ../native_build
+
+    unset CC CXX CFLAGS CXXFLAGS LD LDFLAGS AR RANLIB NM DLLTOOL PKG_CONFIG_LIBDIR
+    cmake \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DSHADERC_SKIP_{COPYRIGHT_CHECK,EXAMPLES,TESTS}=ON \
+        -DSPIRV_TOOLS_BUILD_STATIC=ON \
+        -GNinja \
+        ..
+    ninja -j"$(nproc)" glslc/glslc
+
+    cp glslc/glslc /usr/local/bin/glslc
 }
 
 ffbuild_configure() {

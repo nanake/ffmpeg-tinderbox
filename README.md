@@ -137,6 +137,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - sdl2
 - vaapi
 - vulkan
+- whisper
 
 ---
 
