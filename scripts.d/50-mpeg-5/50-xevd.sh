@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XEVD_REPO="https://github.com/mpeg5/xevd.git"
-XEVD_COMMIT="d4331b73dbc4f474bc523bb099d69cae7370677a"
+XEVD_COMMIT="4087f635624cf4ee6ebe3f9ea165ff939b32117f"
 
 ffbuild_enabled() {
     return 0
