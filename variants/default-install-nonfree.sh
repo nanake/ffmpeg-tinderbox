@@ -6,4 +6,7 @@ package_variant() {
 
     mkdir -p "$OUT"/bin
     cp "$IN"/bin/* "$OUT"/bin
+
+    mkdir -p "$OUT/presets"
+    cp "$IN"/share/ffmpeg/*.ffpreset "$OUT"/presets
 }

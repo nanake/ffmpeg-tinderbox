@@ -21,4 +21,7 @@ package_variant() {
 
     mkdir -p "$OUT"/include
     cp -r "$IN"/include/* "$OUT"/include
+
+    mkdir -p "$OUT/presets"
+    cp "$IN"/share/ffmpeg/*.ffpreset "$OUT"/presets
 }
