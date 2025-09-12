@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DVDCSS_REPO="https://github.com/nanake/libdvdcss.git"
-DVDCSS_COMMIT="d0b6a291c24eda3727ad5c7a14956fc1fc82446d"
+DVDCSS_COMMIT="cec58b6082d84c60f8862cb70d9cab3b9333eb1f"
 
 ffbuild_enabled() {
     return 0
@@ -11,25 +11,25 @@ ffbuild_dockerbuild() {
     git-mini-clone "$DVDCSS_REPO" "$DVDCSS_COMMIT" dvdcss
     cd dvdcss
 
-    autoreconf -i
+    mkdir build && cd build
 
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,dependency-tracking,doc,maintainer-mode}
-        --enable-static
-        --with-pic
+        --buildtype=release
+        -Ddefault_library=static
+        -Denable_{docs,examples}"=false"
     )
 
     if [[ $TARGET == win* ]]; then
         myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
+            --cross-file=/cross.meson
         )
     else
         echo "Unknown target"
         return -1
     fi
 
-    ./configure "${myconf[@]}"
-    make -j"$(nproc)"
-    make install
+    meson setup "${myconf[@]}" ..
+    ninja -j"$(nproc)"
+    ninja install
 }

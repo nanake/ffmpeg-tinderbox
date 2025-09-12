@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DVDREAD_REPO="https://github.com/nanake/libdvdread.git"
-DVDREAD_COMMIT="786e73584b46393fbea4abdb4a25920cde82b9ec"
+DVDREAD_COMMIT="05b6fe2a16038c9e9910ace571963a68487fa945"
 
 ffbuild_enabled() {
     return 0
@@ -17,6 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         -Ddefault_library=static
+        -Denable_docs=false
         -Dlibdvdcss=enabled
     )
 
