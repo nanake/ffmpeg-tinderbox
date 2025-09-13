@@ -42,8 +42,8 @@ ffbuild_dockerbuild() {
         mv "${libfile}" "$(dirname "${libfile}")/lib$(basename "${libfile}")"
     done
 
-    # Linking order is all wrong
-    sed -i 's/^\(Libs:\).*$/\1 -L${libdir} -lwhisper/' "$FFBUILD_PREFIX"/lib/pkgconfig/whisper.pc
+    # Fix linking order and add required flags
+    sed -i "s/^\(Libs:\).*$/\1 -L\${libdir} -lwhisper/" "$FFBUILD_PREFIX"/lib/pkgconfig/whisper.pc
     {
         echo "Cflags.private: -fopenmp"
         echo "Libs.private: -lggml -lggml-base -lggml-cpu -lggml-vulkan -lggml-opencl -lstdc++"
