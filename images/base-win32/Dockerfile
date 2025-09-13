@@ -12,7 +12,7 @@ RUN <<EOF
         gcc \
         gcc-c++ \
         gettext-devel \
-        git \
+        git-core \
         glibc-devel \
         gperf \
         libtool \
@@ -22,6 +22,7 @@ RUN <<EOF
         patch \
         perl-FindBin \
         perl-IPC-Cmd \
+        perl-lib \
         pkgconf-pkg-config \
         python-unversioned-command \
         python3 \
