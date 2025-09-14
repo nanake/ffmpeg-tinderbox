@@ -27,7 +27,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
         -DGGML_{CCACHE,NATIVE}=OFF \
-        -DGGML_{AVX,AVX2,BMI2,F16C,FMA,OPENCL,SSE42,VULKAN}=ON \
+        -DGGML_{AVX,AVX2,BMI2,F16C,FMA,SSE42,VULKAN}=ON \
         -DWHISPER_BUILD_{EXAMPLES,SERVER,TESTS}=OFF \
         -DWHISPER_USE_SYSTEM_GGML=OFF \
         -GNinja \
@@ -46,8 +46,8 @@ ffbuild_dockerbuild() {
     sed -i "s/^\(Libs:\).*$/\1 -L\${libdir} -lwhisper/" "$FFBUILD_PREFIX"/lib/pkgconfig/whisper.pc
     {
         echo "Cflags.private: -fopenmp"
-        echo "Libs.private: -lggml -lggml-base -lggml-cpu -lggml-vulkan -lggml-opencl -lstdc++"
-        echo "Requires: vulkan OpenCL"
+        echo "Libs.private: -lggml -lggml-base -lggml-cpu -lggml-vulkan -lstdc++"
+        echo "Requires: vulkan"
     } >> "$FFBUILD_PREFIX"/lib/pkgconfig/whisper.pc
 }
 
