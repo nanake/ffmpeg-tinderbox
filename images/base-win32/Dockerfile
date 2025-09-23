@@ -22,6 +22,7 @@ RUN <<EOF
         patch \
         perl-FindBin \
         perl-IPC-Cmd \
+        perl-Time-Piece \
         perl-lib \
         pkgconf-pkg-config \
         python-unversioned-command \
