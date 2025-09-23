@@ -14,6 +14,8 @@ ffbuild_dockerbuild() {
 
     git checkout "$WHISPER_COMMIT"
 
+    dnf5 in glslc
+
     mkdir build && cd build
 
     # vulkan-shaders-gen requires the host compiler g++ and its libstdc++.a
