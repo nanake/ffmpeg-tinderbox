@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WHISPER_REPO="https://github.com/ggml-org/whisper.cpp.git"
-WHISPER_COMMIT="edea8a9c3cf0eb7676dcdb604991eb2f95c3d984"
+WHISPER_COMMIT="44fa2f647cf2a6953493b21ab83b50d5f5dbc483"
 
 ffbuild_enabled() {
     [[ $TARGET == win32 ]] && return -1
