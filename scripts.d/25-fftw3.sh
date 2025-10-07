@@ -10,25 +10,18 @@ ffbuild_dockerbuild() {
     curl -L "$FFTW_SRC" | tar xz
     cd fftw*
 
-    local myconf=(
-        --prefix="$FFBUILD_PREFIX"
-        --disable-{shared,dependency-tracking,doc,fortran}
-        --enable-{static,avx,avx2,sse2,threads}
-        --with-{combined-threads,incoming-stack-boundary=2,our-malloc}
-    )
+    mkdir build && cd build
 
-    if [[ $TARGET == win* ]]; then
-        myconf+=(
-            --host="$FFBUILD_TOOLCHAIN"
-            PTHREAD_CFLAGS="-pthread"
-            PTHREAD_LIBS="-lpthread"
-        )
-    else
-        echo "Unknown target"
-        return -1
-    fi
-
-    ./configure "${myconf[@]}"
-    make -j"$(nproc)"
-    make install
+    cmake \
+        -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
+        -DCMAKE_BUILD_TYPE=Release \
+        -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+        -DBUILD_SHARED_LIBS=OFF \
+        -DBUILD_TESTS=OFF \
+        -DDISABLE_FORTRAN=ON \
+        -GNinja \
+        ..
+    ninja -j"$(nproc)"
+    ninja install
 }
