@@ -61,7 +61,7 @@ jobs:
           echo "name=${REF// /-}" >> "$GITHUB_OUTPUT"
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ffmpeg-${{ steps.artifact.outputs.name }}
           path: artifacts/
