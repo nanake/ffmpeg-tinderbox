@@ -17,9 +17,8 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
-        -DBUILD_SHARED_LIBS=OFF \
+        -DBUILD_{SHARED_LIBS,TESTING}=OFF \
         -DZLIB_COMPAT=ON \
-        -DZLIB{,NG}_ENABLE_TESTS=OFF \
         -DWITH_GTEST=OFF \
         -GNinja \
         ..
