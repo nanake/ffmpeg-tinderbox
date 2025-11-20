@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FC_REPO="https://gitlab.freedesktop.org/fontconfig/fontconfig.git"
-FC_COMMIT="a9fd30d226322f7f9b674a74d3782eea03c29453"
+FC_COMMIT="84cb130a72da4bc4e2a0733d92824a8f79c9f204"
 
 ffbuild_enabled() {
     return 0
