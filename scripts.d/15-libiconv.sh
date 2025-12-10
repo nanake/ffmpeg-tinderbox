@@ -5,7 +5,7 @@ LIBICONV_REPO="https://github.com/nanake/libiconv.git"
 LIBICONV_COMMIT="b66b2f548166b667a7c48777ded7506a43971b21"
 
 GNULIB_REPO="https://github.com/coreutils/gnulib.git"
-GNULIB_COMMIT="9ad723d138a6daeaea110a235ef20944ebcbab87"
+GNULIB_COMMIT="bce2c357fc1d10903555c3a3f25367bd4882af97"
 
 ffbuild_enabled() {
     return 0
@@ -35,6 +35,10 @@ ffbuild_dockerbuild() {
         echo "Unknown target"
         return -1
     fi
+
+    # Workaround for autogen.sh failure due to missing gl_LIBDL macro
+    # by importing relocatable-lib module
+    sed -i 's/libiconv-misc/libiconv-misc relocatable-lib/' Makefile.devel
 
     ./autogen.sh
     ./configure "${myconf[@]}"
