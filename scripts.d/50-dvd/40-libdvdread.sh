@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DVDREAD_REPO="https://github.com/nanake/libdvdread.git"
-DVDREAD_COMMIT="c7f373951bae9642e1ce1fbb2cd02f92c09756e0"
+DVDREAD_COMMIT="482f0ab6de0e3771ed3f573e7107585ba105a6ae"
 
 ffbuild_enabled() {
     return 0
