@@ -20,15 +20,13 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
-        -DVN_SDK_FFMPEG_LIBS_PACKAGE="" \
-        -DVN_SDK_SAMPLE_SOURCE=OFF \
+        -DVN_SDK_{METRICS,PIPELINE_LEGACY,SAMPLE_SOURCE,TRACING}=OFF \
+        -DPC_LIBS_PRIVATE="Libs.private: -lstdc++" \
         -GNinja \
         ..
 
     ninja -j"$(nproc)"
     ninja install
-
-    echo "Libs.private: -lstdc++ -lm" >> "$FFBUILD_PREFIX"/lib/pkgconfig/lcevc_dec.pc
 }
 
 ffbuild_configure() {
