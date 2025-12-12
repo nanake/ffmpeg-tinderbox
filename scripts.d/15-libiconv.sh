@@ -36,10 +36,6 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    # Workaround for autogen.sh failure due to missing gl_LIBDL macro
-    # by importing relocatable-lib module
-    sed -i 's/libiconv-misc/libiconv-misc relocatable-lib/' Makefile.devel
-
     ./autogen.sh
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
