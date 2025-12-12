@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVPX_REPO="https://github.com/webmproject/libvpx.git"
-LIBVPX_COMMIT="d6e5cd7132d59d3cea86d06c9aae26f95fe00adb"
+LIBVPX_COMMIT="d98e70839f01aeeee875d343475574386869d47a"
 
 ffbuild_enabled() {
     return 0
