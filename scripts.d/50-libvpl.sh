@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBVPL_REPO="https://github.com/intel/libvpl.git"
-LIBVPL_COMMIT="3591aa94dfbdf4566cd19f3e976ae5b769ab4fa2"
+LIBVPL_COMMIT="778a66d6c6537f08eabb91955dbbf1bce3812894"
 
 ffbuild_enabled() {
     return 0
