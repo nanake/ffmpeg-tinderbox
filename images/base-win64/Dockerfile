@@ -14,6 +14,7 @@ RUN <<EOF
         gettext-devel \
         git-core \
         glibc-devel \
+        glslc \
         gperf \
         libtool \
         meson \
