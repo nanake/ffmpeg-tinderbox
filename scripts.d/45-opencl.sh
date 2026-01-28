@@ -22,6 +22,9 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
+    # 💥 Resolve DllMain symbol conflict with libmingwex.a during ffmpeg-shared build
+    export CFLAGS="$CFLAGS -DDllMain=OpenCL_DllMain"
+
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
