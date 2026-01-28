@@ -13,9 +13,9 @@ ffbuild_dockerbuild() {
     cd openssl
 
     local myconf=(
-        no-{apps,docs,ec2m,engine,legacy,module,shared,tests}
-        no-{ssl,ssl3-method}
-        no-{dh,dsa,md4,mdc2,rc2,rc4,sm2,sm3,sm4}
+        no-{apps,deprecated,docs,engine,legacy,makedepend,module,shared,tests}
+        no-{quic,ssl3-method}
+        no-{dh,dsa,ec2m,idea,md2,md4,mdc2,rc2,rc4,rc5,seed,sm2,sm3,sm4}
         threads
         zlib
         --prefix="$FFBUILD_PREFIX"
