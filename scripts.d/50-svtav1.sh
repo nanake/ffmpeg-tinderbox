@@ -14,6 +14,10 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
+    # 💥 Resolve svt_log symbol collision caused by commit
+    # https://gitlab.com/AOMediaCodec/SVT-AV1/-/commit/d8aab4190d538664227e5345c09c3dde828a6caa
+    export CFLAGS="$CFLAGS -Dsvt_log=svt_log_internal"
+
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
