@@ -16,9 +16,6 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
-    # 💥 symbol collision with libxeve
-    export CFLAGS="$CFLAGS -Dthreadsafe_assign=oapv_threadsafe_assign"
-
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
