@@ -66,6 +66,7 @@ jobs:
           name: ffmpeg-${{ steps.artifact.outputs.name }}
           path: artifacts/
           retention-days: 1
+          archive: false
 
   publish_release:
     name: Publish release
