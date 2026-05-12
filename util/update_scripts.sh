@@ -5,7 +5,8 @@ export LC_ALL=C
 
 cd "$(dirname "$0")"/..
 
-for scr in scripts.d/**/*.sh; do
+process_script() {
+    local scr="$1"
     echo "Processing ${scr}"
     (
         source "$scr"
@@ -58,4 +59,15 @@ for scr in scripts.d/**/*.sh; do
         done
     )
     echo
-done
+}
+
+export -f process_script
+
+# Use GNU parallel if available, otherwise fall back to xargs -P
+PARALLELISM="${UPDATE_PARALLELISM:-8}"
+
+if command -v parallel &>/dev/null; then
+    printf '%s\n' scripts.d/**/*.sh | parallel --jobs "$PARALLELISM" --keep-order process_script {}
+else
+    printf '%s\n' scripts.d/**/*.sh | xargs -P "$PARALLELISM" -I{} bash -c 'process_script "$@"' _ {}
+fi
