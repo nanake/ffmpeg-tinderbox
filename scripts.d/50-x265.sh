@@ -26,6 +26,12 @@ ffbuild_dockerbuild() {
         -GNinja
     )
 
+    # Limit the number of threads an inner ninja can use to avoid
+    # resource starvation in GitHub CI, which runs all builds in parallel.
+    # The outer ninja will still use all available threads.
+    HALF=$(( $(nproc) / 2 ))
+    HALF=$(( HALF < 1 ? 1 : HALF ))
+
     if [[ $TARGET != *32 ]]; then
         mkdir 8bit 10bit 12bit
         cmake "${common_config[@]}" -DHIGH_BIT_DEPTH=ON -DEXPORT_C_API=OFF -DENABLE_HDR10_PLUS=ON -DMAIN12=ON -S source -B 12bit &
@@ -33,15 +39,15 @@ ffbuild_dockerbuild() {
         cmake "${common_config[@]}" -DEXTRA_LIB="x265_main10.a;x265_main12.a" -DEXTRA_LINK_FLAGS=-L. -DLINKED_{10,12}BIT=ON -S source -B 8bit &
         wait
 
-        cat >build.ninja <<"EOF"
+        cat >build.ninja <<EOF
 rule build_lib
-  command = ninja -C $in
+  command = ninja -C \$in -j${HALF}
 
 build 12bit/libx265.a: build_lib 12bit
 build 10bit/libx265.a: build_lib 10bit
-build 8bit/libx265.a: build_lib 8bit
+build 8bit/libx265.a: build_lib 8bit | 10bit/libx265.a 12bit/libx265.a
 
-build all: phony 12bit/libx265.a 10bit/libx265.a 8bit/libx265.a
+build all: phony 8bit/libx265.a
 default all
 EOF
 
