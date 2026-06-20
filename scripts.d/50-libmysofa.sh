@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SOFA_REPO="https://github.com/hoene/libmysofa.git"
-SOFA_COMMIT="302b3fd025cc5105576a767a1e15483e116b8297"
+SOFA_COMMIT="42f3ae68825a4eb2d5593a2308c3483ebbdd8bfe"
 
 ffbuild_enabled() {
     return 0
