@@ -1,7 +1,7 @@
 #!/bin/bash
 
 DVDCSS_REPO="https://github.com/nanake/libdvdcss.git"
-DVDCSS_COMMIT="2682a4a7ed782e700a5b920f6f85c4f9736921c3"
+DVDCSS_COMMIT="f73dc860cb71f81f3126a08a6deffcaea3f64e55"
 
 ffbuild_enabled() {
     return 0
