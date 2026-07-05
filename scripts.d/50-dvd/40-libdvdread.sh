@@ -30,6 +30,10 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
+    # 💥 symbol collision with libbluray
+    # https://github.com/nanake/libdvdread/commit/408d071
+    export CFLAGS="$CFLAGS -Ddir_open_default=libdvdread_dir_open_default -Dfile_open_default=libdvdread_file_open_default"
+
     meson setup "${myconf[@]}" ..
     ninja -j"$(nproc)"
     ninja install
