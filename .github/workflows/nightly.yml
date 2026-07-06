@@ -8,7 +8,7 @@ on:
 jobs:
   decision_task:
     name: Determine whether to perform Nightly build
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       status: ${{ steps.decision.outputs.status }}
       commit: ${{ steps.decision.outputs.ffmpeg_commit }}
@@ -32,7 +32,7 @@ jobs:
     needs: decision_task
     if: needs.decision_task.outputs.status == 'proceed'
     name: Build ffmpeg
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -71,7 +71,7 @@ jobs:
   publish_release:
     name: Publish release
     needs: build_ffmpeg
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     steps:
       - name: Checkout
         uses: actions/checkout@v7

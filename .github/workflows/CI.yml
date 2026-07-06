@@ -10,7 +10,7 @@ on:
 jobs:
   build_targets:
     name: Build target-variant image
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
@@ -57,7 +57,7 @@ jobs:
   ffmpeg_latest:
     name: Get FFmpeg latest commit
     needs: build_targets
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     outputs:
       commit: ${{ steps.sha.outputs.ffmpeg_commit }}
     steps:
@@ -72,7 +72,7 @@ jobs:
   build_ffmpeg:
     name: Build ffmpeg
     needs: ffmpeg_latest
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-26.04
     strategy:
       fail-fast: false
       matrix:
