@@ -40,11 +40,3 @@ ffbuild_dockerbuild() {
 
     rm "$FFBUILD_PREFIX"/lib/*.dll.a
 }
-
-ffbuild_configure() {
-    echo --enable-libshaderc
-}
-
-ffbuild_unconfigure() {
-    echo --disable-libshaderc
-}
