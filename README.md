@@ -24,7 +24,7 @@ Ensure you have the following tools installed on your system:
 
 - `gpl`: Builds all libraries from `scripts.d` folder *except* `libfdk-aac` and `decklink`
 - `lgpl`: Excludes additional libraries (`avisynth`, `davs2`, `vidstab`, `x264`, `x265` and `xavs2`)
-- `nonfree`: Includes both non-free libraries (`libfdk-aac` and `decklink`) and all libraries of the gpl variant
+- `nonfree`: Includes both non-free libraries (`LCEVCdec`, `libfdk-aac` and `decklink`) and all libraries of the gpl variant
 
 #### Addins:
 
