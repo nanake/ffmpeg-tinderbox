@@ -12,8 +12,6 @@ ffbuild_dockerbuild() {
 
     if [[ $TARGET == win64 ]]; then
         cd x86_64-w64-mingw32
-    elif [[ $TARGET == win32 ]]; then
-        cd i686-w64-mingw32
     else
         echo "Unknown target"
         return -1

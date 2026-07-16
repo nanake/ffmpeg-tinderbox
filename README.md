@@ -18,7 +18,6 @@ Ensure you have the following tools installed on your system:
 #### Targets:
 
 - `win64`: Build for 64-bit Windows
-- `win32`: Build for 32-bit Windows
 
 #### Variants:
 

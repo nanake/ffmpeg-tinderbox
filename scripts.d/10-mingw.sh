@@ -32,12 +32,6 @@ ffbuild_dockerbuild() {
         --enable-idl
     )
 
-    if [[ $TARGET == win32 ]]; then
-        myconf+=(
-            --with-default-msvcrt=msvcrt
-        )
-    fi
-
     ./configure "${myconf[@]}"
     make -j"$(nproc)"
     make install
@@ -49,13 +43,7 @@ ffbuild_dockerbuild() {
         --host="$FFBUILD_TOOLCHAIN"
     )
 
-    if [[ $TARGET == win32 ]]; then
-        myconf+=(
-            --disable-lib64
-            --enable-lib32
-            --with-default-msvcrt=msvcrt
-        )
-    elif [[ $TARGET == win64 ]]; then
+    if [[ $TARGET == win64 ]]; then
         myconf+=(
             --disable-lib32
             --enable-lib64

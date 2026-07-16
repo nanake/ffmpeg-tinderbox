@@ -45,10 +45,6 @@ ffbuild_dockerbuild() {
         myconf+=(
             WINDOWS_ARCH=amd64
         )
-    elif [[ $TARGET == win32 ]]; then
-        myconf+=(
-            WINDOWS_ARCH=x86
-        )
     else
         echo "Unknown target"
         return -1

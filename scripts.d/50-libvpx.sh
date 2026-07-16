@@ -22,11 +22,6 @@ ffbuild_dockerbuild() {
             --target=x86_64-win64-gcc
         )
         export CROSS="$FFBUILD_CROSS_PREFIX"
-    elif [[ $TARGET == win32 ]]; then
-        myconf+=(
-            --target=x86-win32-gcc
-        )
-        export CROSS="$FFBUILD_CROSS_PREFIX"
     else
         echo "Unknown target"
         return -1

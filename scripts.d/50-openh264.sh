@@ -18,12 +18,7 @@ ffbuild_dockerbuild() {
         LIBDIR_NAME=lib
     )
 
-    if [[ $TARGET == win32 ]]; then
-        myconf+=(
-            OS=mingw_nt
-            ARCH=i686
-        )
-    elif [[ $TARGET == win64 ]]; then
+    if [[ $TARGET == win64 ]]; then
         myconf+=(
             OS=mingw_nt
             ARCH=x86_64

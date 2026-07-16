@@ -5,7 +5,6 @@ XAVS2_COMMIT="0e5b4da6750b236ea2df60d72ee21d0e7fa85e32"
 
 ffbuild_enabled() {
     [[ $VARIANT == lgpl* ]] && return -1
-    [[ $TARGET == win32 ]] && return -1
     return 0
 }
 
