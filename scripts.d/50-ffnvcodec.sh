@@ -1,7 +1,7 @@
 #!/bin/bash
 
 FFNVCODEC_REPO="https://github.com/FFmpeg/nv-codec-headers.git"
-FFNVCODEC_COMMIT="15ee32753c92faddbabbff11676779618fc6db7e"
+FFNVCODEC_COMMIT="eddcea9e27f6b772057c9b3f87de2cc1737faffc"
 
 ffbuild_enabled() {
     return 0
