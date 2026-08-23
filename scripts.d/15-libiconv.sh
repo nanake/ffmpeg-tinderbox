@@ -2,10 +2,10 @@
 
 # https://git.savannah.gnu.org/gitweb/?p=libiconv.git
 LIBICONV_REPO="https://github.com/nanake/libiconv.git"
-LIBICONV_COMMIT="5e517e5bf0e1b4575ad431e81d7a4750fa2b284e"
+LIBICONV_COMMIT="1df3087ba8110c7f3ed3eb5f8869b814dbbe00b0"
 
 GNULIB_REPO="https://github.com/coreutils/gnulib.git"
-GNULIB_COMMIT="66d15d31f43c6bee2b55e73a70c2472855562ded"
+GNULIB_COMMIT="1c9494d7b9d2fa2438249c405bcfd1cb3db17b6b"
 
 ffbuild_enabled() {
     return 0
