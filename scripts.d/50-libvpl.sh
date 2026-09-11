@@ -11,6 +11,11 @@ ffbuild_dockerbuild() {
     git-mini-clone "$LIBVPL_REPO" "$LIBVPL_COMMIT" libvpl
     cd libvpl
 
+    # FIXME: Remove once intel/libvpl#198 landed
+    # https://github.com/intel/libvpl/pull/198
+    git fetch https://github.com/intel/libvpl.git pull/198/head
+    git cherry-pick FETCH_HEAD
+
     mkdir build && cd build
 
     cmake \
