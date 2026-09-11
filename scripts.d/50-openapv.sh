@@ -1,7 +1,7 @@
 #!/bin/bash
 
 OPENAPV_REPO="https://github.com/AcademySoftwareFoundation/openapv.git"
-OPENAPV_COMMIT="061f4d44e07d1f095c697e4a8fff9c02fb3f7f19"
+OPENAPV_COMMIT="e9ff45ec70792d9b50de5aa05c36646841b74109"
 
 ffbuild_enabled() {
     return 0
