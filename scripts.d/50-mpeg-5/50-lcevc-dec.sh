@@ -1,8 +1,8 @@
 #!/bin/bash
 
 LCEVCDEC_REPO="https://github.com/v-novaltd/LCEVCdec.git"
-LCEVCDEC_COMMIT="4.1.0"
-LCEVCDEC_TAGFILTER="4.1.*"
+LCEVCDEC_COMMIT="4.2.2"
+LCEVCDEC_TAGFILTER="4.*.*"
 
 ffbuild_enabled() {
     [[ $VARIANT == *nonfree* ]] || return -1
