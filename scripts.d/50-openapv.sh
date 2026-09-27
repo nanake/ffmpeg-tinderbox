@@ -29,19 +29,6 @@ ffbuild_dockerbuild() {
     ninja install
 
     rm -rf "$FFBUILD_PREFIX"/include/oapv/oapv_exports.h
-
-    # undone the API break
-    # https://github.com/AcademySoftwareFoundation/openapv/commit/83937c6b005510781fbba18481289cb8df1238af#diff-6afeb7dc69a39db8f975381349feec8191f5e8d37f8769eb8c77764015e19faf
-    # https://github.com/AcademySoftwareFoundation/openapv/pull/235
-    # https://github.com/AcademySoftwareFoundation/openapv/issues/264
-    # https://code.ffmpeg.org/FFmpeg/FFmpeg/pulls/24030
-    cat << 'EOF' >> "$FFBUILD_PREFIX"/include/oapv/oapv.h
-
-#ifndef OAPV_OLD_APISET
-#define OAPV_OLD_APISET
-#define oapvm_create(err) oapvm_create(&(oapvm_cdesc_t){ 0 }, (err))
-#endif
-EOF
 }
 
 ffbuild_configure() {
