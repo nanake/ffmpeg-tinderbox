@@ -13,7 +13,7 @@ ffbuild_dockerbuild() {
     cd openssl
 
     local myconf=(
-        no-{apps,deprecated,docs,legacy,makedepend,module,shared,tests}
+        no-{apps,docs,legacy,makedepend,module,shared,tests}
         # Legacy cipher/digest implementations not required by either consumer.
         no-{bf,blake2,camellia,cast,dh,dsa,ec2m,idea,md2,md4,mdc2,rc2,rc4,rc5,rmd160,seed,sm2,sm3,sm4,whirlpool}
         # Unnecessary async/misc runtime features.
