@@ -20,8 +20,6 @@ ffbuild_dockerbuild() {
         no-{async,autoload-config,ui-console,multiblock,ssl-trace}
         # Unused libcrypto modules.
         no-{comp,ct,ocsp,cms,ts,srp,nextprotoneg,psk,srtp}
-        # FFmpeg uses schannel for TLS on this target, while libssh and libsrt only use libcrypto (EVP/cipher primitives), thus completely eliminating the need for libssl and TLS/DTLS dependencies.
-        no-{tls,dtls,dgram,quic}
         no-{tls1,tls1_1,tls1_2,dtls1,dtls1_2}-method
         threads
         --prefix="$FFBUILD_PREFIX"
@@ -50,4 +48,12 @@ ffbuild_dockerbuild() {
 
     make -j"$(nproc)"
     make install_sw
+}
+
+ffbuild_configure() {
+    echo --enable-openssl
+}
+
+ffbuild_unconfigure() {
+    echo --disable-openssl
 }
