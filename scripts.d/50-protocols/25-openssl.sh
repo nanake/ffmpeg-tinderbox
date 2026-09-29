@@ -19,7 +19,7 @@ ffbuild_dockerbuild() {
         # Unnecessary async/misc runtime features.
         no-{async,autoload-config,ui-console,multiblock,ssl-trace}
         # Unused libcrypto modules.
-        no-{comp,ct,ocsp,cms,ts,srp,nextprotoneg,psk,srtp}
+        no-{comp,ct,ocsp,cms,ts,srp,nextprotoneg,psk}
         threads
         --prefix="$FFBUILD_PREFIX"
     )
