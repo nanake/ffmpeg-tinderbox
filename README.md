@@ -137,7 +137,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - libzmq
 - libzvbi
 - openal
-- schannel
+- openssl
 - sdl2
 - vaapi
 - vulkan
