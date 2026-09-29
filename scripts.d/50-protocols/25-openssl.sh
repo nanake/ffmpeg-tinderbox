@@ -20,7 +20,6 @@ ffbuild_dockerbuild() {
         no-{async,autoload-config,ui-console,multiblock,ssl-trace}
         # Unused libcrypto modules.
         no-{comp,ct,ocsp,cms,ts,srp,nextprotoneg,psk,srtp}
-        no-{tls1,tls1_1,tls1_2,dtls1,dtls1_2}-method
         threads
         --prefix="$FFBUILD_PREFIX"
     )
