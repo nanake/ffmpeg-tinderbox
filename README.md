@@ -140,6 +140,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - openssl
 - sdl2
 - vaapi
+- vapoursynth
 - vulkan
 - whisper
 
