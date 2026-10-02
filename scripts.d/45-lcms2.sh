@@ -34,3 +34,11 @@ ffbuild_dockerbuild() {
     ninja -j"$(nproc)"
     ninja install
 }
+
+ffbuild_configure() {
+    echo --enable-lcms2
+}
+
+ffbuild_unconfigure() {
+    echo --disable-lcms2
+}

@@ -85,6 +85,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - cuda-llvm
 - decklink
 - ffnvcodec
+- lcms2
 - libaribcaption
 - libass
 - libbluray
