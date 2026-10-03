@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SVT_JPEG_XS_REPO="https://github.com/OpenVisualCloud/SVT-JPEG-XS.git"
-SVT_JPEG_XS_COMMIT="f9c82c12beed453980ef1888a5e72923b7265ed4"
+SVT_JPEG_XS_COMMIT="59cf665854825a89d0a130e572befa73c817d80e"
 
 ffbuild_enabled() {
     return 0

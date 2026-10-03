@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZLIB_REPO="https://github.com/zlib-ng/zlib-ng.git"
-ZLIB_COMMIT="941c9a3151fb7438322424d9ce8da056ac080272"
+ZLIB_COMMIT="8b61b4efb6d4b68e8cf5e419d4b325e4bae7b14e"
 
 ffbuild_enabled() {
     return 0
