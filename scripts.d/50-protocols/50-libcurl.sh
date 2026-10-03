@@ -29,7 +29,7 @@ ffbuild_dockerbuild() {
         -D{OPENSSL,NG{TCP2,HTTP{2,3}}}_USE_STATIC_LIBS=ON \
         -DPICKY_COMPILER=OFF \
         -DUSE_LIBIDN2=OFF \
-        -DUSE_{NGHTTP2,NGTCP2}=ON \
+        -DUSE_{NGHTTP2,NGTCP2,WIN32_IDN}=ON \
         -GNinja \
         ..
     ninja -j"$(nproc)"
