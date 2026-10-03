@@ -17,6 +17,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
+        -DCMAKE_REQUIRE_FIND_PACKAGE_NGHTTP2=ON \
         -DBUILD_SHARED_LIBS=OFF \
         -DBUILD_{CURL_EXE,EXAMPLES,{LIBCURL,MISC}_DOCS,TESTING}=OFF \
         -DBUILD_STATIC_{CURL,LIBS}=ON \
@@ -26,9 +27,10 @@ ffbuild_dockerbuild() {
         -DCURL_USE_PKGCONFIG=ON \
         -DCURL_USE_{LIBPSL,OPENSSL}=ON \
         -DENABLE_CURL_MANUAL=OFF \
-        -DOPENSSL_USE_STATIC_LIBS=ON \
+        -D{NGHTTP2,OPENSSL}_USE_STATIC_LIBS=ON \
         -DPICKY_COMPILER=OFF \
-        -DUSE_{NGHTTP2,LIBIDN2}=OFF \
+        -DUSE_LIBIDN2=OFF \
+        -DUSE_NGHTTP2=ON \
         -GNinja \
         ..
     ninja -j"$(nproc)"
