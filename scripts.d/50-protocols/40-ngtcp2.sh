@@ -18,7 +18,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_TESTING=OFF \
-        -DENABLE_{SHARED_LIB,TESTING}=OFF \
+        -DENABLE_SHARED_LIB=OFF \
         -DENABLE_{LIB_ONLY,OPENSSL,STATIC_LIB}=ON \
         -DHAVE_SSL_SET_QUIC_TLS_CBS=ON \
         -GNinja \

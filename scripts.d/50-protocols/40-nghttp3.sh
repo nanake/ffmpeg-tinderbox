@@ -20,7 +20,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_TESTING=OFF \
-        -DENABLE_{SHARED_LIB,TESTING}=OFF \
+        -DENABLE_SHARED_LIB=OFF \
         -DENABLE_STATIC_LIB=ON \
         -DENABLE_LIB_ONLY=ON \
         -GNinja \
