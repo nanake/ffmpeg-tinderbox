@@ -17,6 +17,9 @@ ffbuild_dockerbuild() {
     mkdir -p "$FFBUILD_PREFIX"/{include,lib/pkgconfig}
     cp -r include/. "$FFBUILD_PREFIX"/include/.
     cp -r lib/. "$FFBUILD_PREFIX"/lib/.
+
+    "${FFBUILD_TOOLCHAIN}"-strip --strip-unneeded --strip-debug "$FFBUILD_PREFIX"/lib/librav1e.a
+    "${RANLIB}" "$FFBUILD_PREFIX"/lib/librav1e.a
 }
 
 ffbuild_configure() {
