@@ -29,6 +29,9 @@ ffbuild_dockerbuild() {
         -e 's/ -lSDL2//g' \
         -e 's/Libs: /Libs: -lSDL2 /' \
         "$FFBUILD_PREFIX"/lib/pkgconfig/sdl2.pc
+
+    "${FFBUILD_TOOLCHAIN}"-strip --strip-unneeded --strip-debug "$FFBUILD_PREFIX"/lib/libSDL2.a
+    "${RANLIB}" "$FFBUILD_PREFIX"/lib/libSDL2.a
 }
 
 ffbuild_configure() {
