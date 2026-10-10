@@ -3,7 +3,7 @@ name: Nightly Build
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 21 * * *' # Runs at 06:00 Tokyo time every day 🕕
+    - cron: '0 17 * * *'
 
 jobs:
   decision_task:
