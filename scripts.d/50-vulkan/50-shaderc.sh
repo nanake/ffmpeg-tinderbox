@@ -13,6 +13,8 @@ ffbuild_dockerbuild() {
 
     ./utils/git-sync-deps
 
+    sed -i '/add_subdirectory(glslc)/d' CMakeLists.txt
+
     mkdir build && cd build
 
     cmake \
