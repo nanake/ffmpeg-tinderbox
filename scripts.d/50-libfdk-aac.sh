@@ -27,9 +27,9 @@ ffbuild_dockerbuild() {
 }
 
 ffbuild_configure() {
-    echo --enable-libfdk-aac
+    echo --enable-libfdk-aac --enable-libfdk-xhe-aac
 }
 
 ffbuild_unconfigure() {
-    echo --disable-libfdk-aac
+    echo --disable-libfdk-aac --disable-libfdk-xhe-aac
 }

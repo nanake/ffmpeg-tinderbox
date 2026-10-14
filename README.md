@@ -95,6 +95,7 @@ Upon successful build completion, the build artifacts will be available in the `
 - libdvdnav
 - libdvdread
 - libfdk-aac
+- libfdk-xhe-aac
 - libgme
 - libjxl
 - libkvazaar
