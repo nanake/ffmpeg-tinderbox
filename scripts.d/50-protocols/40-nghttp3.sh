@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NGHTTP3_REPO="https://github.com/ngtcp2/nghttp3.git"
-NGHTTP3_COMMIT="2304973e5a0c8b1fa4bb380b47945a000357f87f"
+NGHTTP3_COMMIT="d29ceea176cebc1f41c9d818c3b1825143d3f813"
 
 ffbuild_enabled() {
     return 0

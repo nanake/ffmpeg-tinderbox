@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XEVE_REPO="https://github.com/mpeg5/xeve.git"
-XEVE_COMMIT="4eda6ca8e0c72fcc814f51800fde267769f9c118"
+XEVE_COMMIT="fe229fec19e14907c60d65626ebd59f41517d9b3"
 
 ffbuild_enabled() {
     return 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ZSTD_REPO="https://github.com/facebook/zstd.git"
-ZSTD_COMMIT="01b7154f1172432f8abe9b3bb9909e14a1176b7d"
+ZSTD_COMMIT="49cf51799ea051457f57243527aa2058f999f005"
 
 ffbuild_enabled() {
     return 0
