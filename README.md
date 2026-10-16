@@ -1,71 +1,92 @@
-Essentially it's a tool, tinderbox, that automates the process of checking out and building a recent FFmpeg source code, including nonfree libraries such as libfdk-aac and decklink.
+# FFmpeg Build Environment
 
-For a manual build, follow detailed instructions below:
+This repository provides a Docker-based build environment for compiling recent git versions of FFmpeg, including optional GPL and non-free libraries such as `libfdk-aac`, `libfdk-xhe-aac`, `libmpeghdec`, `LCEVCdec`, and `DeckLink`.
 
----
+The project automates dependency compilation and FFmpeg builds for supported targets.
 
-##  Prelude
+## Requirements
 
-***Requirements***
+Make sure the following tools are installed:
 
-Ensure you have the following tools installed on your system:
+- Bash
+- Docker
 
-- **Bash**
-- **Docker**
+## Build Configuration
 
-***Targets, Variants and Addins***
+### Targets
 
-#### Targets:
+| Target | Description |
+|----------|-------------|
+| `win64` | 64-bit Windows |
 
-- `win64`: Build for 64-bit Windows
+### Variants
 
-#### Variants:
+| Variant | Description |
+|----------|-------------|
+| `lgpl` | Builds FFmpeg with LGPL-compatible libraries only |
+| `gpl` | Includes all LGPL libraries plus GPL components |
+| `nonfree` | Includes GPL libraries and non-free components such as libfdk-aac, libfdk-xhe-aac, LCEVCdec,  libmpeghdec, and DeckLink |
 
-- `gpl`: Builds all libraries from `scripts.d` folder *except* nonfree libraries
-- `lgpl`: Excludes additional libraries (`avisynth`, `davs2`, `vidstab`, `x264`, `x265` and `xavs2`)
-- `nonfree`: Includes both non-free libraries (`LCEVCdec`, `libfdk-aac`, `libmpeghdec` and `decklink`) and all libraries of the gpl variant
+### Add-ins
 
-#### Addins:
+| Add-in | Description |
+|---------|-------------|
+| `debug` | Embeds GDB-compatible debug symbols |
 
-- `debug`: Adds debug symbols to the build. It's `gdb` compatible embedded debug info
+## Building Docker Images
 
-##  Building
+### Build the Base Image
 
-1. Build base-image:
-
-```console
-docker build -t ghcr.io/nanake/base-${TARGET}:latest images/base-${TARGET}
+```bash
+docker build \
+    -t base-win64:latest \
+    images/base-win64
 ```
 
-*Note:* You might need to modify the *rootfs* image by specifying a public image base, such as `fedora:rawhide`.
+### Generate the Target Dockerfile
 
-2. Build target-variant image:
-
-```console
-./generate.sh ${TARGET} ${VARIANT}
-docker build -t ghcr.io/nanake/${TARGET}-${VARIANT}:latest .
-```
-*Alternatively*, You can build both *base-image* and *target-variant* image by simply invoke `makeimage.sh`. For example:
-
-```console
-./makeimage.sh win64 nonfree
+```bash
+./generate.sh <target> <variant> <add-in>
 ```
 
-3. Build FFmpeg
+### Build the Target Image
 
-```console
-./build.sh ${TARGET} ${VARIANT} ${ADDINS}
+```bash
+docker build \
+    -t <target>-<variant>-<add-in>:latest .
 ```
-To create a `shared` build of FFmpeg, append `-shared` to the `VARIANT` name. For example:
 
-```console
-./build.sh win64 gpl-shared
+### Build Everything Automatically
+Instead of running the previous steps manually:
+
+```bash
+./makeimage.sh <target> <variant> <add-in>
 ```
-Upon successful build completion, the build artifacts will be available in the `artifacts` folder.
 
----
+This command generates and builds both the base image and the target image.
 
-## Enabled libraries
+## Building FFmpeg
+
+Build FFmpeg using a target and variant:
+
+```bash
+./build.sh <target> <variant> <add-in>
+```
+
+### Shared Build
+To build FFMpeg shared libraries instead of static ones, append -shared to the variant:
+
+```bash
+./build.sh <target> <variant>-shared <add-in>
+```
+
+### Output
+After a successful build, the generated binaries and packages can be found in `artifact` folder
+
+## Enabled Libraries
+
+The build environment currently supports the following libraries and features:
+
 
 - iconv
 - libxml2
@@ -146,9 +167,6 @@ Upon successful build completion, the build artifacts will be available in the `
 - vulkan
 - whisper
 
----
+##  Acknowledgments
 
-###  Acknowledgments
-
-The foundation for this build script comes from the work of [BtbN](https://github.com/BtbN/FFmpeg-Builds).
-
+This project is heavily inspired by the excellent work in [BtbN](https://github.com/BtbN/FFmpeg-Builds).
