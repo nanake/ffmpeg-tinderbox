@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WHISPER_REPO="https://github.com/ggml-org/whisper.cpp.git"
-WHISPER_COMMIT="0c7be696371069e0baa2515ed7aa08d5a5473aa6"
+WHISPER_COMMIT="231638a0717b7822784297e5980965ffcec05810"
 
 ffbuild_enabled() {
     return 0
@@ -15,33 +15,20 @@ ffbuild_dockerbuild() {
 
     mkdir build && cd build
 
-    # vulkan-shaders-gen requires the host compiler g++ and its libstdc++.a
-    # which is not available yet. In fact, vulkan-shaders-gen is a host tool,
-    # hence, no need for static linking.
-    unset CXXFLAGS LDFLAGS
-
     cmake \
         -DCMAKE_TOOLCHAIN_FILE="$FFBUILD_CMAKE_TOOLCHAIN" \
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
-        -DGGML_{CCACHE,NATIVE}=OFF \
-        -DGGML_{AVX,AVX2,BMI2,F16C,FMA,SSE42,VULKAN}=ON \
         -DWHISPER_BUILD_{EXAMPLES,SERVER,TESTS}=OFF \
-        -DWHISPER_USE_SYSTEM_GGML=OFF \
+        -DWHISPER_USE_SYSTEM_GGML=ON \
         -GNinja \
         ..
 
     ninja -j"$(nproc)"
     ninja install
 
-    # For some reason, these lack the lib prefix on Windows
-    shopt -s nullglob
-    for libfile in "$FFBUILD_PREFIX"/lib/ggml*.a; do
-        mv "${libfile}" "$(dirname "${libfile}")/lib$(basename "${libfile}")"
-    done
-
-    # Fix linking order and add required flags
+     # Fix linking order and add required flags
     sed -i "s/^\(Libs:\).*$/\1 -L\${libdir} -lwhisper/" "$FFBUILD_PREFIX"/lib/pkgconfig/whisper.pc
     {
         echo "Cflags.private: -fopenmp"
