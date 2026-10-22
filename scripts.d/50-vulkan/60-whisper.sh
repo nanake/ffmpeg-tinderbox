@@ -8,10 +8,8 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerbuild() {
-    git clone --filter=tree:0 --branch=master --single-branch "$WHISPER_REPO" whisper
+    git-mini-clone "$WHISPER_REPO" "$WHISPER_COMMIT" whisper
     cd whisper
-
-    git checkout "$WHISPER_COMMIT"
 
     mkdir build && cd build
 
