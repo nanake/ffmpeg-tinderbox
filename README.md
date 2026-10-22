@@ -46,21 +46,21 @@ docker build \
 ### Generate the Target Dockerfile
 
 ```bash
-./generate.sh <target> <variant> <add-in>
+./generate.sh <target> <variant>
 ```
 
 ### Build the Target Image
 
 ```bash
 docker build \
-    -t <target>-<variant>-<add-in>:latest .
+    -t <target>-<variant>:latest .
 ```
 
 ### Build Everything Automatically
 Instead of running the previous steps manually:
 
 ```bash
-./makeimage.sh <target> <variant> <add-in>
+./makeimage.sh <target> <variant>
 ```
 
 This command generates and builds both the base image and the target image.
