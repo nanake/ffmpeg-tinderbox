@@ -1,7 +1,7 @@
 #!/bin/bash
 set -xe
 cd "$(dirname "$0")"
-source util/vars.sh
+source utils/vars.sh
 
 docker build --tag "$TARGET_IMAGE" "images/base-${TARGET}"
 

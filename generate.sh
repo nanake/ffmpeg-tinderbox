@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 cd "$(dirname "$0")"
-source util/vars.sh
+source utils/vars.sh
 
 rm -f Dockerfile
 

@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Prune old releases
-        run: ./util/prunetags.sh
+        run: ./utils/prunetags.sh
         env:
           GH_TOKEN: ${{ github.token }}
 

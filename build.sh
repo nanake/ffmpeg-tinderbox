@@ -2,7 +2,7 @@
 set -e
 shopt -s globstar
 cd "$(dirname "$0")"
-source util/vars.sh
+source utils/vars.sh
 
 get_output() {
     (
