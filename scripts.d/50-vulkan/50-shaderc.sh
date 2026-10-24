@@ -29,16 +29,12 @@ ffbuild_dockerbuild() {
         -DSPIRV_WERROR=OFF \
         -GNinja \
         ..
-    ninja -j"$(nproc)"
-    ninja install
+    ninja -j"$(nproc)" shaderc_combined shaderc_combined-pkg-config
+    install -Dm644 libshaderc/libshaderc_combined.a "$FFBUILD_PREFIX/lib/libshaderc_combined.a"
+    install -Dm644 shaderc_combined.pc "$FFBUILD_PREFIX/lib/pkgconfig/shaderc_combined.pc"
+    install -Dm644 -t "$FFBUILD_PREFIX/include/shaderc" ../libshaderc/include/shaderc/*.h ../libshaderc/include/shaderc/*.hpp
 
-    # for some reason, this does not get installed...
-    # https://github.com/google/shaderc/issues/1228
-    cp libshaderc_util/libshaderc_util.a "$FFBUILD_PREFIX"/lib
-
-    echo "Libs: -lstdc++" | tee -a "$FFBUILD_PREFIX"/lib/pkgconfig/shaderc_{combined,static}.pc
+    echo "Libs: -lstdc++" >> "$FFBUILD_PREFIX"/lib/pkgconfig/shaderc_combined.pc
 
     cp "$FFBUILD_PREFIX"/lib/pkgconfig/{shaderc_combined,shaderc}.pc
-
-    rm "$FFBUILD_PREFIX"/lib/*.dll.a
 }
