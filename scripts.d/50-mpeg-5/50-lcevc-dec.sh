@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LCEVCDEC_REPO="https://github.com/v-novaltd/LCEVCdec.git"
-LCEVCDEC_COMMIT="4.2.2"
+LCEVCDEC_COMMIT="4.3.0"
 LCEVCDEC_TAGFILTER="4.*.*"
 
 ffbuild_enabled() {

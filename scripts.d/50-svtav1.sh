@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SVTAV1_REPO="https://gitlab.com/AOMediaCodec/SVT-AV1.git"
-SVTAV1_COMMIT="35153590e2e7a8be991f23c5f2d6e40abc26b75b"
+SVTAV1_COMMIT="f2c3fb78611d542b12b11c6d10d3744b31b754a0"
 
 ffbuild_enabled() {
     return 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBPSL_REPO="https://github.com/rockdaboot/libpsl.git"
-LIBPSL_COMMIT="a629c831d09011f76974d931be7f6167be90673e"
+LIBPSL_COMMIT="51722ecf8d67ee4e590c5f452520e6ef3eb2a406"
 
 ffbuild_enabled() {
     return 0

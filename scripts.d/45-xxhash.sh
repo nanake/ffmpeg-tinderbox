@@ -1,7 +1,7 @@
 #!/bin/bash
 
 XXHASH_REPO="https://github.com/Cyan4973/xxHash.git"
-XXHASH_COMMIT="680bf463fa1ca0461b9a7c2dab7556e1f54cf4cf"
+XXHASH_COMMIT="d9dfb8203cd67c576f1d46965ef5c0e48582196d"
 
 ffbuild_enabled() {
     return 0
