@@ -21,10 +21,11 @@ ffbuild_dockerbuild() {
         -DBUILD_SHARED_LIBS=OFF \
         -GNinja \
         ..
-    ninja -j"$(nproc)"
-    ninja install
+    ninja -j"$(nproc)" xevd
+    install -Dm644 src_main/libxevd.a "$FFBUILD_PREFIX/lib/xevd/libxevd.a"
+    install -Dm644 xevd.pc "$FFBUILD_PREFIX/lib/pkgconfig/xevd.pc"
+    install -Dm644 -t "$FFBUILD_PREFIX/include/xevd/" ../inc/xevd.h xevd_exports.h
 
-    rm -f "$FFBUILD_PREFIX"/lib/libxevd.dll.a
     sed -i 's/libdir=.*/&\/xevd/' "$FFBUILD_PREFIX"/lib/pkgconfig/xevd.pc
 }
 
