@@ -33,8 +33,14 @@ ffbuild_dockerbuild() {
         -DJPEGXL_FORCE_SYSTEM_{BROTLI,LCMS2}=ON \
         -GNinja \
         ..
-    ninja -j"$(nproc)"
-    ninja install
+    ninja -j"$(nproc)" hwy jxl jxl_cms jxl_threads
+    install -Dm644 third_party/highway/libhwy.a "$FFBUILD_PREFIX/lib/libhwy.a"
+    install -Dm644 third_party/highway/libhwy.pc "$FFBUILD_PREFIX/lib/pkgconfig/libhwy.pc"
+    install -Dm644 -t "$FFBUILD_PREFIX/include/hwy" ../third_party/highway/hwy/*.h ../third_party/highway/hwy/ops/*.h
+
+    install -Dm644 -t "$FFBUILD_PREFIX/lib" lib/libjxl.a lib/libjxl_cms.a lib/libjxl_threads.a
+    install -Dm644 -t "$FFBUILD_PREFIX/lib/pkgconfig" lib/libjxl.pc lib/libjxl_cms.pc lib/libjxl_threads.pc
+    install -Dm644 -t "$FFBUILD_PREFIX/include/jxl" lib/include/jxl/*.h
 
     echo "Libs.private: -lstdc++ -ladvapi32" | tee -a "${FFBUILD_PREFIX}"/lib/pkgconfig/libjxl{,_threads}.pc
 }
