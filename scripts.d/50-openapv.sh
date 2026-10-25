@@ -25,10 +25,10 @@ ffbuild_dockerbuild() {
         -DOAPV_APP_STATIC_BUILD=ON \
         -GNinja \
         ..
-    ninja -j"$(nproc)"
-    ninja install
-
-    rm -rf "$FFBUILD_PREFIX"/{include/oapv/oapv_exports.h,lib/import}
+    ninja -j"$(nproc)" oapv
+    install -Dm644 lib/liboapv.a "$FFBUILD_PREFIX/lib/liboapv.a"
+    install -Dm644 oapv.pc "$FFBUILD_PREFIX/lib/pkgconfig/oapv.pc"
+    install -Dm644 ../inc/oapv.h "$FFBUILD_PREFIX/include/oapv/oapv.h"
 }
 
 ffbuild_configure() {
