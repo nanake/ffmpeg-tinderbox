@@ -160,7 +160,7 @@ The build environment currently supports the following libraries and features:
 - libzmq
 - libzvbi
 - openal
-- schannel
+- openssl
 - sdl2
 - vaapi
 - vapoursynth
