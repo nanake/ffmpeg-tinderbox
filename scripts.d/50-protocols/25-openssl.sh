@@ -8,9 +8,18 @@ ffbuild_enabled() {
     return 0
 }
 
+ffbuild_dockerstage() {
+    to_df "RUN --mount=src=${SELF},dst=/stage.sh --mount=src=patches/openssl,dst=/patches run_stage /stage.sh"
+}
+
 ffbuild_dockerbuild() {
     git-mini-clone "$OPENSSL_REPO" "$OPENSSL_COMMIT" openssl
     cd openssl
+
+    for patch in /patches/*.patch; do
+        echo "Applying $patch"
+        git am "$patch"
+    done
 
     local myconf=(
         no-{apps,docs,legacy,makedepend,module,shared,tests}
