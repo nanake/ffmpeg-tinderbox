@@ -1,7 +1,7 @@
 #!/bin/bash
 
 WHISPER_REPO="https://github.com/ggml-org/whisper.cpp.git"
-WHISPER_COMMIT="231638a0717b7822784297e5980965ffcec05810"
+WHISPER_COMMIT="284029c07012d2000941a08d38a31ffb71f4734e"
 
 ffbuild_enabled() {
     return 0

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LAME_REPO="https://github.com/nanake/lame.git"
-LAME_COMMIT="0590fca58121fcdf61f1d2357ccd91184a15abc7"
+LAME_COMMIT="c1fb313a416de26ec816ccf8dbaeb6f308321da8"
 
 
 ffbuild_enabled() {
