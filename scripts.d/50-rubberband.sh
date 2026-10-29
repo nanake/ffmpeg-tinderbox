@@ -17,7 +17,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         -Dauto_features=disabled
         -Ddefault_library=static
-        -Dfft=fftw
+        -Dfft=builtin
         -Dresampler=libsamplerate
     )
 

@@ -18,14 +18,15 @@ ffbuild_dockerbuild() {
         -DCMAKE_BUILD_TYPE=Release \
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_{SHARED_LIBS,TESTS,TOOLS}=OFF \
-        -DFFT_LIB=fftw3 \
+        -DFFT_LIB=kissfft \
+        -DKISSFFT_SOURCE_DIR="$PWD/../src/3rdparty/kissfft" \
         -GNinja \
         ..
     ninja -j"$(nproc)"
     ninja install
 
     {
-        echo "Libs.private: -lfftw3 -lstdc++"
+        echo "Libs.private: -lstdc++"
         echo "Cflags.private: -DCHROMAPRINT_NODLL"
     } >> "$FFBUILD_PREFIX"/lib/pkgconfig/libchromaprint.pc
 }
