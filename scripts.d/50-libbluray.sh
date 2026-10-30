@@ -32,10 +32,6 @@ ffbuild_dockerbuild() {
         return -1
     fi
 
-    # 💥 symbol collision with FFmpeg
-    # since https://github.com/FFmpeg/FFmpeg/commit/c4de577
-    export CFLAGS="$CFLAGS -Ddec_init=libbluray_dec_init"
-
     meson setup "${myconf[@]}" ..
     ninja -j"$(nproc)"
     ninja install
