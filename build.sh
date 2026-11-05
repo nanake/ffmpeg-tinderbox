@@ -18,16 +18,16 @@ get_output() {
 
 source "variants/${TARGET}-${VARIANT}.sh"
 
-for addin in ${ADDINS[*]}; do
-    source "addins/${addin}.sh"
-done
-
 for script in scripts.d/**/*.sh; do
     FF_CONFIGURE+=" $(get_output $script configure)"
     FF_CFLAGS+=" $(get_output $script cflags)"
     FF_CXXFLAGS+=" $(get_output $script cxxflags)"
     FF_LDFLAGS+=" $(get_output $script ldflags)"
     FF_LIBS+=" $(get_output $script libs)"
+done
+
+for addin in ${ADDINS[*]}; do
+    source "addins/${addin}.sh"
 done
 
 FF_CONFIGURE="$(xargs <<< "$FF_CONFIGURE")"
