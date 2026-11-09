@@ -37,7 +37,7 @@ TARGET_IMAGE="${REGISTRY}/${OWNER}/base-${TARGET}:latest"
 IMAGE="${REGISTRY}/${OWNER}/${TARGET}-${VARIANT%-shared}:latest"
 
 ffbuild_dockerstage() {
-    to_df "RUN --mount=src=${SELF},dst=/stage.sh run_stage /stage.sh"
+    to_df "RUN --mount=type=bind,src=${SELF},dst=/stage.sh run_stage /stage.sh"
 }
 
 ffbuild_dockerlayer() {
