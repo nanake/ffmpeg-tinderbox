@@ -27,6 +27,15 @@ jobs:
           sudo apt update
           sudo apt install buildah
 
+      - name: Configure Buildah storage
+        run: |
+          mkdir -p "$HOME/.config/containers"
+
+          cat > "$HOME/.config/containers/storage.conf" <<'EOF'
+          [storage]
+          driver = "overlay"
+          EOF
+
       - name: Login to GitHub Container Registry
         uses: redhat-actions/podman-login@v2
         with:
