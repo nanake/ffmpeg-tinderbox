@@ -26,7 +26,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.dodosolsollalasol }}
-          auth_file_path: ${{ github.workspace }}/.registry-auth.json
 
       - name: Generate Dockerfile
         run: ./generate.sh ${{ matrix.target }} ${{ matrix.variant }}
@@ -49,7 +48,6 @@ jobs:
           squash: true
           oci: true
           extra-args: |
-            --authfile=${{ github.workspace }}/.registry-auth.json
             --cache-from ${{ steps.imagename.outputs.cache }}
             --cache-to ${{ steps.imagename.outputs.cache }}
             --jobs=4
