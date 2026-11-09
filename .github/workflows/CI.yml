@@ -20,19 +20,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Create and Boot docker-container Driver
-        uses: docker/setup-buildx-action@v4
-        with:
-          buildkitd-config-inline: |
-            [worker.oci]
-            max-parallelism = 2
-
       - name: Login to GitHub Container Registry
-        uses: docker/login-action@v4
+        uses: redhat-actions/podman-login@v2
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.dodosolsollalasol }}
+          auth_file_path: ${{ github.workspace }}/.registry-auth.json
 
       - name: Generate Dockerfile
         run: ./generate.sh ${{ matrix.target }} ${{ matrix.variant }}
@@ -41,18 +35,32 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}"
+          echo "repository=${IMG/ /-}" >> "$GITHUB_OUTPUT"
           echo "image=${IMG/ /-}:latest" >> "$GITHUB_OUTPUT"
-          echo "cache=${IMG/ /-}:cache" >> "$GITHUB_OUTPUT"
+          echo "cache=${IMG/ /-}/cache" >> "$GITHUB_OUTPUT"
 
       - name: Build variant image
-        uses: docker/build-push-action@v7
+        id: build
+        uses: redhat-actions/buildah-build@v3
         with:
-          context: .
-          outputs: type=registry,oci-mediatypes=true,compression=zstd,compression-level=7
-          cache-from: type=registry,ref=${{ steps.imagename.outputs.cache }}
-          cache-to: type=registry,ref=${{ steps.imagename.outputs.cache }},mode=max,oci-mediatypes=true,compression=zstd,compression-level=7
+          image: ${{ steps.imagename.outputs.repository }}
+          containerfiles: Dockerfile
+          layers: true
+          squash: true
+          oci: true
+          extra-args: |
+            --authfile=${{ github.workspace }}/.registry-auth.json
+            --cache-from ${{ steps.imagename.outputs.cache }}
+            --cache-to ${{ steps.imagename.outputs.cache }}
+            --jobs=4
+
+      - name: Push image to GHCR
+        uses: redhat-actions/push-to-registry@v3
+        with:
           tags: ${{ steps.imagename.outputs.image }}
-          provenance: false
+          extra-args: |
+            --compression-format zstd
+            --compression-level 7
 
   ffmpeg_latest:
     name: Get FFmpeg latest commit
