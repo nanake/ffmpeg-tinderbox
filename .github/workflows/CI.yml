@@ -20,6 +20,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      - name: Install the newest Buildah release
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/podman-container-tools-community/buildah/main/packaging/apt/buildah.sources |
+          sudo tee /etc/apt/sources.list.d/buildah.sources
+          sudo apt update
+          sudo apt install buildah
+
       - name: Login to GitHub Container Registry
         uses: redhat-actions/podman-login@v2
         with:
