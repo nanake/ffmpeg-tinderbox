@@ -35,6 +35,8 @@ Make sure the following tools are installed:
 
 ## Building Docker Images
 
+If you only need to build FFmpeg, you do not need to build the `base` or `target` images; you can skip directly to the [Building FFmpeg](#building-ffmpeg) step.
+
 ### Build the Base Image
 
 ```bash
