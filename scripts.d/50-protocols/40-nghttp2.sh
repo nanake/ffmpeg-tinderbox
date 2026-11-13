@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NGHTTP2_REPO="https://github.com/nghttp2/nghttp2.git"
-NGHTTP2_COMMIT="7ac4557d7da987c837b3c4d47a41dd71baacdba9"
+NGHTTP2_COMMIT="28d4846d201f0444f208cf6373b8563258feaafb"
 
 ffbuild_enabled() {
     return 0

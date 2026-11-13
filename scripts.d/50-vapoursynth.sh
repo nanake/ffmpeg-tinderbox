@@ -1,7 +1,7 @@
 #!/bin/bash
 
 VAPOURSYNTH_REPO="https://github.com/vapoursynth/vapoursynth.git"
-VAPOURSYNTH_COMMIT="ddeb8719b63998afa7fc53e6449acbeea8967d48"
+VAPOURSYNTH_COMMIT="dfe97e09ee0dd76ba495635dbd776361ed66c273"
 
 
 ffbuild_enabled() {
