@@ -20,6 +20,16 @@ ffbuild_dockerbuild() {
 
     unset CC CFLAGS
 
+    # remove hardcoded Automake version references
+    find . -type f \( \
+        -name 'Makefile*' -o \
+        -name '*.sh' -o \
+        -name '*.mk' \
+    \) -exec sed -i \
+        -E \
+        -e 's/automake-[0-9]+(\.[0-9]+)*/automake/g' \
+        -e 's/aclocal-[0-9]+(\.[0-9]+)*/aclocal/g' {} +
+
     local myconf=(
         --prefix="$FFBUILD_PREFIX"
         --disable-{shared,dependency-tracking}
