@@ -12,8 +12,6 @@ ffbuild_dockerbuild() {
     cd openapv
     git checkout "$OPENAPV_COMMIT"
 
-    echo > app/CMakeLists.txt
-
     mkdir build && cd build
 
     cmake \
@@ -22,7 +20,7 @@ ffbuild_dockerbuild() {
         -DCMAKE_INSTALL_PREFIX="$FFBUILD_PREFIX" \
         -DBUILD_SHARED_LIBS=OFF \
         -DENABLE_TESTS=OFF \
-        -DOAPV_APP_STATIC_BUILD=ON \
+        -DOAPV_BUILD_APPS=OFF \
         -GNinja \
         ..
     ninja -j"$(nproc)" oapv
