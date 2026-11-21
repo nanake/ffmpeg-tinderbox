@@ -19,7 +19,7 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         -Ddefault_library=static
-        -D{built_in_models,enable_avx512}"=true"
+        -D{built_in_models,enable_{avx512,zimg}}"=true"
         -Denable_{docs,tests}"=false"
     )
 
