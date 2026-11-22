@@ -1,7 +1,7 @@
 #!/bin/bash
 
 LIBSSH_REPO="https://gitlab.com/libssh/libssh-mirror.git"
-LIBSSH_COMMIT="e6cd6c82cb5fae5dea9c70f063f66551afe200b9"
+LIBSSH_COMMIT="ae59cf0785d38132cef8937e2329bdf3b69e05eb"
 
 ffbuild_enabled() {
     return 0
