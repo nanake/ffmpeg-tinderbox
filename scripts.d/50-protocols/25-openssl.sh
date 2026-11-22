@@ -9,7 +9,7 @@ ffbuild_enabled() {
 }
 
 ffbuild_dockerstage() {
-    to_df "RUN --mount=type=bind,src=${SELF},dst=/stage.sh --mount=type=bind,src=patches/openssl,dst=/patches run_stage /stage.sh"
+    to_df "RUN --mount=type=bind,src=${SELF},dst=/stage.sh --mount=type=bind,src=patches/openssl,dst=/patches run_stage /stage.sh ${SELF}"
 }
 
 ffbuild_dockerbuild() {

@@ -50,23 +50,57 @@ jobs:
         id: imagename
         run: |
           IMG="ghcr.io/${GITHUB_ACTOR,,}/${{ matrix.target }}-${{ matrix.variant }}"
-          echo "repository=${IMG/ /-}" >> "$GITHUB_OUTPUT"
           echo "image=${IMG/ /-}:latest" >> "$GITHUB_OUTPUT"
           echo "cache=${IMG/ /-}/cache" >> "$GITHUB_OUTPUT"
 
       - name: Build variant image
         id: build
-        uses: redhat-actions/buildah-build@v3
-        with:
-          image: ${{ steps.imagename.outputs.repository }}
-          containerfiles: Dockerfile
-          layers: true
-          squash: true
-          oci: true
-          extra-args: |
-            --cache-from ${{ steps.imagename.outputs.cache }}
-            --cache-to ${{ steps.imagename.outputs.cache }}
-            --jobs=4
+        env:
+          IMAGE: ${{ steps.imagename.outputs.image }}
+          CACHE: ${{ steps.imagename.outputs.cache }}
+        run: |
+          STAGELOGS="$RUNNER_TEMP/stagelogs"
+          BUILDAH_LOG="$RUNNER_TEMP/buildah.log"
+          rm -rf "$STAGELOGS"
+          mkdir -p "$STAGELOGS"
+          # Tells run_stage that the log hand-over is available.
+          touch "$STAGELOGS/.active"
+
+          # Sole writer of stage logs to the console (one block per stage).
+          utils/stagelog-printer.sh "$STAGELOGS" &
+          PRINTER=$!
+
+          # Buildah's own output goes to a file so nothing else can write to
+          # the console while stage logs are being printed.
+          set +e
+          buildah build \
+            --file Dockerfile \
+            --tag "$IMAGE" \
+            --layers \
+            --squash \
+            --format oci \
+            --cache-from "$CACHE" \
+            --cache-to "$CACHE" \
+            --compression-format zstd \
+            --compression-level 7 \
+            --jobs=4 \
+            --volume "$STAGELOGS:/stagelogs" \
+            . > "$BUILDAH_LOG" 2>&1
+          rc=$?
+          set -e
+
+          touch "$STAGELOGS/.finished"
+          wait "$PRINTER"
+
+          if (( rc == 0 )); then
+            echo "::group::buildah output"
+            cat "$BUILDAH_LOG"
+            echo "::endgroup::"
+          else
+            echo "::error title=buildah build failed::exit code $rc"
+            cat "$BUILDAH_LOG"
+          fi
+          exit "$rc"
 
       - name: Push image to GHCR
         uses: redhat-actions/push-to-registry@v3
