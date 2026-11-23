@@ -17,6 +17,9 @@ jobs:
         target: [win64]
         variant: [nonfree]
     steps:
+      - name: Find out cpu info
+        run: lscpu
+
       - name: Checkout
         uses: actions/checkout@v7
 
