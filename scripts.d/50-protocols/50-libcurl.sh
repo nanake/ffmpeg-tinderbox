@@ -1,7 +1,7 @@
 #!/bin/bash
 
 CURL_REPO="https://github.com/curl/curl.git"
-CURL_COMMIT="e1e86c15e08b5168309bd4ad7f1a1e217cfb1f43"
+CURL_COMMIT="ff38e43eee49d92a73a6dde9b1bc7550f5e9a92f"
 
 ffbuild_enabled() {
     return 0

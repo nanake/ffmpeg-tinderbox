@@ -1,7 +1,7 @@
 #!/bin/bash
 
 NGTCP2_REPO="https://github.com/ngtcp2/ngtcp2.git"
-NGTCP2_COMMIT="9595a0dda7990b95cc2ff728d2524d7db0a8b7f3"
+NGTCP2_COMMIT="2ad2b84d395b6afeebf881dc71e252d7c422bd16"
 
 ffbuild_enabled() {
     return 0
