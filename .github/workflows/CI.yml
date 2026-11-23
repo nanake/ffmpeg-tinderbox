@@ -83,7 +83,7 @@ jobs:
             --cache-to "$CACHE" \
             --compression-format zstd \
             --compression-level 7 \
-            --jobs=4 \
+            --jobs=3 \
             --volume "$STAGELOGS:/stagelogs" \
             . > "$BUILDAH_LOG" 2>&1
           rc=$?
