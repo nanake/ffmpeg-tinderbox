@@ -17,8 +17,8 @@ ffbuild_dockerbuild() {
         --prefix="$FFBUILD_PREFIX"
         --buildtype=release
         -Ddefault_library=static
-        -Dgdi=enabled
-        -D{benchmark,cairo,chafa,docs,glib,gobject,icu,introspection,tests,utilities}"=disabled"
+        -D{directwrite,gdi}"=enabled"
+        -D{benchmark,cairo,chafa,docs,glib,gobject,gpu,icu,introspection,raster,subset,tests,utilities,vector}"=disabled"
     )
 
     if [[ $TARGET == win* ]]; then
@@ -31,7 +31,7 @@ ffbuild_dockerbuild() {
     fi
 
     meson setup "${myconf[@]}" ..
-    ninja -j"$(nproc)" libs
+    ninja -j"$(nproc)" lib
     meson install --no-rebuild --only-changed
 }
 
