@@ -28,7 +28,6 @@ RUN <<EOF
         pkgconf-pkg-config \
         python-unversioned-command \
         python3 \
-        ragel \
         texinfo \
         unzip \
         wget2-wget \
