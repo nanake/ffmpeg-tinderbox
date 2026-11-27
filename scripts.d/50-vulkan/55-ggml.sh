@@ -1,7 +1,7 @@
 #!/bin/bash
 
 GGML_REPO="https://github.com/ggml-org/ggml.git"
-GGML_COMMIT="d9fe7bff3d2bf4d077e25c654486d02c321734aa"
+GGML_COMMIT="bb877c0c51f38c52ee2d5e41d58e3d0c20f3fed4"
 
 ffbuild_enabled() {
     return 0

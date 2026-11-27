@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ARIBCAPTION_REPO="https://github.com/xqq/libaribcaption.git"
-ARIBCAPTION_COMMIT="4a4ef0899cd077bb2de5f79b29ea18a0dc055a49"
+ARIBCAPTION_COMMIT="476434925644673dbd3bb130b1b309918601ba51"
 
 ffbuild_enabled() {
     return 0
