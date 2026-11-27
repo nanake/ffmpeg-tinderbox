@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: '0 23 * * TUE' # Runs at 08:00 Tokyo time every Wednesday ⌚
     - cron: '0 23 27 * *' # Runs at 08:00 Tokyo time on day-of-month 28 🗓️
+    - cron: '0 23 14,30 * *' # Runs at 08:00 Tokyo time on 1st and 15th of the month 🗓️
 
   workflow_dispatch:
     inputs:
@@ -13,6 +14,10 @@ on:
         default: false
       prune_pkgs:
         description: 'Prune untagged packages'
+        type: boolean
+        default: false
+      prune_cache:
+        description: 'Prune Buildah cache'
         type: boolean
         default: false
 
@@ -42,4 +47,15 @@ jobs:
         with:
           delete-untagged: true
           packages: ${{ matrix.image_name }}
+          token: ${{ secrets.dodosolsollalasol }}
+
+  prune_buildah_cache:
+    if: github.event.schedule == '0 23 14,30 * *' || github.event.inputs.prune_cache == 'true'
+    runs-on: ubuntu-26.04
+    steps:
+      - name: Prune buildah cache
+        uses: dataaxiom/ghcr-cleanup-action@v1
+        with:
+          keep-n-tagged: 380
+          packages: win64-nonfree/cache
           token: ${{ secrets.dodosolsollalasol }}
